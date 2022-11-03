@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>우동소 - 회원가입</title>
+</head>
+<body>
+<h3>회원가입</h3>
+    <form action="/user/registerdo" method="post" name="registerForm" onsubmit="return onClickValidate();">
+    <table>
+        <tr>
+            <td width="144px">아이디</td>
+            <td>
+                <input type="text" name="id">
+            </td>
+        </tr>
+        <tr>
+            <td>이름</td>
+            <td>
+                <input type="text" name="name">
+            </td>
+        </tr>
+        <tr>
+            <td>닉네임</td>
+            <td>
+                <input type="text" name="nickname">
+            </td>
+        </tr>
+        <tr>
+            <td>비밀번호</td>
+            <td>
+                <input type="password" name="password">
+            </td>
+        </tr>
+        <tr>
+            <td>비밀번호 확인</td>
+            <td>
+                <input type="password" name="passwordCheck">
+            </td>
+        </tr>
+        <tr>
+            <td>동아리 유형</td>
+            <td>
+                <select name="type">
+                    <option value="0" selected>총동아리연합회</option>
+                    <option value="1">과동아리/소모임</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>연락처</td>
+            <td>
+                <input type="text" name="contact">
+            </td>
+        </tr>
+        <tr>
+            <td>프로필 사진</td>
+            <td>
+                <input type="file" name="profile_url">
+            </td>
+        </tr>
+        <tr>
+            <td>지역</td>
+            <td>
+                <input type="text" name="region">
+            </td>
+        </tr>
+        <tr>
+            <td>대학교</td>
+            <td>
+                <input type="text" name="university">
+            </td>
+        </tr>
+        <tr>
+            <td>학과</td>
+            <td>
+                <input type="text" name="major">
+            </td>
+        </tr>
+        <tr>
+            <td>학번</td>
+            <td>
+                <input type="text" name="classOf">
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="확인">
+</form>
+<script>
+    function onClickValidate(){
+        const pw = document.registerForm.password.value;
+        const pwCheck = document.registerForm.passwordCheck.value;
+
+        if(pw !== pwCheck) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return false;
+        } else {
+            alert("회원가입 완료");
+        }
+    }
+</script>
+</body>
+</html>

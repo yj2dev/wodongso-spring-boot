@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>우동소 - 동아리 목록</title>
+</head>
+<style>
+
+    .layout {
+        border: 1px solid orange;
+    }
+    table {
+        border-collapse: collapse;
+        margin: 24px;
+    }
+    tr, th, td {
+        border: 1px solid #000;
+    }
+
+</style>
+<body>
+    <div class="layout">
+        <table>
+            <thead>
+                <tr>
+                    <th>고유번호</th>
+                    <th>동아리명</th>
+                    <th>유형</th>
+                    <th>카테고리</th>
+                    <th>위치</th>
+                    <th>프로필</th>
+                    <th>프로필배경</th>
+                    <th>한줄소개</th>
+                    <th>상세소개</th>
+                    <th>생성일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="board: ${list}">
+                    <td th:text="${board.number}"></td>
+                    <td th:text="${board.name}"></td>
+                    <td th:text="${board.type}"></td>
+                    <td th:text="${board.category}"></td>
+                    <td th:text="${board.position}"></td>
+                    <td th:text="${board.profileUrl}"></td>
+                    <td th:text="${board.backgroundUrl}"></td>
+                    <td th:text="${board.simpleDesc}"></td>
+                    <td th:text="${board.detailDesc}"></td>
+                    <td th:text="${board.createdAt}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</body>
+</html>
