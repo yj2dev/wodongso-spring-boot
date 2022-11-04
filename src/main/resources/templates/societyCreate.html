@@ -5,7 +5,90 @@
     <title>우동소 - 동아리 만들기</title>
 </head>
 <body>
-  <h3>동아리 만들기</h3>
-  <button>만들기</button>
+<h3>동아리 만들기</h3>
+<form action="/society/createdo" method="post"
+      enctype="multipart/form-data" name="createSocietyForm"
+      onsubmit="return onValidateCreateSociety();">
+    <table>
+        <tr>
+            <td>동아리명</td>
+            <td>
+                <input type="text" name="name">
+            </td>
+        </tr>
+        <tr>
+            <td>동아리 유형</td>
+            <td>
+                <select name="type">
+                    <option value="0" selected>총동아리연합회</option>
+                    <option value="1">중앙동아리</option>
+                    <option value="2">일반동아리</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>카테고리</td>
+            <td>
+                <select name="category">
+                    <option value="0" selected>문화/취미</option>
+                    <option value="1">전시/공연/음악</option>
+                    <option value="2">종교</option>
+                    <option value="3">학술</option>
+                    <option value="4">봉사</option>
+                    <option value="5">체육/레저</option>
+                    <option value="6">창업</option>
+                    <option value="7">기타</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>위치</td>
+            <td>
+                <input type="text" name="position" placeholder="미지정">
+            </td>
+        </tr>
+        <tr>
+        <tr>
+            <td>프로필 사진</td>
+            <td>
+                <input type="file" accept="image/*" name="profileImage">
+            </td>
+        </tr>
+        <tr>
+            <td>프로필 배경사진</td>
+            <td>
+                <input type="file" accept="image/*" name="backgroundImage">
+            </td>
+        </tr>
+        <tr>
+            <td>동아리 한 줄 소개</td>
+            <td>
+                <input type="text" name="simple_desc" placeholder="두 바퀴에서 오는 자유">
+            </td>
+        </tr>
+        <tr>
+            <td>동아리 상세 소개</td>
+            <td>
+                <textarea type="text" name="detail_desc" placeholder="주당 활동 횟수, 활동 계획 등 자유롭게 입력"></textarea>
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="확인">
+</form>
+<script>
+    const onValidateCreateSociety = () => {
+        const pw = document.registerForm.password.value;
+        const pwCheck = document.registerForm.passwordCheck.value;
+        console.log(pw, pwCheck);
+        if (pw !== pwCheck) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return false;
+        } else {
+            alert("회원가입 완료");
+        }
+    }
+</script>
+
+
 </body>
 </html>

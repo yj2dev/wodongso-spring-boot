@@ -7,7 +7,7 @@
 <body>
 <a href="/">우동소</a>
 <h3>로그인</h3>
-    <form action="/user/logindo" method="post" name="loginForm" onsubmit="return onClickValidate();">
+    <form action="/user/logindo" method="post" name="loginForm" onsubmit="return onValidateLogin();">
         <table>
             <tr>
                 <td>아이디</td>
@@ -25,16 +25,12 @@
         <input type="submit" value="확인">
     </form>
     <script>
-        function onClickValidate(e){
-            e.preventDefault();
-            const nullCheck = prop => document.registerForm.prop.value.length == 0 ? false : true
-            console.log("check id >> ", nullCheck("id"))
-            console.log("check pw >> ", nullCheck("password"))
-            if(nullCheck("id") || nullCheck("password")) {
+        const onValidateLogin = () => {
+            const isNull = prop => document.getElementsByName(prop)[0].value.length === 0;
+            if(isNull("id") || isNull("password") ) {
                 alert("아이디와 비밀번호를 입력해주세요.");
                 return false;
             }
-                return false;
         }
     </script>
 </body>
