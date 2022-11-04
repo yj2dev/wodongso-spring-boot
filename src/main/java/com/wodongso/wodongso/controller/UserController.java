@@ -41,7 +41,7 @@ public class UserController {
     @PostMapping ("/user/logindo")
     @ResponseBody
     public String userLoginDo(User user){
-        System.out.println('user >> ', user);
+//        System.out.println('user >> ', user);
         return null;
     }
 
