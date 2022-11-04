@@ -12,7 +12,6 @@ public class UserService {
     private UserRepository userRepository;
 
     public void userRegister(User user) {
-
         userRepository.save(user);
     }
 }

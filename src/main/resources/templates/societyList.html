@@ -36,17 +36,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="board: ${list}">
-                    <td th:text="${board.number}"></td>
-                    <td th:text="${board.name}"></td>
-                    <td th:text="${board.type}"></td>
-                    <td th:text="${board.category}"></td>
-                    <td th:text="${board.position}"></td>
-                    <td th:text="${board.profileUrl}"></td>
-                    <td th:text="${board.backgroundUrl}"></td>
-                    <td th:text="${board.simpleDesc}"></td>
-                    <td th:text="${board.detailDesc}"></td>
-                    <td th:text="${board.createdAt}"></td>
+                <tr th:each="society: ${list}">
+                    <td th:text="${society.number}"></td>
+                    <td>
+                        <a th:text="${society.name}" th:href="@{/society/detail(number=${society.number})}"></a>
+                    </td>
+                    <td th:text="${society.type}"></td>
+                    <td th:text="${society.category}"></td>
+                    <td th:text="${society.position}"></td>
+                    <td th:text="${society.profileUrl}"></td>
+                    <td th:text="${society.backgroundUrl}"></td>
+                    <td th:text="${society.simpleDesc}"></td>
+                    <td th:text="${society.detailDesc}"></td>
+                    <td th:text="${society.createdAt}"></td>
                 </tr>
             </tbody>
         </table>

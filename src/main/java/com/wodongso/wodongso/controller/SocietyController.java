@@ -1,5 +1,6 @@
 package com.wodongso.wodongso.controller;
 
+import com.wodongso.wodongso.entity.Society;
 import com.wodongso.wodongso.service.SocietyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,34 +14,23 @@ public class SocietyController {
     @Autowired
     private SocietyService societyService;
 
-    @GetMapping("/")
-    @ResponseBody
-    public String main(){
-        return "Hello Java...";
-    }
-
-
-
-
 
     @GetMapping("/society/create")
-    public String societyCreate(){
+    public String societyCreate() {
         return "societyCreate";
     }
 
     @GetMapping("/society/list")
-    public String societyList(Model model){
+    public String societyList(Model model) {
         model.addAttribute("list", societyService.societyList());
         return "societyList";
     }
 
-
-
-
-
-
-
-
+    @GetMapping("/society/detail")
+    public String societyDetail(Model model, Integer number) {
+        model.addAttribute("society", societyService.societyDetail(number));
+        return "societyDetail";
+    }
 
 //    public String createSocietyDo(String title, String desc)
 

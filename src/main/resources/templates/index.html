@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>우동소</title>
+</head>
+<body>
+    <a href="/user/register">회원가입</a>
+    <a href="/user/login">로그인</a>
+<div class="layout">
+    <table>
+        <thead>
+        <tr>
+            <th>고유번호</th>
+            <th>동아리명</th>
+            <th>유형</th>
+            <th>카테고리</th>
+            <th>위치</th>
+            <th>프로필</th>
+            <th>프로필배경</th>
+            <th>한줄소개</th>
+            <th>상세소개</th>
+            <th>생성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="society: ${list}">
+            <td th:text="${society.number}"></td>
+            <td>
+                <a th:text="${society.name}" th:href="@{/society/detail(number=${society.number})}"></a>
+            </td>
+            <td th:text="${society.type}"></td>
+            <td th:text="${society.category}"></td>
+            <td th:text="${society.position}"></td>
+            <td th:text="${society.profileUrl}"></td>
+            <td th:text="${society.backgroundUrl}"></td>
+            <td th:text="${society.simpleDesc}"></td>
+            <td th:text="${society.detailDesc}"></td>
+            <td th:text="${society.createdAt}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+</body>
+</html>

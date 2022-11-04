@@ -33,4 +33,5 @@ public class Society {
     private String detailDesc;
 
     private Date createdAt;
+
 }

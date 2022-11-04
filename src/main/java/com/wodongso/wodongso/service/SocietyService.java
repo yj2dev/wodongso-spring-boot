@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Service
 public class SocietyService {
 
@@ -16,6 +18,10 @@ public class SocietyService {
     public List<Society> societyList(){
         return societyRepository.findAll();
     }
+    public Society societyDetail(Integer id){
+        return societyRepository.findById(id).get();
+    }
+
 
 
 }
