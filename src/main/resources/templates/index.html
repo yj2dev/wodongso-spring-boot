@@ -5,9 +5,9 @@
     <title>우동소</title>
 </head>
 <body>
-    <a href="/user/register">회원가입</a>
-    <a href="/user/login">로그인</a>
-    <a href="/society/create">동아리 등록</a>
+<a href="/user/register">회원가입</a>
+<a href="/user/login">로그인</a>
+<a href="/society/create">동아리 등록</a>
 <div class="layout">
     <table>
         <thead>
@@ -33,15 +33,24 @@
             <td th:text="${society.type}"></td>
             <td th:text="${society.category}"></td>
             <td th:text="${society.position}"></td>
-            <td th:text="${society.profileUrl}"></td>
-            <td th:text="${society.backgroundUrl}"></td>
+            <td><img width="150px" th:src="${society.profileUrl}"></td>
+            <td><img width="150px" th:src="${society.backgroundUrl}"></td>
             <td th:text="${society.simpleDesc}"></td>
             <td th:text="${society.detailDesc}"></td>
             <td th:text="${society.createdAt}"></td>
         </tr>
         </tbody>
     </table>
-
+    <th:block th:each="page: ${#numbers.sequence(startPage, endPage)}">
+        <a th:if="${page != currentPage}" th:href="@{/(page= ${page - 1}, searchKeyword= ${param.searchKeyword})}"
+           th:text="${page}"></a>
+        <b th:if="${page == currentPage}" th:text="${page}" style="color:red"></b>
+    </th:block>
+    <!--    <form th:action="@{/(searchKeyword= ${param.searchKeyword})}">-->
+    <form action="" method="get">
+        <input type="text" name="searchKeyword">
+        <button type="submit">검색</button>
+    </form>
 </div>
 
 

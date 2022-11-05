@@ -3,6 +3,8 @@ package com.wodongso.wodongso.service;
 import com.wodongso.wodongso.entity.Society;
 import com.wodongso.wodongso.repository.SocietyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,10 +19,13 @@ public class SocietyService {
     @Autowired
     private SocietyRepository societyRepository;
 
-    public List<Society> societyList() {
-        return societyRepository.findAll();
 
+    public Page<Society> societySearchList(String searchKeyword, Pageable pageable) {
+        return societyRepository.findByNameContaining(searchKeyword, pageable);
+    }
 
+    public Page<Society> societyList(Pageable pageable) {
+        return societyRepository.findAll(pageable);
     }
 
     public Society societyDetail(Integer id) {
@@ -51,7 +56,7 @@ public class SocietyService {
         File saveBackgroundImage = new File(filePath, backgroundImageName);
 
         profileImage.transferTo(saveProfileImage);
-        profileImage.transferTo(saveBackgroundImage);
+        backgroundImage.transferTo(saveBackgroundImage);
 
         society.setProfileUrl("/files/" + profileImageName);
         society.setBackgroundUrl("/files/" + backgroundImageName);

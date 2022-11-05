@@ -3,6 +3,9 @@ package com.wodongso.wodongso.controller;
 import com.wodongso.wodongso.entity.Society;
 import com.wodongso.wodongso.service.SocietyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +22,9 @@ public class SocietyController {
 
     //    동아리 전체 조회
     @GetMapping("/society/list")
-    public String societyList(Model model) {
-        model.addAttribute("list", societyService.societyList());
+    public String societyList(Model model,
+                              @PageableDefault(page = 0, size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable) {
+        model.addAttribute("list", societyService.societyList(pageable));
         return "societyList";
     }
 
@@ -42,10 +46,7 @@ public class SocietyController {
     public String createSocietyDo(Society society,
                                   MultipartFile profileImage,
                                   MultipartFile backgroundImage) throws Exception {
-        System.out.println("file >> " + profileImage);
-
         societyService.societyCreate(society, profileImage, backgroundImage);
-
         return "redirect:/";
     }
 
@@ -53,7 +54,6 @@ public class SocietyController {
     // 동아리 제거
     @GetMapping("/society/delete")
     public String societyDelete(Integer number) {
-        System.out.println("numbers >> " + number);
         societyService.societyDelete(number);
         return "redirect:/";
     }
@@ -62,8 +62,6 @@ public class SocietyController {
     @GetMapping("/society/update/{number}")
     public String societyUpdate(@PathVariable Integer number, Model model) {
         model.addAttribute("society", societyService.societyDetail(number));
-
-        //        societyService.societyDelete(number);
         return "societyUpdate";
     }
 
