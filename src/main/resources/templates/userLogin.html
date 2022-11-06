@@ -8,6 +8,7 @@
 <a href="/">우동소</a>
 <h3>로그인</h3>
 <form th:action="@{/user/login}" method="post" name="loginForm" onsubmit="return onValidateLogin();">
+    <h3 th:text="${param.fail}"></h3>
     <table>
         <tr>
             <td>아이디</td>
@@ -18,7 +19,7 @@
         <tr>
             <td>비밀번호</td>
             <td>
-                <input type="text" name="password">
+                <input type="password" name="password">
             </td>
         </tr>
     </table>

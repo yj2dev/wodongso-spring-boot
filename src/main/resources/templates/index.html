@@ -9,6 +9,10 @@
 <a href="/user/register">회원가입</a>
 <a href="/society/create">동아리 등록</a>
 <a href="/society/list">동아리 목록</a>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<form th:action="@{/user/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
 <div class="layout">
     <table>
         <thead>

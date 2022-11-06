@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.security.Principal;
 import java.util.UUID;
 
 @Controller
@@ -43,10 +44,13 @@ public class SocietyController {
     }
 
     //    동아리 생성
-    @PostMapping("/createdo")
+    @PostMapping("/create")
     public String createSocietyDo(Society society,
                                   MultipartFile profileImage,
-                                  MultipartFile backgroundImage) throws Exception {
+                                  MultipartFile backgroundImage,
+                                  Principal principal) throws Exception {
+        System.out.println("principal >> " + principal);
+        System.out.println("principal >> " + principal.getName());
         societyService.societyCreate(society, profileImage, backgroundImage);
         return "redirect:/";
     }

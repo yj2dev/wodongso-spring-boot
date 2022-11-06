@@ -20,6 +20,7 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+
     public void userRegister(User user, MultipartFile profileImage) throws Exception {
 
         if (!profileImage.isEmpty()) {
