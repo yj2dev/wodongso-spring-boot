@@ -41,26 +41,23 @@ public class SocietyService {
     public void societyCreate(Society society,
                               MultipartFile profileImage,
                               MultipartFile backgroundImage) throws Exception {
-        System.out.println(" p >> " + profileImage.isEmpty());
-        System.out.println(" b >> " + backgroundImage.isEmpty());
-        //        if (profileImage.isEmpty()) {
         String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
-        UUID profileUuid = UUID.randomUUID();
-        UUID backgroundUuid = UUID.randomUUID();
+        if (!profileImage.isEmpty()) {
+            UUID profileUuid = UUID.randomUUID();
+            String profileImageName = profileUuid + "_" + profileImage.getOriginalFilename();
+            File saveProfileImage = new File(filePath, profileImageName);
+            profileImage.transferTo(saveProfileImage);
+            society.setProfileUrl("/files/" + profileImageName);
+        }
 
-        String profileImageName = profileUuid + "_" + profileImage.getOriginalFilename();
-        String backgroundImageName = backgroundUuid + "_" + backgroundImage.getOriginalFilename();
-
-        File saveProfileImage = new File(filePath, profileImageName);
-        File saveBackgroundImage = new File(filePath, backgroundImageName);
-
-        profileImage.transferTo(saveProfileImage);
-        backgroundImage.transferTo(saveBackgroundImage);
-
-        society.setProfileUrl("/files/" + profileImageName);
-        society.setBackgroundUrl("/files/" + backgroundImageName);
-//        }
+        if (!backgroundImage.isEmpty()) {
+            UUID backgroundUuid = UUID.randomUUID();
+            String backgroundImageName = backgroundUuid + "_" + backgroundImage.getOriginalFilename();
+            File saveBackgroundImage = new File(filePath, backgroundImageName);
+            backgroundImage.transferTo(saveBackgroundImage);
+            society.setBackgroundUrl("/files/" + backgroundImageName);
+        }
 
         societyRepository.save(society);
     }

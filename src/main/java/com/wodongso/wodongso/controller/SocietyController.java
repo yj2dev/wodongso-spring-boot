@@ -15,13 +15,14 @@ import java.io.File;
 import java.util.UUID;
 
 @Controller
+@RequestMapping("society")
 public class SocietyController {
 
     @Autowired
     private SocietyService societyService;
 
     //    동아리 전체 조회
-    @GetMapping("/society/list")
+    @GetMapping("/list")
     public String societyList(Model model,
                               @PageableDefault(page = 0, size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable) {
         model.addAttribute("list", societyService.societyList(pageable));
@@ -29,20 +30,20 @@ public class SocietyController {
     }
 
     // 특정 동아리 조회
-    @GetMapping("/society/detail")
+    @GetMapping("/detail")
     public String societyDetail(Model model, Integer number) {
         model.addAttribute("society", societyService.societyDetail(number));
         return "societyDetail";
     }
 
     // 동아리 생성페이지 이동
-    @GetMapping("/society/create")
+    @GetMapping("/create")
     public String societyCreate() {
         return "societyCreate";
     }
 
     //    동아리 생성
-    @PostMapping("/society/createdo")
+    @PostMapping("/createdo")
     public String createSocietyDo(Society society,
                                   MultipartFile profileImage,
                                   MultipartFile backgroundImage) throws Exception {
@@ -52,14 +53,14 @@ public class SocietyController {
 
 
     // 동아리 제거
-    @GetMapping("/society/delete")
+    @GetMapping("/delete")
     public String societyDelete(Integer number) {
         societyService.societyDelete(number);
         return "redirect:/";
     }
 
     //    동아리 정보 수정페이지 이동
-    @GetMapping("/society/update/{number}")
+    @GetMapping("/update/{number}")
     public String societyUpdate(@PathVariable Integer number, Model model) {
         model.addAttribute("society", societyService.societyDetail(number));
         return "societyUpdate";
@@ -67,7 +68,7 @@ public class SocietyController {
 
 
     //    동아리 정보 수정
-    @PostMapping("/society/updatedo/{number}")
+    @PostMapping("/updatedo/{number}")
     public String societyUpdateDo(@PathVariable Integer number,
                                   Society society,
                                   MultipartFile profileImage,
