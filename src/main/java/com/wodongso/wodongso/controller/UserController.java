@@ -39,8 +39,9 @@ public class UserController {
 
     @GetMapping("/info")
     @ResponseBody
-    public User userInfo(Principal principal){
-        return userService.userInfo(principal.getName());
+    public User userInfo(String userId) {
+        System.out.println("userId >> " + userId);
+        return userService.userInfo(userId);
     }
 
     @GetMapping("/login")

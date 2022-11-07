@@ -3,6 +3,7 @@ package com.wodongso.wodongso.controller;
 import com.wodongso.wodongso.entity.Society;
 import com.wodongso.wodongso.security.SessionManager;
 import com.wodongso.wodongso.service.SocietyService;
+import com.wodongso.wodongso.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,12 +14,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 
 @Controller
 public class RootController {
 
     @Autowired
     SocietyService societyService;
+
+    @Autowired
+    UserService userService;
+
     SessionManager sessionManager = new SessionManager();
 
 
@@ -26,8 +32,12 @@ public class RootController {
     public String root(Model model,
                        @PageableDefault(page = 0, size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable,
                        String searchKeyword,
-                       HttpServletResponse res) {
+                       HttpServletResponse res, Principal principal) {
         Page<Society> list = null;
+
+//        System.out.println("principal >> " + principal);
+//        System.out.println("principal >> " + principal.getName());
+//        System.out.println("principal >> " + principal.getClass());
 
         if (searchKeyword == null) {
             list = societyService.societyList(pageable);
@@ -44,7 +54,21 @@ public class RootController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        sessionManager.createSession("4412-3frk3-1293", res);
+//        try {
+
+        try {
+//            principal.getName();
+            model.addAttribute("userInfo", userService.userInfo(principal.getName()));
+        } catch (NullPointerException err) {
+            System.out.println("로그인 정보 없음");
+        } catch (Exception err) {
+            System.out.println("principal err");
+        }
+
+
+//        }
+
+//        sessionManager.createSession("4412-3frk3-1293", res);
 
         return "index";
     }

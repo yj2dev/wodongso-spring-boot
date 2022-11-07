@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>우동소 - 로그인</title>
@@ -8,7 +8,7 @@
 <a href="/">우동소</a>
 <h3>로그인</h3>
 <form th:action="@{/user/login}" method="post" name="loginForm" onsubmit="return onValidateLogin();">
-    <h3 th:text="${param.fail}"></h3>
+    <h3 th:if="${param.fail}">아이디 또는 비밀번호가 일치하지 않습니다.</h3>
     <table>
         <tr>
             <td>아이디</td>

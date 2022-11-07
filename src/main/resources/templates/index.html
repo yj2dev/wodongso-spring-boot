@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>우동소</title>
 </head>
 <body>
 <a href="/user/login">로그인</a>
+<!--<th:block th:if="@{not {user}(user = ${httpServletRequest.remoteUser})}">-->
 <a href="/user/register">회원가입</a>
+<!--</th:block>-->
 <a href="/society/create">동아리 등록</a>
 <a href="/society/list">동아리 목록</a>
-<h1 th:inline="text"><span id="userId">[[${#httpServletRequest.remoteUser}]]</span>님 안녕하세요.</h1>
-<sec:authentication property="principal.authorities" />
-User ids: <span sec:authentication="#ids"></span>
-Role(s) username: <span sec:authentication="principal.getUsername()"></span>
-Role(s): <span sec:authentication="principal.authorities"></span>
+<th:block th:if="${userInfo != null}">
+    <h1 th:inline="text"><span id="userId" name="username2">[[${#httpServletRequest.remoteUser}]]</span>님 안녕하세요.</h1>
+    <h2 th:text="${userInfo.name}"></h2>
+    <form th:action="@{/user/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</th:block>
 
-<form th:action="@{/user/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
 <div class="layout">
     <table>
         <thead>
@@ -65,12 +65,9 @@ Role(s): <span sec:authentication="principal.authorities"></span>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    const userId = document.getElementById("userId");
-    console.log("userId >> ", userId);
-    console.log("userId value >> ", userId.valueOf());
-    console.log("userId value >> ", userId.value());
-    console.log("userId value >> ", userId.value);
-    // axios.get(`http://localhost:8080/user/info?userId=${userId}`)
+    const getUserId = () => document.getElementById("userId").textContent;
+
+    // axios.get(`http://localhost:8080/user/info?userId=${getUserId()}`)
     //     .then((res) => {
     //         console.log(res);
     //         console.log("res.data >> ", res.data);
