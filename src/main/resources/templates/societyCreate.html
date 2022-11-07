@@ -52,13 +52,13 @@
         </tr>
         <tr>
         <tr>
-            <td>프로필 사진</td>
+            <td>동아리 대표사진</td>
             <td>
                 <input type="file" accept="image/*" name="profileImage">
             </td>
         </tr>
         <tr>
-            <td>프로필 배경사진</td>
+            <td>동아리 배경사진</td>
             <td>
                 <input type="file" accept="image/*" name="backgroundImage">
             </td>
@@ -66,13 +66,13 @@
         <tr>
             <td>동아리 한 줄 소개</td>
             <td>
-                <input type="text" name="simple_desc" placeholder="두 바퀴에서 오는 자유">
+                <input type="text" name="simpleDesc" placeholder="두 바퀴에서 오는 자유">
             </td>
         </tr>
         <tr>
             <td>동아리 상세 소개</td>
             <td>
-                <textarea type="text" name="detail_desc" placeholder="주당 활동 횟수, 활동 계획 등 자유롭게 입력"></textarea>
+                <textarea type="text" name="detailDesc" placeholder="주당 활동 횟수, 활동 계획 등 자유롭게 입력"></textarea>
             </td>
         </tr>
     </table>
@@ -80,15 +80,15 @@
 </form>
 <script>
     const onValidateCreateSociety = () => {
-        const pw = document.registerForm.password.value;
-        const pwCheck = document.registerForm.passwordCheck.value;
-        console.log(pw, pwCheck);
-        if (pw !== pwCheck) {
-            alert("비밀번호가 일치하지 않습니다.");
-            return false;
-        } else {
-            alert("회원가입 완료");
-        }
+        // const pw = document.registerForm.password.value;
+        // const pwCheck = document.registerForm.passwordCheck.value;
+        // console.log(pw, pwCheck);
+        // if (pw !== pwCheck) {
+        //     alert("비밀번호가 일치하지 않습니다.");
+        //     return false;
+        // } else {
+        //     alert("회원가입 완료");
+        // }
     }
 </script>
 

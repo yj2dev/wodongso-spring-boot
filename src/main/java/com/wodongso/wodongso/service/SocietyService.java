@@ -48,6 +48,7 @@ public class SocietyService {
         String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
         System.out.println("filePath >> " + filePath);
+        System.out.println("principal >> " + principal);
 
         if (!profileImage.isEmpty()) {
             UUID profileUuid = UUID.randomUUID();

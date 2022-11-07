@@ -22,13 +22,23 @@ public class SocietyController {
     @Autowired
     private SocietyService societyService;
 
-    //    동아리 전체 조회
-    @GetMapping("/list")
-    public String societyList(Model model,
-                              @PageableDefault(page = 0, size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable) {
+
+    //    동아리 현황(신청, 거절, 보류 상태 확인)
+    @GetMapping("/status-list")
+    public String societyStatusList(Model model,
+                                    @PageableDefault(page = 0, size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable) {
         model.addAttribute("list", societyService.societyList(pageable));
-        return "societyList";
+        return "societyStatusList";
     }
+
+
+    //    동아리 전체 조회
+//    @GetMapping("/list")
+//    public String societyList(Model model,
+//                              @PageableDefault(page = 0, size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable) {
+//        model.addAttribute("list", societyService.societyList(pageable));
+//        return "societyList";
+//    }
 
     // 특정 동아리 조회
     @GetMapping("/detail")
@@ -73,13 +83,13 @@ public class SocietyController {
 
 
     //    동아리 정보 수정
-    @PostMapping("/updatedo/{number}")
+    @PostMapping("/update/{number}")
     public String societyUpdateDo(@PathVariable Integer number,
                                   Society society,
                                   MultipartFile profileImage,
                                   MultipartFile backgroundImage,
                                   Principal principal
-                                  ) throws Exception {
+    ) throws Exception {
         Society societyOrigin = societyService.societyDetail(number);
         societyOrigin.setSimpleDesc(society.getSimpleDesc());
         societyOrigin.setDetailDesc(society.getDetailDesc());

@@ -33,11 +33,8 @@ public class RootController {
                        @PageableDefault(page = 0, size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable,
                        String searchKeyword,
                        HttpServletResponse res, Principal principal) {
+        
         Page<Society> list = null;
-
-//        System.out.println("principal >> " + principal);
-//        System.out.println("principal >> " + principal.getName());
-//        System.out.println("principal >> " + principal.getClass());
 
         if (searchKeyword == null) {
             list = societyService.societyList(pageable);
@@ -54,21 +51,12 @@ public class RootController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-//        try {
-
         try {
-//            principal.getName();
             model.addAttribute("userInfo", userService.userInfo(principal.getName()));
         } catch (NullPointerException err) {
-            System.out.println("로그인 정보 없음");
         } catch (Exception err) {
             System.out.println("principal err");
         }
-
-
-//        }
-
-//        sessionManager.createSession("4412-3frk3-1293", res);
 
         return "index";
     }

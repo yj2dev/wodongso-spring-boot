@@ -10,15 +10,14 @@
 <a href="/user/register">회원가입</a>
 <!--</th:block>-->
 <a href="/society/create">동아리 등록</a>
-<a href="/society/list">동아리 목록</a>
+<a href="/society/status-list">동아리 현황 목록</a>
 <th:block th:if="${userInfo != null}">
-    <h1 th:inline="text"><span id="userId" name="username2">[[${#httpServletRequest.remoteUser}]]</span>님 안녕하세요.</h1>
+    <h1 th:inline="text"><span id="userId">[[${#httpServletRequest.remoteUser}]]</span>님 안녕하세요.</h1>
     <h2 th:text="${userInfo.name}"></h2>
-    <form th:action="@{/user/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
+    <form th:action="@{/user/logout}" method="get">
+        <input type="submit" value="로그아웃"/>
     </form>
 </th:block>
-
 <div class="layout">
     <table>
         <thead>
@@ -57,23 +56,10 @@
            th:text="${page}"></a>
         <b th:if="${page == currentPage}" th:text="${page}" style="color:red"></b>
     </th:block>
-    <!--    <form th:action="@{/(searchKeyword= ${param.searchKeyword})}">-->
     <form action="" method="get">
         <input type="text" name="searchKeyword">
         <button type="submit">검색</button>
     </form>
 </div>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-    const getUserId = () => document.getElementById("userId").textContent;
-
-    // axios.get(`http://localhost:8080/user/info?userId=${getUserId()}`)
-    //     .then((res) => {
-    //         console.log(res);
-    //         console.log("res.data >> ", res.data);
-    //     }).catch((err) => console.error(err))
-
-</script>
-
 </body>
 </html>

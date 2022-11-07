@@ -54,20 +54,6 @@ public class UserController {
         return "userLogin";
     }
 
-    @GetMapping("/logout")
-    public String userLogout(HttpServletRequest req) {
-        sessionManager.expire(req);
-        return "redirect:/";
-    }
-
-//    @PostMapping("/logindo")
-//    @ResponseBody
-//    public String userLoginDo(User user) {
-////        System.out.println('user >> ', user);
-//
-//
-//        return null;
-//    }
 
     @GetMapping("/register")
     public String userRegister(HttpServletRequest req) {
@@ -81,5 +67,19 @@ public class UserController {
         userService.userRegister(user, profileImage);
         return "redirect:/user/login";
     }
+//    @GetMapping("/logout")
+//    public String userLogout(HttpServletRequest req) {
+//        sessionManager.expire(req);
+//        return "redirect:/";
+//    }
+
+//    @PostMapping("/logindo")
+//    @ResponseBody
+//    public String userLoginDo(User user) {
+////        System.out.println('user >> ', user);
+//
+//
+//        return null;
+//    }
 
 }
