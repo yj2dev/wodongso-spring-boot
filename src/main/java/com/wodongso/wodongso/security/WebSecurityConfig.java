@@ -99,7 +99,6 @@ public class WebSecurityConfig {
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
-        System.out.println("passwordEncoder >> ");
         return new BCryptPasswordEncoder();
     }
 

@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -17,6 +18,8 @@ public class Society {
     private Integer number;
 
 	private String name;
+
+    private String officer_id;
 
     private String type;
 
@@ -31,6 +34,8 @@ public class Society {
     private String simpleDesc;
 
     private String detailDesc;
+
+    private boolean enabled;
 
     private Date createdAt;
 

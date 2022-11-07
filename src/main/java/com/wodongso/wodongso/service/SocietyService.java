@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,8 +41,13 @@ public class SocietyService {
 
     public void societyCreate(Society society,
                               MultipartFile profileImage,
-                              MultipartFile backgroundImage) throws Exception {
+                              MultipartFile backgroundImage,
+                              Principal principal
+    ) throws Exception {
+
         String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+
+        System.out.println("filePath >> " + filePath);
 
         if (!profileImage.isEmpty()) {
             UUID profileUuid = UUID.randomUUID();
@@ -58,6 +64,9 @@ public class SocietyService {
             backgroundImage.transferTo(saveBackgroundImage);
             society.setBackgroundUrl("/files/" + backgroundImageName);
         }
+
+        society.setOfficer_id(principal.getName());
+        society.setEnabled(false);
 
         societyRepository.save(society);
     }

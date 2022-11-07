@@ -48,10 +48,11 @@ public class SocietyController {
     public String createSocietyDo(Society society,
                                   MultipartFile profileImage,
                                   MultipartFile backgroundImage,
-                                  Principal principal) throws Exception {
+                                  Principal principal
+    ) throws Exception {
         System.out.println("principal >> " + principal);
         System.out.println("principal >> " + principal.getName());
-        societyService.societyCreate(society, profileImage, backgroundImage);
+        societyService.societyCreate(society, profileImage, backgroundImage, principal);
         return "redirect:/";
     }
 
@@ -76,12 +77,14 @@ public class SocietyController {
     public String societyUpdateDo(@PathVariable Integer number,
                                   Society society,
                                   MultipartFile profileImage,
-                                  MultipartFile backgroundImage) throws Exception {
+                                  MultipartFile backgroundImage,
+                                  Principal principal
+                                  ) throws Exception {
         Society societyOrigin = societyService.societyDetail(number);
         societyOrigin.setSimpleDesc(society.getSimpleDesc());
         societyOrigin.setDetailDesc(society.getDetailDesc());
         societyOrigin.setPosition(society.getPosition());
-        societyService.societyCreate(societyOrigin, profileImage, backgroundImage);
+        societyService.societyCreate(societyOrigin, profileImage, backgroundImage, principal);
         return "redirect:/";
     }
 

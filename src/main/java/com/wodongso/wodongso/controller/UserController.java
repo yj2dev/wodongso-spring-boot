@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 import java.util.UUID;
 
 
@@ -36,8 +37,19 @@ public class UserController {
     private SocietyService societyService;
 
 
+    @GetMapping("/info")
+    @ResponseBody
+    public User userInfo(Principal principal){
+        return userService.userInfo(principal.getName());
+    }
+
     @GetMapping("/login")
     public String userLogin() {
+        return "userLogin";
+    }
+
+    @PostMapping("/login")
+    public String userLoginDo() {
         return "userLogin";
     }
 
