@@ -21,9 +21,10 @@ public class UserService {
     PasswordEncoder passwordEncoder;
 
 
-    public User userInfo(String id){
+    public User userInfo(String id) {
         return userRepository.findByIdContaining(id);
     }
+
     public void userRegister(User user, MultipartFile profileImage) throws Exception {
 
         if (!profileImage.isEmpty()) {

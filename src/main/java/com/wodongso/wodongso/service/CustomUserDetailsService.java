@@ -1,13 +1,14 @@
 package com.wodongso.wodongso.service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.wodongso.wodongso.entity.Role;
-import com.wodongso.wodongso.entity.UserRole;
-import com.wodongso.wodongso.repository.RoleRepository;
+//import com.wodongso.wodongso.entity.UserRole;
+//import com.wodongso.wodongso.repository.RoleRepository;
 import com.wodongso.wodongso.repository.UserRepository;
-import com.wodongso.wodongso.repository.UserRoleRepository;
+//import com.wodongso.wodongso.repository.UserRoleRepository;
 import net.bytebuddy.asm.Advice;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,25 +21,36 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 @Service
 @AllArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final UserRoleRepository userRoleRepository;
+//    private final RoleRepository roleRepository;
+//    private final UserRoleRepository userRoleRepository;
 
     public String getRole(String id) {
-        com.wodongso.wodongso.entity.User user = userRepository.findByIdContaining(id);
-        UserRole userRole = userRoleRepository.findByRoleIdContaining(id);
-        Role role = roleRepository.findByIdContaining(userRole.getRoleId());
-        return role.getName();
+//        com.wodongso.wodongso.entity.User user = userRepository.findByIdContaining(id);
+//        UserRole userRole = userRoleRepository.findByRoleIdContaining(id);
+//        Role role = roleRepository.findByIdContaining(userRole.getRoleId());
+//        return role.getName();
+
+//        com.wodongso.wodongso.entity.User user = userRepository.findByIdContaining(id);
+//        List<Role> roleList = user.getRoles();
+//        System.out.println("roleList >> " + roleList);
+
+        
+        return "ROLE_";
     }
 
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String id) {
+        System.out.println("loadUserByUsername id >> " + id);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         com.wodongso.wodongso.entity.User user = userRepository.findByIdContaining(id);
