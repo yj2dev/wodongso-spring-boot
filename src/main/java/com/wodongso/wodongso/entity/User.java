@@ -16,10 +16,6 @@ import java.util.ArrayList;
 public class User {
 
     @Id
-    @GeneratedValue(generator = "uuids")
-    @GenericGenerator(name = "uuid2", strategy = "uuid")
-    private UUID _id;
-
     private String id;
 
     private String name;
@@ -28,10 +24,11 @@ public class User {
 
     private String password;
 
-    private Integer type;
+    private String role;
 
     private String contact;
 
+    @Column(name = "profile_url")
     private String profileUrl;
 
     private String region;
@@ -46,10 +43,4 @@ public class User {
 
     private Date createdAt;
 
-    @ManyToMany()
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles = new ArrayList<>();
 }

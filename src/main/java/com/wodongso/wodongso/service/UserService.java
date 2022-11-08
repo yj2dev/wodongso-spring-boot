@@ -1,6 +1,5 @@
 package com.wodongso.wodongso.service;
 
-import com.wodongso.wodongso.entity.Role;
 import com.wodongso.wodongso.entity.User;
 import com.wodongso.wodongso.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,11 @@ import java.util.UUID;
 
 @Service
 public class UserService {
-
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
-
 
     public User userInfo(String id) {
         return userRepository.findByIdContaining(id);
@@ -37,17 +34,8 @@ public class UserService {
         }
 
         String encodePassword = passwordEncoder.encode(user.getPassword());
-        System.out.println("encodePassword >> " + encodePassword);
         user.setPassword(encodePassword);
-        user.setEnabled(true);
-
-        Role role = new Role();
-        role.setId(1);
-
-        user.getRoles().add(role);
-        System.out.println("role >> " + role);
-        System.out.println("user >> " + user);
-
+        user.setRole("ROLE_USER");
         userRepository.save(user);
     }
 }
