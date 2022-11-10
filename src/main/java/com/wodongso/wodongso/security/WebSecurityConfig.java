@@ -16,7 +16,12 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
+
+        http.
+                exceptionHandling().
+                accessDeniedHandler(new CustomAccessDeniedHandler());
+
+        http
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/",
                                 "/user/register",
@@ -45,8 +50,10 @@ public class WebSecurityConfig {
                         .deleteCookies("sId")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
-                        .logoutSuccessUrl("/"))
-                .build();
+                        .logoutSuccessUrl("/"));
+
+
+        return http.build();
     }
 
     @Bean
