@@ -2,14 +2,14 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>동아리 상세페이지</title>
+    <title th:text="${society.name}"></title>
 </head>
 <body>
-    <a href="/">우동소</a>
-    <h2 th:text="${society.name}"></h2>
-    <h3 th:text="${society.simpleDesc}"></h3>
-    <div th:text="${society.detailDesc}"></div>
-    <button th:onclick="|location.href='@{/society/update/{number}(number = ${society.number})}'|">수정</button>
-    <button th:onclick="|location.href='@{/society/delete(number=${society.number})}'|">삭제</button>
+<a href="/">우동소</a>
+<h2 th:text="${society.name}"></h2>
+<h3 th:text="${society.simpleDesc}"></h3>
+<div th:text="${society.detailDesc}"></div>
+<button th:onclick="|location.href='@{/society/update/{number}(number = ${society.number})}'|">수정</button>
+<button th:onclick="|location.href='@{/society/delete(number=${society.number})}'|">삭제</button>
 </body>
 </html>

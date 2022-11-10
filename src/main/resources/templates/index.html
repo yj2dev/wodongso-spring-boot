@@ -5,12 +5,10 @@
     <title>우동소</title>
 </head>
 <body>
-<a href="/user/login">로그인</a>
-<!--<th:block th:if="@{not {user}(user = ${httpServletRequest.remoteUser})}">-->
-<a href="/user/register">회원가입</a>
-<!--</th:block>-->
-<a href="/society/create">동아리 등록</a>
-<a href="/society/status-list">동아리 현황 목록</a>
+<a href="/user/login">로그인</a> <br>
+<a href="/user/register">회원가입</a> <br>
+<a href="/society/create">동아리 등록</a> <br>
+<a href="/society/status-list">동아리 현황 목록</a> <br>
 <th:block th:if="${userInfo != null}">
     <h1 th:inline="text"><span id="userId">[[${#httpServletRequest.remoteUser}]]</span>님 안녕하세요.</h1>
     <h2 th:text="${userInfo.name}"></h2>

@@ -31,7 +31,7 @@ public class WebSecurityConfig {
                                 "/files/**",
                                 "/css/**"
                         ).permitAll()
-                        .antMatchers("/society/status-list")
+                        .antMatchers("/society/create", "/society/status-list")
                         .hasRole("MANAGER")
                         .anyRequest()
                         .authenticated()
