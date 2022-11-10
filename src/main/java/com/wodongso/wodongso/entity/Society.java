@@ -2,10 +2,7 @@ package com.wodongso.wodongso.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
@@ -19,7 +16,8 @@ public class Society {
 
 	private String name;
 
-    private String officer_id;
+    @Column(name="officer_id")
+    private String officerId;
 
     private String type;
 
@@ -27,16 +25,21 @@ public class Society {
 
     private String position;
 
+    @Column(name="profile_url")
     private String profileUrl;
 
+    @Column(name="background_url")
     private String backgroundUrl;
 
+    @Column(name="simple_desc")
     private String simpleDesc;
 
+    @Column(name="detail_desc")
     private String detailDesc;
 
     private boolean enabled;
 
+    @Column(name="created_at")
     private Date createdAt;
 
 }

@@ -37,10 +37,12 @@ public class User {
 
     private String major;
 
+    @Column(name = "class_of")
     private Integer classOf;
 
     private boolean enabled;
 
+    @Column(name = "created_at")
     private Date createdAt;
 
 }
