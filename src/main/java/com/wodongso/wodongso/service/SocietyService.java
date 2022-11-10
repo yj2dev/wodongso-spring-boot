@@ -66,7 +66,7 @@ public class SocietyService {
             society.setBackgroundUrl("/files/" + backgroundImageName);
         }
 
-        society.setOfficer_id(principal.getName());
+        society.setOfficerId(principal.getName());
         society.setEnabled(false);
 
         societyRepository.save(society);
