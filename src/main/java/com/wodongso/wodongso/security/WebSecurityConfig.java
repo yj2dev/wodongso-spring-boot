@@ -23,18 +23,25 @@ public class WebSecurityConfig {
 
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/",
-                                "/user/register",
-                                "/user/logout",
-                                "/society/list",
-                                "/society/detail",
-                                "/files/**",
-                                "/css/**"
-                        ).permitAll()
-                        .antMatchers("/society/create", "/society/status-list")
-                        .hasRole("MANAGER")
-                        .anyRequest()
-                        .authenticated()
+                                .antMatchers("/",
+                                        "/user/logout",
+                                        "/society/list",
+                                        "/society/detail",
+                                        "/files/**",
+                                        "/css/**"
+                                ).permitAll()
+                                .antMatchers(
+                                        "/user/register",
+                                        "/user/my-info",
+                                        "/user/update-password",
+                                        "/user/apply-manager"
+                                ).hasAnyRole("USER", "MANAGER", "ADMIN")
+//                                .hasRole("USER")
+//                        .hasAnyAuthority("USER", "MANAGER", "ADMIN")
+                                .antMatchers("/society/create", "/society/status-list")
+                                .hasRole("MANAGER")
+                                .anyRequest()
+                                .authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/user/login")
@@ -44,7 +51,6 @@ public class WebSecurityConfig {
                         .loginProcessingUrl("/user/login")
                         .defaultSuccessUrl("/")
                         .failureUrl("/user/login?fail=true")
-
                 )
                 .logout((logout) -> logout.permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
                         .deleteCookies("sId")

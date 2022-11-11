@@ -37,10 +37,52 @@ public class UserController {
     private SocietyService societyService;
 
 
+    @GetMapping("/update-password")
+    public String userUpdatePassword() {
+        return "userUpdatePassword";
+    }
+
+    @PostMapping("/update-password")
+    public String userUpdatePasswordDo(Principal principal,
+                                       String currentPassword,
+                                       String updatePassword,
+                                       String updatePasswordCheck
+    ) {
+        System.out.println("principal.getName()" + principal.getName());
+        System.out.println("currentPassword >> " + currentPassword);
+        System.out.println("updatePassword" + updatePassword);
+        System.out.println("updatePasswordCheck" + updatePasswordCheck);
+
+        if (userService.userUpdatePassword(principal, currentPassword, updatePassword, updatePasswordCheck) == true) {
+            return "redirect:/user/login";
+        } else {
+            return "redirect:/user/update-password?fail=true";
+        }
+    }
+
+    @GetMapping("/my-info")
+    public String userMyInfo(Model model, Principal principal) {
+        User userInfo = userService.userInfo(principal.getName());
+        model.addAttribute("userInfo", userInfo);
+        return "userMyInfo";
+    }
+
+    @PostMapping("/my-info")
+    public String userMyInfoDo(Principal principal) {
+
+        return "userMyInfo";
+    }
+
+    @GetMapping("/apply-manager")
+    public String userApplyManager(Model model, Principal principal) {
+        User userInfo = userService.userInfo(principal.getName());
+        model.addAttribute("userInfo", userInfo);
+        return "userApplyManager";
+    }
+
     @GetMapping("/info")
     @ResponseBody
     public User userInfo(String userId) {
-        System.out.println("userId >> " + userId);
         return userService.userInfo(userId);
     }
 

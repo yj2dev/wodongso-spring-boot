@@ -3,11 +3,13 @@ package com.wodongso.wodongso.service;
 import com.wodongso.wodongso.entity.User;
 import com.wodongso.wodongso.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.security.Principal;
 import java.util.UUID;
 
 @Service
@@ -17,6 +19,34 @@ public class UserService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+
+    public boolean userUpdatePassword(Principal principal,
+                                      String currentPassword,
+                                      String updatePassword,
+                                      String updatePasswordCheck) {
+
+        User findUser = userRepository.findByIdContaining(principal.getName());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+
+//         변경할 비밀번호가 일치한지 확인
+        if (!updatePassword.equals(updatePasswordCheck)) {
+            return false;
+        }
+
+//        현재 비밀번호가 일치한지 확인
+        if (encoder.matches(currentPassword, findUser.getPassword()) == true) {
+//            변경할 비밀번호 암호화 후 저장
+            String encodePassword = passwordEncoder.encode(updatePassword);
+            findUser.setPassword(encodePassword);
+            userRepository.save(findUser);
+            return true;
+        }
+
+
+        return false;
+    }
 
     public User userInfo(String id) {
         return userRepository.findByIdContaining(id);
