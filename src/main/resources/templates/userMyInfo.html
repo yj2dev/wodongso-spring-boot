@@ -13,13 +13,11 @@
       name="myInfoForm"
       enctype="multipart/form-data"
 >
-
-
     <table>
         <tr>
             <td width="144px">아이디</td>
             <td>
-                <input th:value="${userInfo.id}" type="text" name="id" disabled>
+                <input th:value="${userInfo.id}" type="text" name="id" readonly>
             </td>
         </tr>
         <tr>

@@ -68,9 +68,11 @@ public class UserController {
     }
 
     @PostMapping("/my-info")
-    public String userMyInfoDo(Principal principal) {
-
-        return "userMyInfo";
+    public String userMyInfoDo(Principal principal,
+                               User user,
+                               MultipartFile profileImage) throws Exception {
+        userService.userUpdateInfo(principal, user, profileImage);
+        return "redirect:/";
     }
 
     @GetMapping("/apply-manager")

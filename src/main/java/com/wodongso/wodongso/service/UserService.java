@@ -21,6 +21,33 @@ public class UserService {
     PasswordEncoder passwordEncoder;
 
 
+    public boolean userUpdateInfo(Principal principal,
+                                  User updateUser,
+                                  MultipartFile profileImage) throws Exception {
+
+        User user = userRepository.findByIdContaining(principal.getName());
+        user.setName(updateUser.getName());
+        user.setNickname(updateUser.getNickname());
+        user.setContact(updateUser.getContact());
+
+        if (!profileImage.isEmpty()) {
+            String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+            UUID profileUuid = UUID.randomUUID();
+            String profileImageName = profileUuid + "_" + profileImage.getOriginalFilename();
+            File saveProfileImage = new File(filePath, profileImageName);
+            profileImage.transferTo(saveProfileImage);
+            user.setProfileUrl("/files/" + profileImageName);
+        }
+
+        user.setRegion(updateUser.getRegion());
+        user.setUniversity(updateUser.getUniversity());
+        user.setMajor(updateUser.getMajor());
+        user.setClassOf(updateUser.getClassOf());
+        userRepository.save(user);
+        return true;
+    }
+
+
     public boolean userUpdatePassword(Principal principal,
                                       String currentPassword,
                                       String updatePassword,
