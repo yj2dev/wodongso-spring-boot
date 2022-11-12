@@ -26,16 +26,14 @@ public class SocietyController {
     //    동아리 개설 허용
     @PostMapping("/accept/{number}")
     public String societyCreateAccept(@PathVariable Integer number, Principal principal) {
-
-        System.out.println(number + principal.getName());
-        return "redirect:/";
+        societyService.societyCreateAccept(number, principal);
+        return "redirect:/society/status-list";
     }
 
     @PostMapping("/reject/{number}")
     public String societyCreateReject(@PathVariable Integer number, Principal principal, String content) {
-        System.out.println("content >> " + content);
-        System.out.println(number + principal.getName());
-        return "redirect:/";
+        societyService.societyCreateReject(number, content, principal);
+        return "redirect:/society/status-list";
     }
 
 

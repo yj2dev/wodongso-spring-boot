@@ -1,8 +1,10 @@
 package com.wodongso.wodongso.service;
 
 import com.wodongso.wodongso.entity.Society;
+import com.wodongso.wodongso.entity.SocietyCreateStatus;
 import com.wodongso.wodongso.entity.SocietyWithUser;
 import com.wodongso.wodongso.entity.User;
+import com.wodongso.wodongso.repository.SocietyCreateStatusRepository;
 import com.wodongso.wodongso.repository.SocietyRepository;
 import com.wodongso.wodongso.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +29,39 @@ public class SocietyService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private SocietyCreateStatusRepository societyCreateStatusRepository;
 
-    boolean societyCreateAccept(Integer number) {
+    public boolean societyCreateAccept(Integer number, Principal principal) {
         Optional<Society> society = societyRepository.findById(number);
         society.get().setEnabled(true);
-        
+
+        SocietyCreateStatus scs = new SocietyCreateStatus();
+        scs.setToSocietyNumber(number);
+        scs.setFromUserId(principal.getName());
+        scs.setState(true);
+
+        societyCreateStatusRepository.save(scs);
         societyRepository.save(society.get());
         return true;
     }
 
-    boolean societyCreateReject(Integer number) {
+    public boolean societyCreateReject(Integer number, String content, Principal principal) {
         Optional<Society> society = societyRepository.findById(number);
         society.get().setEnabled(false);
 
+        SocietyCreateStatus scs = new SocietyCreateStatus();
+        scs.setToSocietyNumber(number);
+        scs.setFromUserId(principal.getName());
+        scs.setState(false);
+
+        if (content.length() == 0) {
+            return false;
+        }
+        
+        scs.setRejectReason(content);
+
+        societyCreateStatusRepository.save(scs);
         societyRepository.save(society.get());
         return true;
     }
@@ -52,12 +74,6 @@ public class SocietyService {
     }
 
     public Page<Society> societyEnableList(Pageable pageable) {
-        Page<Society> l = societyRepository.findByEnabledPage(true, pageable);
-
-        while (l.hasNext()) {
-            System.out.println(l.getNumber());
-            System.out.println(l.getContent());
-        }
         return societyRepository.findByEnabledPage(true, pageable);
     }
 
@@ -106,14 +122,9 @@ public class SocietyService {
             society.setBackgroundUrl("/files/" + backgroundImageName);
         }
 
-//        User user = userRepository.findByIdContaining(principal.getName());
-
-//        User user = user.setId(principal.getName());
         User user = new User();
         user.setId(principal.getName());
 
-
-//        society.setOfficerId(principal.getName());
         society.setOfficerId(user);
         society.setEnabled(false);
 

@@ -4,27 +4,26 @@ package com.wodongso.wodongso.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 @Entity
 @Data
 @Table(name = "society_create_status")
 public class SocietyCreateStatus {
 
-    @EmbeddedId
-    SocietyCreateStatusPK societyCreateStatusPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    @OneToMany
-    @JoinColumn(name = "to_society_number")
-    private List<Society> toSocietyNumber;
+    @Column(name = "to_society_number")
+    private Integer toSocietyNumber;
 
-    @OneToMany
-    @JoinColumn(name = "from_user_id")
-    private List<User> fromUserId;
+    @Column(name = "from_user_id")
+    private String fromUserId;
 
     private boolean state;
 
-    @Column(name = "to_society_number")
+    @Column(name = "reject_reason")
     private String rejectReason;
 
 }
