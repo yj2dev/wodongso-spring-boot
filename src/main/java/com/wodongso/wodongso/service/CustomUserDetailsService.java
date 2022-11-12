@@ -31,6 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String id) {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         com.wodongso.wodongso.entity.User user = userRepository.findByIdContaining(id);
+        
         if (user != null) {
             grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
             return new User(user.getId(), user.getPassword(), grantedAuthorities);

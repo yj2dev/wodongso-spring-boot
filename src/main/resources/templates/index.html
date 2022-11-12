@@ -5,20 +5,28 @@
     <title>우동소</title>
 </head>
 <body>
-<a href="/user/login">로그인</a> <br>
-<a href="/user/register">회원가입</a> <br>
+<th:block th:if="${userInfo == null}">
+    <a href="/user/login">로그인</a> <br>
+    <a href="/user/register">회원가입</a> <br>
+</th:block>
+<th:block th:if="${userInfo != null}">
+    <form th:action="@{/user/logout}" method="get">
+        <input type="submit" value="로그아웃"/>
+    </form>
+</th:block>
+
 <a href="/user/my-info">내 정보 변경</a> <br>
 <a href="/user/update-password">비밀번호 변경</a> <br>
 <a href="/user/apply-manager">대학관리자(매니저) 신청</a> <br>
+<a href="/society/create">동아리 등록</a> <br>
+<!--<a href="/society/apply-list">동아리 개설 신청 목록</a> <br>-->
 <a href="/society/create">동아리 등록</a> <br>
 <a href="/society/status-list">동아리 현황 목록</a> <br>
 <th:block th:if="${userInfo != null}">
     <h1 th:inline="text"><span id="userId">[[${#httpServletRequest.remoteUser}]]</span>님 안녕하세요.</h1>
     <h2 th:text="${userInfo.name}"></h2>
     <img th:src="${userInfo.profileUrl}" style="width: 150px"/>
-    <form th:action="@{/user/logout}" method="get">
-        <input type="submit" value="로그아웃"/>
-    </form>
+
 </th:block>
 <div class="layout">
     <table>

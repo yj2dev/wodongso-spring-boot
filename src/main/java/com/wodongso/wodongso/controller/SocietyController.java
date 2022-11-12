@@ -1,6 +1,7 @@
 package com.wodongso.wodongso.controller;
 
 import com.wodongso.wodongso.entity.Society;
+import com.wodongso.wodongso.entity.SocietyWithUser;
 import com.wodongso.wodongso.service.SocietyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -11,9 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.security.Principal;
-import java.util.UUID;
+import java.util.List;
 
 @Controller
 @RequestMapping("society")
@@ -22,8 +22,18 @@ public class SocietyController {
     @Autowired
     private SocietyService societyService;
 
-    @GetMapping("/apply/{number}")
-    public String societyApply(@PathVariable Integer number, Principal principal) {
+
+    //    동아리 개설 허용
+    @PostMapping("/accept/{number}")
+    public String societyCreateAccept(@PathVariable Integer number, Principal principal) {
+
+        System.out.println(number + principal.getName());
+        return "redirect:/";
+    }
+
+    @PostMapping("/reject/{number}")
+    public String societyCreateReject(@PathVariable Integer number, Principal principal, String content) {
+        System.out.println("content >> " + content);
         System.out.println(number + principal.getName());
         return "redirect:/";
     }
@@ -32,8 +42,13 @@ public class SocietyController {
     //    동아리 현황(신청, 거절, 보류 상태 확인)
     @GetMapping("/status-list")
     public String societyStatusList(Model model,
-                                    @PageableDefault(page = 0, size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable) {
-        model.addAttribute("list", societyService.societyList(pageable));
+                                    @PageableDefault(page = 0, size = 10,
+                                            sort = "number",
+                                            direction = Sort.Direction.DESC)
+                                    Pageable pageable,
+                                    Principal principal) {
+        List<SocietyWithUser> list = societyService.societyStatusList(pageable, principal);
+        model.addAttribute("list", list);
         return "societyStatusList";
     }
 
@@ -51,7 +66,9 @@ public class SocietyController {
                                   @PageableDefault(page = 0, size = 10,
                                           sort = "number", direction = Sort.Direction.DESC)
                                   Pageable pageable) {
+
         model.addAttribute("list", societyService.societyEnableList(pageable));
+
         return "societyList";
     }
 

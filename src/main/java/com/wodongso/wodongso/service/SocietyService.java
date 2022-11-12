@@ -1,7 +1,10 @@
 package com.wodongso.wodongso.service;
 
 import com.wodongso.wodongso.entity.Society;
+import com.wodongso.wodongso.entity.SocietyWithUser;
+import com.wodongso.wodongso.entity.User;
 import com.wodongso.wodongso.repository.SocietyRepository;
+import com.wodongso.wodongso.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -20,6 +24,32 @@ public class SocietyService {
     @Autowired
     private SocietyRepository societyRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+
+    boolean societyCreateAccept(Integer number) {
+        Optional<Society> society = societyRepository.findById(number);
+        society.get().setEnabled(true);
+        
+        societyRepository.save(society.get());
+        return true;
+    }
+
+    boolean societyCreateReject(Integer number) {
+        Optional<Society> society = societyRepository.findById(number);
+        society.get().setEnabled(false);
+
+        societyRepository.save(society.get());
+        return true;
+    }
+
+
+    public List<SocietyWithUser> societyStatusList(Pageable pageable, Principal principal) {
+
+        User user = userRepository.findByIdContaining(principal.getName());
+        return societyRepository.findAllByUniversity(user.getUniversity());
+    }
 
     public Page<Society> societyEnableList(Pageable pageable) {
         Page<Society> l = societyRepository.findByEnabledPage(true, pageable);
@@ -76,7 +106,15 @@ public class SocietyService {
             society.setBackgroundUrl("/files/" + backgroundImageName);
         }
 
-        society.setOfficerId(principal.getName());
+//        User user = userRepository.findByIdContaining(principal.getName());
+
+//        User user = user.setId(principal.getName());
+        User user = new User();
+        user.setId(principal.getName());
+
+
+//        society.setOfficerId(principal.getName());
+        society.setOfficerId(user);
         society.setEnabled(false);
 
         societyRepository.save(society);

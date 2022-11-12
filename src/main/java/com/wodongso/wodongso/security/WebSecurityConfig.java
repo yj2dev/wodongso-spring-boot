@@ -34,14 +34,13 @@ public class WebSecurityConfig {
                                         "/user/register",
                                         "/user/my-info",
                                         "/user/update-password",
-                                        "/user/apply-manager"
+                                        "/user/apply-manager",
+                                        "/society/create"
                                 ).hasAnyRole("USER", "MANAGER", "ADMIN")
-//                                .hasRole("USER")
-//                        .hasAnyAuthority("USER", "MANAGER", "ADMIN")
-                                .antMatchers("/society/create", "/society/status-list")
-                                .hasRole("MANAGER")
-                                .anyRequest()
-                                .authenticated()
+                                .antMatchers("/society/status-list")
+                                .hasAnyRole("MANAGER", "ADMIN")
+//                        .anyRequest()
+//                        .authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/user/login")

@@ -9,5 +9,46 @@
 
 <p>ROLE_MANAGER 만 접근가능</p>
 
+
+<div th:each="v: ${list}">
+    <div style="border: 1px solid #ff5b5b;">
+        <div th:text="${v.number}"></div>
+        <div th:text="${v.university}"></div>
+        <div th:text="${v.userName}"></div>
+        <div th:text="${v.societyName}"></div>
+        <div th:text="${v.category}"></div>
+        <div th:text="${v.simpleDesc}"></div>
+        <div th:text="${v.detailDesc}"></div>
+        <div th:text="${v.enabled}"></div>
+
+        <form th:action="@{/society/accept/{id}(id = ${v.number})}"
+              method="post">
+            <button type="submit">수락</button>
+        </form>
+        <form th:action="@{/society/reject/{id}(id = ${v.number})}"
+              method="post">
+            <input type="text" name="content" onkeyup="onChangeReject(this.value)">
+            <button id="rejectBtn" type="submit">거절</button>
+            <!--            <button th:id="${rejectBtn{id}(id = ${v.number})}" type="submit" disabled>거절</button>-->
+        </form>
+    </div>
+
+</div>
+<script>
+
+    // function onClickReject(){
+    // alert("")
+    // }
+
+
+    function onChangeReject(value) {
+        // console.log('value >> ', value);
+        // const rejectBtn = document.getElementById("rejectBtn");
+        // if (value.length) rejectBtn.disabled = false;
+        // else rejectBtn.disabled = true;
+
+    }
+
+</script>
 </body>
 </html>
