@@ -48,11 +48,6 @@ public class UserController {
                                        String updatePassword,
                                        String updatePasswordCheck
     ) {
-        System.out.println("principal.getName()" + principal.getName());
-        System.out.println("currentPassword >> " + currentPassword);
-        System.out.println("updatePassword" + updatePassword);
-        System.out.println("updatePasswordCheck" + updatePasswordCheck);
-
         if (userService.userUpdatePassword(principal, currentPassword, updatePassword, updatePasswordCheck) == true) {
             return "redirect:/user/login";
         } else {

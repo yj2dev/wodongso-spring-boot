@@ -22,6 +22,12 @@ public class SocietyController {
     @Autowired
     private SocietyService societyService;
 
+    @GetMapping("/apply/{number}")
+    public String societyApply(@PathVariable Integer number, Principal principal) {
+        System.out.println(number + principal.getName());
+        return "redirect:/";
+    }
+
 
     //    동아리 현황(신청, 거절, 보류 상태 확인)
     @GetMapping("/status-list")
@@ -39,6 +45,16 @@ public class SocietyController {
 //        model.addAttribute("list", societyService.societyList(pageable));
 //        return "societyList";
 //    }
+
+    @GetMapping("/open-list")
+    public String societyOpenList(Model model,
+                                  @PageableDefault(page = 0, size = 10,
+                                          sort = "number", direction = Sort.Direction.DESC)
+                                  Pageable pageable) {
+        model.addAttribute("list", societyService.societyEnableList(pageable));
+        return "societyList";
+    }
+
 
     // 특정 동아리 조회
     @GetMapping("/detail")

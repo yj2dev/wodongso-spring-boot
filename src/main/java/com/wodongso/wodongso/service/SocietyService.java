@@ -21,6 +21,16 @@ public class SocietyService {
     private SocietyRepository societyRepository;
 
 
+    public Page<Society> societyEnableList(Pageable pageable) {
+        Page<Society> l = societyRepository.findByEnabledPage(true, pageable);
+
+        while (l.hasNext()) {
+            System.out.println(l.getNumber());
+            System.out.println(l.getContent());
+        }
+        return societyRepository.findByEnabledPage(true, pageable);
+    }
+
     public Page<Society> societySearchList(String searchKeyword, Pageable pageable) {
         return societyRepository.findByNameContaining(searchKeyword, pageable);
     }

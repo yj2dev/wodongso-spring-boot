@@ -33,11 +33,11 @@ public class RootController {
                        @PageableDefault(page = 0, size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable,
                        String searchKeyword,
                        HttpServletResponse res, Principal principal) {
-        
+
         Page<Society> list = null;
 
         if (searchKeyword == null) {
-            list = societyService.societyList(pageable);
+            list = societyService.societyEnableList(pageable);
         } else {
             list = societyService.societySearchList(searchKeyword, pageable);
         }
