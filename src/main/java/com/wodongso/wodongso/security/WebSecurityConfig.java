@@ -26,20 +26,26 @@ public class WebSecurityConfig {
                                 .antMatchers("/",
                                         "/user/logout",
                                         "/society/list",
+                                        "/user/register",
                                         "/society/detail",
                                         "/files/**",
                                         "/css/**"
                                 ).permitAll()
                                 .antMatchers(
-                                        "/user/register",
                                         "/user/my-info",
                                         "/user/update-password",
                                         "/user/apply-manager",
                                         "/society/create",
                                         "/society/apply"
                                 ).hasAnyRole("USER", "MANAGER", "ADMIN")
-                                .antMatchers("/society/status-list")
+                                .antMatchers(
+                                        "/society/status-list"
+                                )
                                 .hasAnyRole("MANAGER", "ADMIN")
+                                .antMatchers(
+                                        "/user/manager-status-all"
+                                )
+                                .hasAnyRole("ADMIN")
 //                        .anyRequest()
 //                        .authenticated()
                 )

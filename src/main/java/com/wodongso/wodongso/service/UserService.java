@@ -1,6 +1,9 @@
 package com.wodongso.wodongso.service;
 
+import com.wodongso.wodongso.entity.ManagerWithUser;
 import com.wodongso.wodongso.entity.User;
+import com.wodongso.wodongso.entity.UserManagerStatus;
+import com.wodongso.wodongso.repository.UserManagerStatusRepository;
 import com.wodongso.wodongso.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -18,8 +23,58 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private UserManagerStatusRepository userManagerStatusRepository;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
 
+
+    public boolean userManagerAccept(String id) {
+        UserManagerStatus ums = userManagerStatusRepository.findByFromUserId(id);
+        ums.setState(true);
+
+        User user = userRepository.findByIdContaining(id);
+        user.setRole("ROLE_MANAGER");
+
+        userManagerStatusRepository.save(ums);
+        userRepository.save(user);
+        return true;
+    }
+
+    public boolean userManagerReject(String id, String content) {
+        UserManagerStatus ums = userManagerStatusRepository.findByFromUserId(id);
+        ums.setState(false);
+        ums.setRejectReason(content);
+
+        User user = userRepository.findByIdContaining(id);
+        user.setRole("ROLE_USER");
+
+        userManagerStatusRepository.save(ums);
+        userRepository.save(user);
+        return true;
+    }
+
+    public UserManagerStatus userUploadProof(Principal principal,
+                                             MultipartFile proofImage) throws IOException {
+        UserManagerStatus ums = new UserManagerStatus();
+        ums.setFromUserId(principal.getName());
+        if (principal.getName() == null) return null;
+        if (!proofImage.isEmpty()) {
+            String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+            UUID profileUuid = UUID.randomUUID();
+            String proofImageName = profileUuid + "_" + proofImage.getOriginalFilename();
+            File saveProofImage = new File(filePath, proofImageName);
+            proofImage.transferTo(saveProofImage);
+            ums.setProofImageUrl("/files/" + proofImageName);
+        } else {
+            return null;
+        }
+        return userManagerStatusRepository.save(ums);
+    }
+
+    public List<ManagerWithUser> userManagerStatusAll() {
+        return userManagerStatusRepository.findAllManagerStatus();
+    }
 
     public boolean userUpdateInfo(Principal principal,
                                   User updateUser,

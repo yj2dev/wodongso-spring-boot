@@ -2,8 +2,11 @@ package com.wodongso.wodongso.entity;
 
 
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 
@@ -12,8 +15,9 @@ import java.util.List;
 @Table(name = "society_recruit_status")
 public class SocietyRecruitStatus {
 
-    @EmbeddedId
-    SocietyRecruitStatusPK societyRecruitStatusPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @OneToOne
     @JoinColumn(name = "to_society_number")
@@ -28,5 +32,6 @@ public class SocietyRecruitStatus {
     @Column(name = "reject_reason")
     private String rejectReason;
 
-
+    @Column(name = "created_At")
+    private LocalDateTime createAt = LocalDateTime.now();
 }

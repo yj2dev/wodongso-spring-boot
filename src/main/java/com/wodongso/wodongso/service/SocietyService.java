@@ -34,6 +34,13 @@ public class SocietyService {
     @Autowired
     private SocietyRecruitStatusRepository societyRecruitStatusRepository;
 
+    public void societyMyApply(int number, Principal principal) {
+        SocietyRecruitStatus srs = societyRecruitStatusRepository
+                .findByToSocietyNumberAndFromUserIdContaining(number, principal.getName());
+        System.out.println(srs.getToSocietyNumber());
+    }
+
+
     public boolean societyRecruitApply(Integer number, Principal principal) {
         SocietyRecruitStatus srs = new SocietyRecruitStatus();
         User user = new User();
@@ -43,9 +50,6 @@ public class SocietyService {
         Society society = new Society();
         society.setNumber(number);
         srs.setToSocietyNumber(society);
-
-        //        srs.setToSocietyNumber(number);
-//        srs.setFromUserId(principal.getName());
 
 
         societyRecruitStatusRepository.save(srs);
