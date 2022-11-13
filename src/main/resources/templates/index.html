@@ -32,7 +32,6 @@
     <table>
         <thead>
         <tr>
-            <th>고유번호</th>
             <th>동아리명</th>
             <th>유형</th>
             <th>카테고리</th>
@@ -46,7 +45,6 @@
         </thead>
         <tbody>
         <tr th:each="society: ${list}">
-            <td th:text="${society.number}"></td>
             <td>
                 <a th:text="${society.name}" th:href="@{/society/detail(number=${society.number})}"></a>
             </td>

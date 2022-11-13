@@ -1,10 +1,8 @@
 package com.wodongso.wodongso.service;
 
-import com.wodongso.wodongso.entity.Society;
-import com.wodongso.wodongso.entity.SocietyCreateStatus;
-import com.wodongso.wodongso.entity.SocietyWithUser;
-import com.wodongso.wodongso.entity.User;
+import com.wodongso.wodongso.entity.*;
 import com.wodongso.wodongso.repository.SocietyCreateStatusRepository;
+import com.wodongso.wodongso.repository.SocietyRecruitStatusRepository;
 import com.wodongso.wodongso.repository.SocietyRepository;
 import com.wodongso.wodongso.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,7 @@ import java.util.UUID;
 @Service
 public class SocietyService {
 
+
     @Autowired
     private SocietyRepository societyRepository;
 
@@ -31,6 +30,27 @@ public class SocietyService {
 
     @Autowired
     private SocietyCreateStatusRepository societyCreateStatusRepository;
+
+    @Autowired
+    private SocietyRecruitStatusRepository societyRecruitStatusRepository;
+
+    public boolean societyRecruitApply(Integer number, Principal principal) {
+        SocietyRecruitStatus srs = new SocietyRecruitStatus();
+        User user = new User();
+        user.setId(principal.getName());
+        srs.setFromUserId(user);
+
+        Society society = new Society();
+        society.setNumber(number);
+        srs.setToSocietyNumber(society);
+
+        //        srs.setToSocietyNumber(number);
+//        srs.setFromUserId(principal.getName());
+
+
+        societyRecruitStatusRepository.save(srs);
+        return true;
+    }
 
     public boolean societyCreateAccept(Integer number, Principal principal) {
         Optional<Society> society = societyRepository.findById(number);
@@ -58,7 +78,7 @@ public class SocietyService {
         if (content.length() == 0) {
             return false;
         }
-        
+
         scs.setRejectReason(content);
 
         societyCreateStatusRepository.save(scs);
@@ -126,7 +146,6 @@ public class SocietyService {
         user.setId(principal.getName());
 
         society.setOfficerId(user);
-        society.setEnabled(false);
 
         societyRepository.save(society);
     }

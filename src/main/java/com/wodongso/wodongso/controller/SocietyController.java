@@ -23,6 +23,15 @@ public class SocietyController {
     private SocietyService societyService;
 
 
+    //    동아리 가입 신청
+    @GetMapping("/apply/{number}")
+    public String societyRecruitApply(@PathVariable Integer number, Principal principal) {
+        System.out.println(number + principal.getName());
+        societyService.societyRecruitApply(number, principal);
+        return "redirect:/";
+    }
+
+
     //    동아리 개설 허용
     @PostMapping("/accept/{number}")
     public String societyCreateAccept(@PathVariable Integer number, Principal principal) {

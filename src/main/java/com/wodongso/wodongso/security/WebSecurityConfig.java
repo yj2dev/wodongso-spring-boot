@@ -35,7 +35,8 @@ public class WebSecurityConfig {
                                         "/user/my-info",
                                         "/user/update-password",
                                         "/user/apply-manager",
-                                        "/society/create"
+                                        "/society/create",
+                                        "/society/apply"
                                 ).hasAnyRole("USER", "MANAGER", "ADMIN")
                                 .antMatchers("/society/status-list")
                                 .hasAnyRole("MANAGER", "ADMIN")

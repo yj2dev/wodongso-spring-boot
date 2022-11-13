@@ -8,23 +8,30 @@
 <a href="/">우동소</a>
 
 
-<!--<h4 th:></h4>-->
-<h1 th:inline="text"><span id="userId">[[${#httpServletRequest.remoteUser}]]</span>님 안녕하세요.</h1>
-
-
 <h2 th:text="${society.name}"></h2>
 <h3 th:text="${society.simpleDesc}"></h3>
 <div th:text="${society.detailDesc}"></div>
-<h3 th:text="${society.officerId}"></h3>
+<h3 th:text="${society.officerId.getNickname()}"></h3>
 
-<th:block th:if="${society.officerId != #httpServletRequest.remoteUser}">
-    <button th:onclick="|location.href='@{/society/apply/{number}(number = ${society.number})}'|">가입 신청</button>
+<th:block th:if="${society.officerId.getId() != #httpServletRequest.remoteUser}">
+    <button th:value="${society.number}"
+            onclick="onClickSocietyApply(this.value)">
+        가입 신청
+    </button>
 </th:block>
 
-<th:block th:if="${society.officerId == #httpServletRequest.remoteUser}">
+<th:block th:if="${society.officerId.getId() == #httpServletRequest.remoteUser}">
     <button th:onclick="|location.href='@{/society/update/{number}(number = ${society.number})}'|">수정</button>
     <button th:onclick="|location.href='@{/society/delete(number=${society.number})}'|">삭제</button>
 </th:block>
 
+<script th:inline="javascript">
+
+    const onClickSocietyApply = (number) => {
+        window.event.preventDefault();
+        if ([[${#httpServletRequest.remoteUser}]] != null) location.href = `/society/apply/${number}`
+        else alert("로그인 후 신청해주세요!")
+    }
+</script>
 </body>
 </html>
