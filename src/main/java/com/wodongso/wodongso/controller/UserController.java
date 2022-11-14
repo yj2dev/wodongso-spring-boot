@@ -38,6 +38,21 @@ public class UserController {
     private SocietyService societyService;
 
 
+    @GetMapping("/my-apply-status")
+    public String userMyApplyStatus(Model model) {
+        List<ManagerWithUser> ums = userService.userManagerStatusAll();
+        model.addAttribute("list", ums);
+        return "userMyApplyStatus";
+    }
+
+    @GetMapping("/my-manager-status")
+    public String userMyManagerStatus(Model model) {
+        List<ManagerWithUser> ums = userService.userManagerStatusAll();
+        model.addAttribute("list", ums);
+        return "userMyManagerStatus";
+    }
+
+
     @GetMapping("/update-password")
     public String userUpdatePassword() {
         return "userUpdatePassword";
