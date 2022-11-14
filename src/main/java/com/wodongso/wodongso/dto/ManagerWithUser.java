@@ -1,4 +1,4 @@
-package com.wodongso.wodongso.entity;
+package com.wodongso.wodongso.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,13 +16,13 @@ public class ManagerWithUser {
     private Integer classOf;
     private String proofImageUrl;
     private LocalDateTime createdAt;
-    private boolean state;
+    private Integer state;
     private String rejectReason;
 
     public ManagerWithUser() {
     }
 
-    public ManagerWithUser(String id, String name, String contact, String university, String major, Integer class_of, String proof_image_url, LocalDateTime created_at, boolean state, String reject_reason) {
+    public ManagerWithUser(String id, String name, String contact, String university, String major, Integer class_of, String proof_image_url, LocalDateTime created_at, Integer state, String reject_reason) {
         this.id = id;
         this.name = name;
         this.contact = contact;
@@ -99,11 +99,11 @@ public class ManagerWithUser {
         this.createdAt = createdAt;
     }
 
-    public boolean isState() {
+    public Integer getState() {
         return state;
     }
 
-    public void setState(boolean state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 

@@ -1,6 +1,6 @@
 package com.wodongso.wodongso.repository;
 
-import com.wodongso.wodongso.entity.SocietyWithUser;
+import com.wodongso.wodongso.dto.SocietyWithUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

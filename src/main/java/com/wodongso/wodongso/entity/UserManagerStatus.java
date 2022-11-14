@@ -22,7 +22,7 @@ public class UserManagerStatus {
     @Column(name = "proof_image_url")
     private String proofImageUrl;
 
-    private boolean state;
+    private int state;
 
     @Column(name = "reject_reason")
     private String rejectReason;

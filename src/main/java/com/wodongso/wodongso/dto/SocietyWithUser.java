@@ -1,4 +1,4 @@
-package com.wodongso.wodongso.entity;
+package com.wodongso.wodongso.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,12 +14,12 @@ public class SocietyWithUser {
     private String category;
     private String simpleDesc;
     private String detailDesc;
-    private boolean enabled;
+    private Integer enabled;
 
     public SocietyWithUser() {
     }
 
-    public SocietyWithUser(Integer number, String university, String userName, String societyName, String category, String simpleDesc, String detailDesc, boolean enabled) {
+    public SocietyWithUser(Integer number, String university, String userName, String societyName, String category, String simpleDesc, String detailDesc, Integer enabled) {
         this.number = number;
         this.university = university;
         this.userName = userName;
@@ -87,11 +87,11 @@ public class SocietyWithUser {
         this.detailDesc = detailDesc;
     }
 
-    public boolean isEnabled() {
+    public Integer getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Integer enabled) {
         this.enabled = enabled;
     }
 

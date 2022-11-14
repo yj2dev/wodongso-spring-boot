@@ -19,19 +19,24 @@ public class SocietyRecruitStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
-    @JoinColumn(name = "to_society_number")
-    private Society toSocietyNumber;
+//    @OneToOne
+//    @JoinColumn(name = "to_society_number")
+//    private Society toSocietyNumber;
 
-    @OneToOne
-    @JoinColumn(name = "from_user_id")
-    private User fromUserId;
+//    @OneToOne
+//    @JoinColumn(name = "from_user_id")
+//    private User fromUserId;
 
-    private boolean state;
+    private Integer toSocietyNumber;
+
+    private String fromUserId;
+
+
+    private Integer state;
 
     @Column(name = "reject_reason")
     private String rejectReason;
 
     @Column(name = "created_At")
-    private LocalDateTime createAt = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

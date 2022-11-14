@@ -50,6 +50,7 @@ public class RootController {
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        model.addAttribute("searchKeyword", searchKeyword);
 
         try {
             model.addAttribute("userInfo", userService.userInfo(principal.getName()));

@@ -4,6 +4,7 @@ package com.wodongso.wodongso.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -21,9 +22,11 @@ public class SocietyCreateStatus {
     @Column(name = "from_user_id")
     private String fromUserId;
 
-    private boolean state;
+    private Integer state;
 
     @Column(name = "reject_reason")
     private String rejectReason;
 
+    @Column(name = "created_At")
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

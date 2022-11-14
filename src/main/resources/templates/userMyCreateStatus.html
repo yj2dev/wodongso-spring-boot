@@ -7,13 +7,14 @@
 <body>
 <a href="/">우동소</a>
 
-<h3>내 동아리 가입 신청 결과</h3>
+<h3>내 동아리 개설 신청 결과</h3>
 
 <div th:each="v: ${list}">
     <div style="border: 3px solid orangered">
         <div th:text="${v.userId}"></div>
         <div th:text="${v.societyNumber}"></div>
-        <div th:text="${v.name}"></div>
+        <div th:text="${v.societyName}"></div>
+        <div th:text="${v.simpleDesc}"></div>
         <div th:text="${v.state}"></div>
         <div th:text="${v.rejectReason}"></div>
         <div th:text="${v.createdAt}"></div>

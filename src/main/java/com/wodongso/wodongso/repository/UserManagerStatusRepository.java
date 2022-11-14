@@ -1,6 +1,6 @@
 package com.wodongso.wodongso.repository;
 
-import com.wodongso.wodongso.entity.ManagerWithUser;
+import com.wodongso.wodongso.dto.ManagerWithUser;
 import com.wodongso.wodongso.entity.UserManagerStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

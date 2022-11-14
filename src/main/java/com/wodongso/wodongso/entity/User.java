@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.ManyToAny;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -42,7 +43,6 @@ public class User {
 
     private boolean enabled;
 
-    @Column(name = "created_at")
-    private Date createdAt;
-
+    @Column(name = "created_At")
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

@@ -1,28 +1,23 @@
 package com.wodongso.wodongso.controller;
 
-import com.wodongso.wodongso.entity.ManagerWithUser;
-import com.wodongso.wodongso.entity.Society;
+import com.wodongso.wodongso.dto.ManagerWithUser;
+import com.wodongso.wodongso.dto.SocietyCreateWithUser;
+import com.wodongso.wodongso.dto.SocietyRecruitWithUser;
 import com.wodongso.wodongso.entity.User;
 import com.wodongso.wodongso.entity.UserManagerStatus;
 import com.wodongso.wodongso.security.SessionManager;
 import com.wodongso.wodongso.service.SocietyService;
 import com.wodongso.wodongso.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
-import java.util.UUID;
 
 
 @Controller
@@ -37,18 +32,29 @@ public class UserController {
     @Autowired
     private SocietyService societyService;
 
+    //    내 동아리 개설 신청 내역 조회
+    @GetMapping("/my-create-status")
+    public String userMyCreateStatus(Model model, Principal principal) {
+        List<SocietyCreateWithUser> uws = userService.myCreateStatus(principal);
+        model.addAttribute("list", uws);
+        return "userMyCreateStatus";
+    }
 
+    //    내 동아리 가입 신청 내역 조회
     @GetMapping("/my-apply-status")
-    public String userMyApplyStatus(Model model) {
-        List<ManagerWithUser> ums = userService.userManagerStatusAll();
-        model.addAttribute("list", ums);
+    public String userMyApplyStatus(Model model, Principal principal) {
+        List<SocietyRecruitWithUser> srw = userService.myApplyStatus(principal);
+        model.addAttribute("list", srw);
         return "userMyApplyStatus";
     }
 
+    //    내 동아리 관리자(매니저) 결과 조회
     @GetMapping("/my-manager-status")
-    public String userMyManagerStatus(Model model) {
-        List<ManagerWithUser> ums = userService.userManagerStatusAll();
+    public String userMyManagerStatus(Model model, Principal principal) {
+        UserManagerStatus ums = userService.myManagerStatus(principal);
+        User user = userService.userInfo(principal.getName());
         model.addAttribute("list", ums);
+        model.addAttribute("university", user.getUniversity());
         return "userMyManagerStatus";
     }
 

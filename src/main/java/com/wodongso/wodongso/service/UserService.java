@@ -1,8 +1,12 @@
 package com.wodongso.wodongso.service;
 
-import com.wodongso.wodongso.entity.ManagerWithUser;
+import com.wodongso.wodongso.dto.ManagerWithUser;
+import com.wodongso.wodongso.dto.SocietyCreateWithUser;
+import com.wodongso.wodongso.dto.SocietyRecruitWithUser;
 import com.wodongso.wodongso.entity.User;
 import com.wodongso.wodongso.entity.UserManagerStatus;
+import com.wodongso.wodongso.repository.SocietyCreateStatusRepository;
+import com.wodongso.wodongso.repository.SocietyRecruitStatusRepository;
 import com.wodongso.wodongso.repository.UserManagerStatusRepository;
 import com.wodongso.wodongso.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +30,29 @@ public class UserService {
     private UserManagerStatusRepository userManagerStatusRepository;
 
     @Autowired
+    SocietyCreateStatusRepository societyCreateStatusRepository;
+
+    @Autowired
+    SocietyRecruitStatusRepository societyRecruitStatusRepository;
+    @Autowired
     PasswordEncoder passwordEncoder;
 
 
+    public List<SocietyCreateWithUser> myCreateStatus(Principal principal) {
+        return societyCreateStatusRepository.findByUserIdJoinSocietyCreate(principal.getName());
+    }
+
+    public List<SocietyRecruitWithUser> myApplyStatus(Principal principal) {
+        return societyRecruitStatusRepository.findByUserIdJoinSocietyRecruit(principal.getName());
+    }
+
+    public UserManagerStatus myManagerStatus(Principal principal) {
+        return userManagerStatusRepository.findByFromUserId(principal.getName());
+    }
+
     public boolean userManagerAccept(String id) {
         UserManagerStatus ums = userManagerStatusRepository.findByFromUserId(id);
-        ums.setState(true);
+        ums.setState(1);
 
         User user = userRepository.findByIdContaining(id);
         user.setRole("ROLE_MANAGER");
@@ -43,7 +64,7 @@ public class UserService {
 
     public boolean userManagerReject(String id, String content) {
         UserManagerStatus ums = userManagerStatusRepository.findByFromUserId(id);
-        ums.setState(false);
+        ums.setState(-1);
         ums.setRejectReason(content);
 
         User user = userRepository.findByIdContaining(id);

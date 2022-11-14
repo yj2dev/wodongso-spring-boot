@@ -10,25 +10,44 @@
     <a href="/user/register">회원가입</a> <br>
 </th:block>
 <th:block th:if="${userInfo != null}">
+
+    <h1 th:inline="text">[[${userInfo.nickname}]]님 안녕하세요.</h1>
+    <!--    <h2>[[${#httpServletRequest.remoteUser}]]</h2>-->
+    <img th:src="${userInfo.profileUrl}" width="200" class="img-thumbnail"/>
+    <br>
+    권한: [[${userInfo.role}]] <br>
+    <a href="/user/my-info">내 정보 변경</a> <br>
+    <a href="/user/update-password">비밀번호 변경</a> <br>
+
+    <br>
+
+    <th:block th:if="${userInfo.role != 'ROLE_ADMIN'}">
+        <a href="/society/create">동아리 개설 신청</a> <br>
+        <a href="/user/apply-manager">대학관리자(매니저) 신청</a> <br>
+        <a href="/user/my-create-status">내 동아리 개설 결과 조회</a> <br>
+        <a href="/user/my-apply-status">동아리 가입 신청 결과 조회</a> <br>
+        <a href="/user/my-manager-status">대학 관리자 신청 결과 조회</a> <br>
+        <br>
+    </th:block>
+
+    <th:block th:if="${userInfo.role != 'ROLE_USER'}">
+        <h4>동아리 관리</h4>
+        <a href="/society/status-list">동아리 개설 신청 현황 목록</a> <br>
+        <br>
+    </th:block>
+
+    <th:block th:if="${userInfo.role == 'ROLE_ADMIN'}">
+        <h4>유저 및 동아리 관리</h4>
+        <a href="/user/manager-status-all">대학관리자(매니저) 신청자 명단</a> <br>
+    </th:block>
+
     <form th:action="@{/user/logout}" method="get">
         <input type="submit" value="로그아웃"/>
     </form>
 </th:block>
 
-<a href="/user/my-info">내 정보 변경</a> <br>
-<a href="/user/update-password">비밀번호 변경</a> <br>
-<a href="/user/apply-manager">대학관리자(매니저) 신청</a> <br>
-<a href="/user/manager-status-all">대학관리자(매니저) 신청자 명단</a> <br>
-<a href="/society/create">동아리 등록</a> <br>
-<a href="/society/status-list">동아리 현황 목록</a> <br>
-<th:block th:if="${userInfo != null}">
-    <h1 th:inline="text"><span id="userId">[[${#httpServletRequest.remoteUser}]]</span>님 안녕하세요.</h1>
-    <h2 th:text="${userInfo.name}"></h2>
-    <img th:src="${userInfo.profileUrl}" style="width: 150px"/>
-
-</th:block>
 <div class="layout">
-    <table>
+    <table class="table table-striped">
         <thead>
         <tr>
             <th>동아리명</th>
@@ -44,6 +63,8 @@
         </thead>
         <tbody>
         <tr th:each="society: ${list}">
+
+
             <td>
                 <a th:text="${society.name}" th:href="@{/society/detail(number=${society.number})}"></a>
             </td>
@@ -63,10 +84,19 @@
            th:text="${page}"></a>
         <b th:if="${page == currentPage}" th:text="${page}" style="color:red"></b>
     </th:block>
-    <form action="" method="get">
-        <input type="text" name="searchKeyword">
-        <button type="submit">검색</button>
+    <form action="/" method="get" style="display: flex;">
+        <input style="width:200px;" class="form-control" type="text" name="searchKeyword"
+               th:value="${searchKeyword}"/>
+        <button class="btn btn-primary" type="submit" style="display: inline; margin-left: 8px;">검색</button>
     </form>
 </div>
+
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
 </body>
 </html>

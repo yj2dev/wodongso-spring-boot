@@ -3,6 +3,7 @@ package com.wodongso.wodongso.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -39,9 +40,11 @@ public class Society {
     @Column(name = "detail_desc")
     private String detailDesc;
 
-    private boolean enabled;
+    private Integer enabled;
 
-    @Column(name = "created_at")
-    private Date createdAt;
+    @Column(name = "created_At")
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 }
+
+

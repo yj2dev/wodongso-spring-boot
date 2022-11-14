@@ -1,5 +1,6 @@
 package com.wodongso.wodongso.service;
 
+import com.wodongso.wodongso.dto.SocietyWithUser;
 import com.wodongso.wodongso.entity.*;
 import com.wodongso.wodongso.repository.SocietyCreateStatusRepository;
 import com.wodongso.wodongso.repository.SocietyRecruitStatusRepository;
@@ -43,14 +44,17 @@ public class SocietyService {
 
     public boolean societyRecruitApply(Integer number, Principal principal) {
         SocietyRecruitStatus srs = new SocietyRecruitStatus();
-        User user = new User();
-        user.setId(principal.getName());
-        srs.setFromUserId(user);
+//        User user = new User();
+//        user.setId(principal.getName());
+//        srs.setFromUserId(user);
 
-        Society society = new Society();
-        society.setNumber(number);
-        srs.setToSocietyNumber(society);
+//        Society society = new Society();
+//        society.setNumber(number);
+//        srs.setToSocietyNumber(society);
 
+        srs.setFromUserId(principal.getName());
+        srs.setToSocietyNumber(number);
+        srs.setState(0);
 
         societyRecruitStatusRepository.save(srs);
         return true;
@@ -58,12 +62,12 @@ public class SocietyService {
 
     public boolean societyCreateAccept(Integer number, Principal principal) {
         Optional<Society> society = societyRepository.findById(number);
-        society.get().setEnabled(true);
+        society.get().setEnabled(1);
 
         SocietyCreateStatus scs = new SocietyCreateStatus();
         scs.setToSocietyNumber(number);
         scs.setFromUserId(principal.getName());
-        scs.setState(true);
+        scs.setState(1);
 
         societyCreateStatusRepository.save(scs);
         societyRepository.save(society.get());
@@ -72,12 +76,12 @@ public class SocietyService {
 
     public boolean societyCreateReject(Integer number, String content, Principal principal) {
         Optional<Society> society = societyRepository.findById(number);
-        society.get().setEnabled(false);
+        society.get().setEnabled(-1);
 
         SocietyCreateStatus scs = new SocietyCreateStatus();
         scs.setToSocietyNumber(number);
         scs.setFromUserId(principal.getName());
-        scs.setState(false);
+        scs.setState(-1);
 
         if (content.length() == 0) {
             return false;
@@ -98,7 +102,7 @@ public class SocietyService {
     }
 
     public Page<Society> societyEnableList(Pageable pageable) {
-        return societyRepository.findByEnabledPage(true, pageable);
+        return societyRepository.findByEnabledPage(1, pageable);
     }
 
     public Page<Society> societySearchList(String searchKeyword, Pageable pageable) {
@@ -111,8 +115,6 @@ public class SocietyService {
 
     public Society societyDetail(Integer id) {
         return societyRepository.findById(id).get();
-
-
     }
 
     public void societyDelete(Integer number) {
@@ -124,11 +126,7 @@ public class SocietyService {
                               MultipartFile backgroundImage,
                               Principal principal
     ) throws Exception {
-
         String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-
-        System.out.println("filePath >> " + filePath);
-        System.out.println("principal >> " + principal);
 
         if (!profileImage.isEmpty()) {
             UUID profileUuid = UUID.randomUUID();
@@ -150,8 +148,13 @@ public class SocietyService {
         user.setId(principal.getName());
 
         society.setOfficerId(user);
+        Society saveSociety = societyRepository.save(society);
 
-        societyRepository.save(society);
+        SocietyCreateStatus scs = new SocietyCreateStatus();
+        scs.setToSocietyNumber(saveSociety.getNumber());
+        scs.setFromUserId(principal.getName());
+        scs.setState(0);
+        societyCreateStatusRepository.save(scs);
     }
 
 }
