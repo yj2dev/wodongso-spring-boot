@@ -21,7 +21,9 @@ public interface SocietyRepository extends JpaRepository<Society, Integer> {
     Optional<Society> findById(Integer integer);
 
 
-    Page<Society> findByNameContaining(String searchKeyword, Pageable pageable);
+//    Page<Society> findByNameContaining(String searchKeyword, Pageable pageable);
+
+    Page<Society> findByNameContainingAndEnabled(String searchKeyword, Integer isEnable, Pageable pageable);
 
 
     @Query("SELECT s FROM Society s WHERE s.enabled = :isEnable")

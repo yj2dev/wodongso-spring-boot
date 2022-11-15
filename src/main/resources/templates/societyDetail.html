@@ -23,9 +23,64 @@
 <th:block th:if="${society.officerId.getId() == #httpServletRequest.remoteUser}">
     <button th:onclick="|location.href='@{/society/update/{number}(number = ${society.number})}'|">수정</button>
     <button th:onclick="|location.href='@{/society/delete(number=${society.number})}'|">삭제</button>
+    <br>
+    <button onclick="onClickShowSocietyApplyList()">가입신청자 조회</button>
+    <div class="society_apply_list" style="display: none">
+        <div th:each="v: ${recruitUserList}">
+            <div th:text="${v.uId}"></div>
+            <div th:text="${v.societyNumber}"></div>
+            <div th:text="${v.userId}"></div>
+            <div th:text="${v.userName}"></div>
+            <div th:text="${v.state}"></div>
+            <div th:text="${v.rejectReason}"></div>
+            <div th:text="${v.createdAt}"></div>
+
+
+            <form th:action="@{/society/recruit/accept}"
+                  method="post">
+                <button formmethod="post" type="submit" class="btn btn-md btn-primary">수락TEST</button>
+            </form>
+
+
+            <form th:action="@{/society/recruit/accept}"
+                  method="post">
+                <input type="text" name="uid" th:value="${v.uId}" readonly style="display: none">
+                <input type="text" name="number" th:value="${v.societyNumber}" readonly style="display: none">
+
+                <button formmethod="post" type="submit" class="btn btn-md btn-primary">수락</button>
+            </form>
+            <form th:action="@{/society/recruit/reject}"
+                  method="post">
+                <input type="text" name="uid" th:value="${v.uId}" readonly style="display: none">
+                <input type="text" name="number" th:value="${v.societyNumber}" readonly style="display: none">
+
+                <button id="rejectBtn" type="submit" class="btn btn-md btn-danger">거절</button>
+                <input type="text" name="content" class="form-control" style="width: 200px;"
+                       onkeyup="onChangeReject(this.value)">
+            </form>
+        </div>
+    </div>
 </th:block>
 
 <script th:inline="javascript">
+
+    // class show {
+    //     static societyApplyList = false;
+    //
+    //     static setSocietyApplyList(isShow) {
+    //         this.societyApplyList = isShow
+    //     }
+    //
+    //     static getSocietyApplyList() {
+    //         return this.societyApplyList;
+    //     }
+    // }
+
+    const onClickShowSocietyApplyList = () => {
+        const sal = document.getElementsByClassName("society_apply_list");
+        sal[0].style.display === "none" ? sal[0].style.display = "block" : sal[0].style.display = "none";
+    }
+
 
     const onClickSocietyApply = (number) => {
         window.event.preventDefault();

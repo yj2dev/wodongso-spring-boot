@@ -2,6 +2,7 @@ package com.wodongso.wodongso.repository;
 
 import com.wodongso.wodongso.dto.SocietyCreateWithUser;
 import com.wodongso.wodongso.dto.SocietyRecruitWithUser;
+import com.wodongso.wodongso.dto.SocietyRecruitWithUserOfficer;
 import com.wodongso.wodongso.entity.SocietyRecruitStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,5 +25,14 @@ public interface SocietyRecruitStatusRepository extends JpaRepository<SocietyRec
             "ON s.number = srs.toSocietyNumber " +
             "WHERE u.id = :userId")
     List<SocietyRecruitWithUser> findByUserIdJoinSocietyRecruit(@Param("userId") String userId);
+
+
+    @Query("SELECT new SocietyRecruitWithUserOfficer(srs.id, srs.toSocietyNumber, u.id, u.name, u.university, u.profileUrl, u.major, u.contact, srs.state, srs.rejectReason, srs.createdAt) " +
+            "FROM SocietyRecruitStatus srs " +
+            "INNER JOIN User u " +
+            "ON srs.fromUserId = u.id " +
+            "WHERE srs.toSocietyNumber = :number")
+    List<SocietyRecruitWithUserOfficer> findBySocietyRecruitJoinUser(@Param("number") Integer number);
+
 
 }

@@ -1,5 +1,6 @@
 package com.wodongso.wodongso.service;
 
+import com.wodongso.wodongso.dto.SocietyRecruitWithUserOfficer;
 import com.wodongso.wodongso.dto.SocietyWithUser;
 import com.wodongso.wodongso.entity.*;
 import com.wodongso.wodongso.repository.SocietyCreateStatusRepository;
@@ -35,12 +36,36 @@ public class SocietyService {
     @Autowired
     private SocietyRecruitStatusRepository societyRecruitStatusRepository;
 
-    public void societyMyApply(int number, Principal principal) {
-        SocietyRecruitStatus srs = societyRecruitStatusRepository
-                .findByToSocietyNumberAndFromUserIdContaining(number, principal.getName());
-        System.out.println(srs.getToSocietyNumber());
+
+    //    동아리 가입 신청자 수락
+    public SocietyRecruitStatus societyRecruitAcceptUser(Principal principal, Integer uid) {
+        if (principal.getName() == null) return null;
+
+        Optional<SocietyRecruitStatus> srs = societyRecruitStatusRepository.findById(uid);
+        srs.get().setState(1);
+
+        return societyRecruitStatusRepository.save(srs.get());
     }
 
+    //    동아리 가입 신청자 거절
+    public SocietyRecruitStatus societyRecruitRejectUser(Principal principal, Integer uid, String content) {
+        if (principal.getName() == null) return null;
+
+        System.out.println("uid >> " + uid);
+        System.out.println("content >> " + content);
+
+        Optional<SocietyRecruitStatus> srs = societyRecruitStatusRepository.findById(uid);
+        srs.get().setState(-1);
+        srs.get().setRejectReason(content);
+
+        return societyRecruitStatusRepository.save(srs.get());
+    }
+
+
+    //    동아리 관리(동아리 신청한 명단 조회)
+    public List<SocietyRecruitWithUserOfficer> societyRecruitUser(Integer number) {
+        return societyRecruitStatusRepository.findBySocietyRecruitJoinUser(number);
+    }
 
     public boolean societyRecruitApply(Integer number, Principal principal) {
         SocietyRecruitStatus srs = new SocietyRecruitStatus();
@@ -106,7 +131,8 @@ public class SocietyService {
     }
 
     public Page<Society> societySearchList(String searchKeyword, Pageable pageable) {
-        return societyRepository.findByNameContaining(searchKeyword, pageable);
+        return societyRepository.findByNameContainingAndEnabled(searchKeyword, 1, pageable);
+//        return societyRepository.findByNameContaining(searchKeyword, pageable);
     }
 
     public Page<Society> societyList(Pageable pageable) {

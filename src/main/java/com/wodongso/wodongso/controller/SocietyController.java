@@ -6,6 +6,7 @@ import com.wodongso.wodongso.service.SocietyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,20 @@ public class SocietyController {
     @Autowired
     private SocietyService societyService;
 
+
+    //   동아리 가입 신청자 수락
+    @PostMapping("/recruit/accept")
+    public String societyRecruitApplyUser(Principal principal, Integer uid, Integer number) {
+        societyService.societyRecruitAcceptUser(principal, uid);
+        return String.format("redirect:/society/detail?number=%d", number);
+    }
+
+    //   동아리 가입 신청자 거절
+    @PostMapping("/recruit/reject")
+    public String societyRecruitRejectUser(Principal principal, Integer uid, String content, Integer number) {
+        societyService.societyRecruitRejectUser(principal, uid, content);
+        return String.format("redirect:/society/detail?number=%d", number);
+    }
 
     //    동아리 가입 신청
     @GetMapping("/apply/{number}")
@@ -75,6 +90,8 @@ public class SocietyController {
     @GetMapping("/detail")
     public String societyDetail(Model model, Integer number) {
         model.addAttribute("society", societyService.societyDetail(number));
+        model.addAttribute("recruitUserList", societyService.societyRecruitUser(number));
+
         return "societyDetail";
     }
 
