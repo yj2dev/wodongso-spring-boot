@@ -136,8 +136,6 @@ public class SocietyController {
                                   MultipartFile backgroundImage,
                                   Principal principal
     ) throws Exception {
-        System.out.println("principal >> " + principal);
-        System.out.println("principal >> " + principal.getName());
         societyService.societyCreate(society, profileImage, backgroundImage, principal);
         return "redirect:/";
     }
