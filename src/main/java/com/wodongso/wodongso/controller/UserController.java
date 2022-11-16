@@ -95,7 +95,6 @@ public class UserController {
 
     @PostMapping("/manager-accept/{id}")
     public String userManagerAccept(@PathVariable String id) {
-        System.out.println("id >> " + id);
         userService.userManagerAccept(id);
         return "redirect:/user/manager-status-all";
     }

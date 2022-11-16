@@ -27,19 +27,17 @@
     <button onclick="onClickShowSocietyApplyList()">가입신청자 조회</button>
     <div class="society_apply_list" style="display: none">
         <div th:each="v: ${recruitUserList}">
+            <img th:src="${v.userProfileUrl}" style="width: 150px; object-fit: cover">
             <div th:text="${v.uId}"></div>
             <div th:text="${v.societyNumber}"></div>
             <div th:text="${v.userId}"></div>
             <div th:text="${v.userName}"></div>
+            <div th:text="${v.userUniversity}"></div>
+            <div th:text="${v.userMajor}"></div>
+            <div th:text="${v.userContact}"></div>
             <div th:text="${v.state}"></div>
             <div th:text="${v.rejectReason}"></div>
             <div th:text="${v.createdAt}"></div>
-
-
-            <form th:action="@{/society/recruit/accept}"
-                  method="post">
-                <button formmethod="post" type="submit" class="btn btn-md btn-primary">수락TEST</button>
-            </form>
 
 
             <form th:action="@{/society/recruit/accept}"
@@ -60,6 +58,32 @@
             </form>
         </div>
     </div>
+</th:block>
+
+<div th:each="v: ${categoryList}">
+    <div th:text="${v.name}" }>
+    </div>
+    <form th:action="@{/society/category-board/write}" method="post">
+        <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
+        <input type="text" name="uid" th:value="${v.id}" readonly style="display: none">
+        <input type="text" name="title">
+        <textarea name="content"></textarea>
+        <button type="submit">글쓰기</button>
+    </form>
+</div>
+<br>
+<div th:each="v: ${contentList}">
+    <div th:text="${v.title}"></div>
+    <div th:text="${v.content}"></div>
+</div>
+
+
+<th:block th:if="${society.officerId.getId() == #httpServletRequest.remoteUser}">
+    <form th:action="@{/society/category/create}" method="post">
+        <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
+        <input type="text" name="name">
+        <button type="submit">카테고리 추가</button>
+    </form>
 </th:block>
 
 <script th:inline="javascript">

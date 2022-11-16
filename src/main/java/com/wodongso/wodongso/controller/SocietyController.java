@@ -2,6 +2,8 @@ package com.wodongso.wodongso.controller;
 
 import com.wodongso.wodongso.entity.Society;
 import com.wodongso.wodongso.dto.SocietyWithUser;
+import com.wodongso.wodongso.entity.SocietyCategory;
+import com.wodongso.wodongso.entity.SocietyContent;
 import com.wodongso.wodongso.service.SocietyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("society")
@@ -22,6 +25,25 @@ public class SocietyController {
 
     @Autowired
     private SocietyService societyService;
+
+
+    //    동아리 게시글 작성
+    @PostMapping("/category-board/write")
+    public String societyCategoryBoardWrite(Principal principal, Integer number, Integer uid, String title, String content) {
+
+        societyService.categoryBoardWrite(principal, number, uid, title, content);
+
+
+        return String.format("redirect:/society/detail?number=%d", number);
+    }
+
+
+    //    동아리 카테고리 추가
+    @PostMapping("/category/create")
+    public String societyCategoryCreate(Principal principal, Integer number, String name) {
+        societyService.categoryCreate(principal, number, name);
+        return String.format("redirect:/society/detail?number=%d", number);
+    }
 
 
     //   동아리 가입 신청자 수락
@@ -88,9 +110,15 @@ public class SocietyController {
 
     // 특정 동아리 조회
     @GetMapping("/detail")
-    public String societyDetail(Model model, Integer number) {
+    public String societyDetail(Model model, Integer cid, Integer number) {
         model.addAttribute("society", societyService.societyDetail(number));
         model.addAttribute("recruitUserList", societyService.societyRecruitUser(number));
+        model.addAttribute("categoryList", societyService.getCategory(number));
+
+        if (cid != null) {
+            List<SocietyContent> contentList = societyService.getCategoryContent(cid);
+            model.addAttribute("contentList", contentList);
+        }
 
         return "societyDetail";
     }

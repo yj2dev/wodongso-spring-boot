@@ -3,12 +3,14 @@ package com.wodongso.wodongso.service;
 import com.wodongso.wodongso.dto.ManagerWithUser;
 import com.wodongso.wodongso.dto.SocietyCreateWithUser;
 import com.wodongso.wodongso.dto.SocietyRecruitWithUser;
+import com.wodongso.wodongso.entity.SocietyCreateStatus;
 import com.wodongso.wodongso.entity.User;
 import com.wodongso.wodongso.entity.UserManagerStatus;
 import com.wodongso.wodongso.repository.SocietyCreateStatusRepository;
 import com.wodongso.wodongso.repository.SocietyRecruitStatusRepository;
 import com.wodongso.wodongso.repository.UserManagerStatusRepository;
 import com.wodongso.wodongso.repository.UserRepository;
+import com.wodongso.wodongso.utils.SocietyStateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,6 +41,7 @@ public class UserService {
 
 
     public List<SocietyCreateWithUser> myCreateStatus(Principal principal) {
+
         return societyCreateStatusRepository.findByUserIdJoinSocietyCreate(principal.getName());
     }
 
