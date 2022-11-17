@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="sidebarFragment" class="sidebar" id="sidebar">
+
+    <div class="sidebar-title">
+        <div class="sidebar-title_logo">
+            <i class='bx bxs-bot'></i>
+        </div>
+
+        <div class="text sidebar-title_text">
+            <span class="project-title">우동소</span>
+            <span class="project-sub-title">우리 학교 동아리를 소개합니다</span>
+        </div>
+    </div>
+
+    <i class='bx bx-chevron-left toggle' id="toggle"></i>
+
+    <div class="sidebar-menu-bar">
+        <div class="sidebar-menu">
+            <ul class="sidebar-menu_list">
+                <li class="sidebar-list_item">
+                    <a href="#">
+                        <i class='bx bx-message-detail'></i>
+                        <span class="text sidebar-item_name">홈</span>
+                    </a>
+                </li>
+                <li class="sidebar-list_item">
+                    <a href="#">
+                        <i class='bx bx-message-detail'></i>
+                        <span class="text sidebar-item_name">동아리 신청 확인</span>
+                    </a>
+                </li>
+                <li class="sidebar-list_item">
+                    <a href="#">
+                        <i class='bx bx-message-detail'></i>
+                        <span class="text sidebar-item_name">동아리</span>
+                    </a>
+                </li>
+                <li class="sidebar-list_item">
+                    <a href="#">
+                        <i class='bx bx-message-detail'></i>
+                        <span class="text sidebar-item_name">동아리</span>
+                    </a>
+                </li>
+                <li class="sidebar-list_item">
+                    <a href="#">
+                        <i class='bx bx-message-detail'></i>
+                        <span class="text sidebar-item_name">동아리</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-bottom-bar">
+            <ul class="sidebar-menu_list">
+                <li class="sidebar-list_item">
+                    <a href="user/login">
+                        <i class='bx bx-log-in' ></i>
+                        <span class="text sidebar-item_name">로그인</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script th:inline="javascript" th:src="@{/js/component/sidebar/sidebar.js}"></script>
+
+</div>
+
+
+
+</html>

@@ -59,7 +59,7 @@ public class RootController {
             System.out.println("principal err");
         }
 
-        return "index";
+        return "content/index/index";
     }
 
 }
