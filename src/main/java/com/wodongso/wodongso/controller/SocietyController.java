@@ -29,12 +29,12 @@ public class SocietyController {
 
     //    동아리 게시글 작성
     @PostMapping("/category-board/write")
-    public String societyCategoryBoardWrite(Principal principal, Integer number, Integer uid, String title, String content) {
+    public String societyCategoryBoardWrite(Principal principal, Integer number, Integer categoryId, String title, String content) {
 
-        societyService.categoryBoardWrite(principal, number, uid, title, content);
+        societyService.categoryBoardWrite(principal, number, categoryId, title, content);
 
 
-        return String.format("redirect:/society/detail?number=%d", number);
+        return String.format("redirect:/society/detail?number=%d&cid=%d", number, categoryId);
     }
 
 
@@ -118,7 +118,14 @@ public class SocietyController {
         if (cid != null) {
             List<SocietyContent> contentList = societyService.getCategoryContent(cid);
             model.addAttribute("contentList", contentList);
+        } else {
+            SocietyCategory sc = societyService.getCategoryId(number);
+            cid = sc.getId();
+            List<SocietyContent> contentList = societyService.getCategoryContent(cid);
+            model.addAttribute("contentList", contentList);
         }
+
+        model.addAttribute("currentCategoryId", cid);
 
         return "societyDetail";
     }

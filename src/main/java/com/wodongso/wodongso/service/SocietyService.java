@@ -40,6 +40,11 @@ public class SocietyService {
     private SocietyContentRepository societyContentRepository;
 
 
+    //    해당 동아리 기본게시판(활동내역) 번호 가져오기
+    public SocietyCategory getCategoryId(Integer number) {
+        return societyCategoryRepository.findByFromSocietyNumberAndName(number, "활동내역");
+    }
+
     //    해당하는 카테고리 글 가져오기
     public List<SocietyContent> getCategoryContent(Integer cid) {
         return societyContentRepository.findByToCategoryId(cid);
@@ -47,10 +52,10 @@ public class SocietyService {
 
 
     //    카테고리에 맞게 글 작성
-    public SocietyContent categoryBoardWrite(Principal principal, Integer number, Integer uid, String title, String content) {
+    public SocietyContent categoryBoardWrite(Principal principal, Integer number, Integer categoryId, String title, String content) {
 
         SocietyContent sc = new SocietyContent();
-        sc.setToCategoryId(uid);
+        sc.setToCategoryId(categoryId);
         sc.setFromSocietyNumber(number);
         sc.setTitle(title);
         sc.setWriterId(principal.getName());

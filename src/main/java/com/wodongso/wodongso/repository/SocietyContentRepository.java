@@ -11,4 +11,6 @@ public interface SocietyContentRepository extends JpaRepository<SocietyContent, 
 
     List<SocietyContent> findByToCategoryId(Integer number);
 
+//    SocietyContent
+
 }
