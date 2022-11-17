@@ -98,6 +98,11 @@
     font-size: 15px;
     padding-left: 15px;
     box-sizing:border-box;
+    transition: 0.3s all ease-in-out;
+}
+
+.register-input-field input:focus{
+    border: 1px solid #4d84e2;
 }
 
 .register-input-field input::placeholder{
@@ -105,18 +110,59 @@
     font-weight: 500;
 }
 
-.register-input-field.success input{
+.register-input-field.success input,
+.register-input-field.success select,
+.register-input-field .id-input.success{
     border-color: #09c372;
 }
 
-.register-input-field.error input{
+.register-input-field.error input,
+.register-input-field.error select,
+.register-input-field .id-input.error{
     border-color: #ff3860;
 }
-.register-input-field .error{
+
+
+.register-input-field.error .error,
+.register-input-field .id-input.error .error{
     color: #ff3860;
     font-size: 12px;
     font-weight: bold;
     margin: 5px 0 0 10px
+}
+
+.register-input-field .id-input{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    flex-wrap: wrap;
+    box-sizing: content-box;
+    transition: 0.3s all ease-in-out;
+}
+
+.register-input-field .id-input:focus-within{
+    border:  1px solid #4d84e2;
+}
+
+.register-input-field .id-input input{
+    width: 70%;
+    border: none;
+}
+
+.register-input-field .id-input button{
+    width: 30%;
+    background-color: #5995fd;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: #fff;
+    transition: 0.5s all ease-in-out;
+}
+
+.register-input-field .id-input button:hover{
+    background-color: #4d84e2;
 }
 
 .register-btns{

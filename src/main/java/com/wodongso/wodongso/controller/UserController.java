@@ -32,6 +32,15 @@ public class UserController {
     @Autowired
     private SocietyService societyService;
 
+
+    // 유저 아이디 중복 확인
+    @GetMapping("/id-check")
+    @ResponseBody
+    public boolean userIsId(@RequestParam(name = "id") String id){
+
+        return userService.isId(id);
+    }
+
     //    내 동아리 개설 신청 내역 조회
     @GetMapping("/my-create-status")
     public String userMyCreateStatus(Model model, Principal principal) {
@@ -157,3 +166,4 @@ public class UserController {
         return "redirect:/user/login";
     }
 }
+

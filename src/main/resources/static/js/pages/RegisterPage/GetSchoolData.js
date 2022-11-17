@@ -26,8 +26,9 @@ function SchoolSerch(value){
 			함수를 시작하고 초기화를 한번 해준다.
 		*/
 		schoolInfo = [];
-				
-				
+
+		schoolInfo.push("-");
+
 		/* 
 			반복문과 조건문을 통해 선택한 지역의 대학교를 모두
 			schoolInfo 배열안에 값을 추가시켜 준다
@@ -88,6 +89,9 @@ function majorSerch(value){
 			반복문과 조건문을 통해 선택한 지역별 대학교에 있는 모든 학과
 			schoolInfo 배열안에 값을 추가시켜 준다.
 		*/
+
+		majorInfo.push("-");
+
 		while(i < info.length){
 			if(info[i].지역 == regionInfo && info[i].학교명 == value){
 				majorInfo.push(info[i].학과);
@@ -129,7 +133,7 @@ function majorSerch(value){
 let regionSelect = document.getElementById('region').addEventListener('change', function(event){
 	SchoolSerch(event.target.value);
 });
-		
+
 /* .html 파일에 school, major id를 가진 태그를 가지고 온다 */
 let school = document.getElementById('school');
 let major = document.getElementById('major');

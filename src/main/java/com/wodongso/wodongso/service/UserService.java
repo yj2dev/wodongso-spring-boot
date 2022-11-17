@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -39,6 +40,11 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+
+    public boolean isId(String id) {
+        Optional<User> user = userRepository.findById(id);
+        return (user.isEmpty() == true) ? false : true;
+    }
 
     public List<SocietyCreateWithUser> myCreateStatus(Principal principal) {
 

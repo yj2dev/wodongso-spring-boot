@@ -3,38 +3,42 @@ const firstNextBtn = document.getElementById("firstNextBtn");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 
+const userIdCheckBtn = document.getElementById('id-check-btn');
+
+const region = document.getElementById("region");
+// const major = document.getElementById("user_id");
 const class_of = document.getElementById("class_of");
+
+const isId = document.getElementById("user_id");
 const name = document.getElementById("name");
 const nickname = document.getElementById("nickname");
 const password = document.getElementById("password");
 const passwordCheck = document.getElementById("passwordCheck");
 const phoneNumber = document.getElementById("phoneNumber");
 
+let setIsRegion = false;
+let setIsSchool = false;
+let setIsMajor = false;
 let setIsClassNumber = false;
+
+let setIsId = false;
+let setIsIdCheck = false;
 let setIsName = false;
 let setIsNickName = false;
 let setIsPassword = false;
 let setIsConfirmPassword = false;
 let setIsPhoneNumber = false;
 
-firstNextBtn.addEventListener("click", (event) => {
-	event.preventDefault();
-	
-	onClassNumberHandler();
-	
-	if(setIsClassNumber){
-		slidePage.style.marginLeft = "-100%";	
-	}
-	
-})	
-
+let regionValue = "";
+let schoolValue = "";
+let majorValue = "";
 
 const setError = (element, message) => {
 	const inputControl = element.parentElement;
 	const errorDisplay = inputControl.querySelector('.error');
-	
+
 	errorDisplay.innerText = message;
-	
+
 	inputControl.classList.add('error');
 	inputControl.classList.remove('success');
 }
@@ -42,13 +46,33 @@ const setError = (element, message) => {
 const setSuccess = (element) => {
 	const inputControl = element.parentElement;
 	const errorDisplay = inputControl.querySelector('.error');
-	
+
 	errorDisplay.innerText = '';
-	
+
 	inputControl.classList.add('success');
 	inputControl.classList.remove('error');
 }
 
+firstNextBtn.addEventListener("click", (event) => {
+	event.preventDefault();
+
+	if(!setIsRegion){
+		onRegionHandler();
+	}
+	if(!setIsSchool){
+		onSchoolHandler();
+	}
+	if(!setIsMajor){
+		onMajorHandler();
+	}
+
+	onClassNumberHandler();
+	
+	if(setIsRegion && setIsClassNumber && setIsSchool && setIsMajor){
+		slidePage.style.marginLeft = "-100%";	
+	}
+	
+})
 
 prevBtn.addEventListener("click", (event) => {
 	event.preventDefault()
@@ -56,19 +80,85 @@ prevBtn.addEventListener("click", (event) => {
 })
 
 nextBtn.addEventListener('click', (event) => {
-	
+
+	if(!setIsId){
+		onIdCheckHandler();
+	}
 	onNameHandler();
 	onNickNameHandler();
 	onPasswordHandler();
 	onConfirmPassword();
 	onPhoneNumberHandler();
-	
+
 	if(!(setIsClassNumber && setIsName && setIsNickName && setIsPassword && setIsConfirmPassword && setIsPhoneNumber)){
 		event.preventDefault();
 	}
 	
 
 })
+
+region.addEventListener('change', (event) => {
+	regionValue = event.target.value;
+
+	if(regionValue === '' || regionValue === '-'){
+		onRegionHandler(region, '지역을 선택해주세요.', false)
+	} else{
+		onRegionHandler(region, '', true);
+	}
+
+});
+
+function onRegionHandler(element=region, message='지역을 선택해주세요.', check=false){
+	if(check){
+		setSuccess(element);
+		setIsRegion = check;
+	} else{
+		setError(element, message);
+		setIsRegion = check;
+	}
+}
+
+school.addEventListener('change', (event) => {
+	schoolValue = event.target.value;
+
+	if(schoolValue === '' || schoolValue === '-'){
+		onSchoolHandler(school, '지역을 선택해주세요.', false)
+	} else{
+		onSchoolHandler(school, '', true);
+	}
+
+});
+
+function onSchoolHandler(element=school, message="학교를 선택해주세요.", check=false){
+	if(check){
+		setSuccess(element);
+		setIsSchool = check;
+	} else{
+		setError(element, message);
+		setIsSchool = check;
+	}
+}
+
+major.addEventListener('change', (event) => {
+	majorValue = event.target.value;
+
+	if(majorValue === '' || majorValue === '-'){
+		onMajorHandler(major, '지역을 선택해주세요.', false)
+	} else{
+		onMajorHandler(major, '', true);
+	}
+
+});
+
+function onMajorHandler(element=major, message="학교를 선택해주세요.", check=false){
+	if(check){
+		setSuccess(element);
+		setIsMajor = check;
+	} else{
+		setError(element, message);
+		setIsMajor = check;
+	}
+}
 
 function onClassNumberHandler(){
 	const number = class_of.value.trim();
@@ -91,6 +181,43 @@ function onClassNumberHandler(){
 		setIsClassNumber = true;
 	}
 	
+}
+
+userIdCheckBtn.addEventListener('click', (event) => {
+	event.preventDefault();
+
+	const idValue = isId.value.trim();
+
+	let url = '/user/id-check';
+
+	fetch(url+"?id="+idValue).then(res => res.json()).then(data => {
+		setIsIdCheck = data;
+
+		if(idValue === ''){
+			onIdCheckHandler(isId, "아이디를 입력해주세요.", false);
+		} else if(setIsIdCheck){
+			onIdCheckHandler(isId, "중복된 아이디입니다.", false);
+		} else{
+			onIdCheckHandler(isId, "", true);
+		}
+
+	}).catch(err => {
+		console.log("err");
+	})
+})
+
+function onIdCheckHandler(element=isId, message='중복 확인을 해주세요.', check=false){
+
+	console.log(element, message, check);
+
+	if(check){
+		setSuccess(element);
+		setIsId = check
+	} else{
+		setError(element, message);
+		setIsId = check;
+	}
+
 }
 
 function onNameHandler(){

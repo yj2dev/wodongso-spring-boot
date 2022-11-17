@@ -62,6 +62,7 @@
                             </optgroup>
 
                         </select>
+                        <div class="error"></div>
                     </div>
 
                     <div class="register-input-field">
@@ -69,6 +70,7 @@
                         <select id="school" name="university">
                             <option value="">-</option>
                         </select>
+                        <div class="error"></div>
                     </div>
 
                     <div class="register-input-field">
@@ -76,6 +78,7 @@
                         <select id="major" name="major">
                             <option value="">-</option>
                         </select>
+                        <div class="error"></div>
                     </div>
 
                     <div class="register-input-field">
@@ -96,8 +99,12 @@
 
                     <div class="register-input-field">
                         <div class="register-input-field_label"> 아이디 </div>
-                        <input type="text" placeholder="아이디를 입력해주세요" id="user_id" name="id" onchange="onNameHandler()">
-                        <div class="error"></div>
+                        <div class="id-input">
+                            <input type="text" placeholder="아이디를 입력해주세요" id="user_id" name="id">
+                            <button id="id-check-btn">중복확인</button>
+                            <div class="error"></div>
+                        </div>
+
                     </div>
 
                     <div class="register-input-field">
