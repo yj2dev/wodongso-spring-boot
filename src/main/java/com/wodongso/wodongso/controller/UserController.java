@@ -36,7 +36,7 @@ public class UserController {
     // 유저 아이디 중복 확인
     @GetMapping("/id-check")
     @ResponseBody
-    public boolean userIsId(String id){
+    public boolean userIsId(@RequestParam String id){
         return userService.isId(id);
     }
 
@@ -143,12 +143,12 @@ public class UserController {
 
     @GetMapping("/login")
     public String userLogin() {
-        return "userLogin";
+        return "content/user/login/userLogin";
     }
 
     @PostMapping("/login")
     public String userLoginDo() {
-        return "userLogin";
+        return "content/user/login/userLogin";
     }
 
 
@@ -156,7 +156,7 @@ public class UserController {
     public String userRegister(HttpServletRequest req) {
 //        System.out.println(sessionManager.getAllSession(req));
 
-        return "userRegister";
+        return "content/user/register/userRegister";
     }
 
     @PostMapping("/register")
