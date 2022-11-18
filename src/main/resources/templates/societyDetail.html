@@ -15,9 +15,6 @@
 <div th:text="${society.detailDesc}"></div>
 <h3 th:text="${society.officerId.getNickname()}"></h3>
 
-<img th:src="${society.profileUrl}" style="object-fit: contain; width: 150px; height: 150px;">
-<img th:src="${society.backgroundUrl}" style="object-fit: contain; width: 150px; height: 150px;">>
-
 <th:block th:if="${society.officerId.getId() != #httpServletRequest.remoteUser}">
     <button th:value="${society.number}"
             onclick="onClickSocietyApply(this.value)">
@@ -64,44 +61,23 @@
         </div>
     </div>
 </th:block>
-<br>
-<br>
-<div style="display: flex; gap:24px;">
 
-    <div th:each="v: ${categoryList}">
-
-        <form th:action="@{/society/detail}" method="get">
-            <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
-            <input type="text" name="cid" th:value="${v.id}" readonly style="display: none">
-            <button type="submit">[[${v.name}]]</button>
-        </form>
+<div th:each="v: ${categoryList}">
+    <div th:text="${v.name}" }>
     </div>
+    <form th:action="@{/society/category-board/write}" method="post">
+        <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
+        <input type="text" name="uid" th:value="${v.id}" readonly style="display: none">
+        <input type="text" name="title">
+        <textarea name="content"></textarea>
+        <button type="submit">글쓰기</button>
+    </form>
 </div>
 <br>
-
 <div th:each="v: ${contentList}">
-    <img src="https://via.placeholder.com/200x200">
     <div th:text="${v.title}"></div>
     <div th:text="${v.content}"></div>
 </div>
-
-
-<form th:action="@{/society/category-board/write}" method="post">
-    <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
-    <input type="text" name="categoryId" th:value="${currentCategoryId}" readonly style="display: none"> <br>
-    <input type="text" name="title"><br>
-    <textarea name="content"></textarea>
-
-    <div th:with="imageCnt = 3">
-        <h3 th:each="v : ${#numbers.sequence(1, imageCnt)}">
-            몇개까지될까
-            <input type="file" accept="image/*" name="profileImage">
-        </h3>
-    </div>
-
-    <button type="submit">글쓰기</button>
-
-</form>
 
 
 <th:block th:if="${society.officerId.getId() == #httpServletRequest.remoteUser}">
@@ -114,6 +90,18 @@
 
 <div th:replace="layout/footer"></div>
 <script th:inline="javascript">
+
+    // class show {
+    //     static societyApplyList = false;
+    //
+    //     static setSocietyApplyList(isShow) {
+    //         this.societyApplyList = isShow
+    //     }
+    //
+    //     static getSocietyApplyList() {
+    //         return this.societyApplyList;
+    //     }
+    // }
 
     const onClickShowSocietyApplyList = () => {
         const sal = document.getElementsByClassName("society_apply_list");
