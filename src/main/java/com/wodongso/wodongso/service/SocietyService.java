@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,8 @@ public class SocietyService {
     @Autowired
     private SocietyContentRepository societyContentRepository;
 
+    @Autowired
+    private SocietyContentImageRepository societyContentImageRepository;
 
     //    해당 동아리 기본게시판(활동내역) 번호 가져오기
     public SocietyCategory getCategoryId(Integer number) {
@@ -52,16 +55,36 @@ public class SocietyService {
 
 
     //    카테고리에 맞게 글 작성
-    public SocietyContent categoryBoardWrite(Principal principal, Integer number, Integer categoryId, String title, String content) {
+    public boolean categoryBoardWrite(Principal principal, Integer number, Integer categoryId, String title, String content, List<MultipartFile> files) throws IOException {
 
+//         게시글 저장
         SocietyContent sc = new SocietyContent();
         sc.setToCategoryId(categoryId);
         sc.setFromSocietyNumber(number);
         sc.setTitle(title);
         sc.setWriterId(principal.getName());
         sc.setContent(content);
+        SocietyContent saveSc = societyContentRepository.save(sc);
 
-        return societyContentRepository.save(sc);
+// 게시글에 등록된 이미지 저장
+        SocietyContentImage sci = new SocietyContentImage();
+        sci.setFromSocietyContentId(sc.getId());
+
+        String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+
+        if (files.size() > 0) {
+            for (MultipartFile file : files) {
+                UUID imageUuid = UUID.randomUUID();
+                String imageName = file.getOriginalFilename() + "_" + imageUuid;
+                File saveImage = new File(filePath, imageName);
+                file.transferTo(saveImage);
+                sci.setPath("/files/" + imageName);
+                societyContentImageRepository.save(sci);
+            }
+        }
+
+
+        return true;
 
     }
 

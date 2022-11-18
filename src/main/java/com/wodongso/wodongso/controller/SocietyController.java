@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -29,11 +30,10 @@ public class SocietyController {
 
     //    동아리 게시글 작성
     @PostMapping("/category-board/write")
-    public String societyCategoryBoardWrite(Principal principal, Integer number, Integer categoryId, String title, String content) {
+    public String societyCategoryBoardWrite(Principal principal, Integer number, Integer categoryId, String title, String content, List<MultipartFile> files) throws IOException {
 
-        societyService.categoryBoardWrite(principal, number, categoryId, title, content);
-
-
+        societyService.categoryBoardWrite(principal, number, categoryId, title, content, files);
+     
         return String.format("redirect:/society/detail?number=%d&cid=%d", number, categoryId);
     }
 
