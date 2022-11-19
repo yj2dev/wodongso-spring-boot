@@ -1,5 +1,6 @@
 package com.wodongso.wodongso.controller;
 
+import com.wodongso.wodongso.dto.CategoryDetail;
 import com.wodongso.wodongso.entity.Society;
 import com.wodongso.wodongso.dto.SocietyWithUser;
 import com.wodongso.wodongso.entity.SocietyCategory;
@@ -28,12 +29,26 @@ public class SocietyController {
     private SocietyService societyService;
 
 
+    //    카테고리 상세 페이지 이동
+    @GetMapping("/category/detail")
+    public String societyCategoryDetail(Model model, Integer scid) {
+        List<CategoryDetail> cd = societyService.getCategoryDetail(scid);
+        model.addAttribute("payload", cd);
+        return "societyCategoryDetail";
+    }
+
+
     //    동아리 게시글 작성
     @PostMapping("/category-board/write")
-    public String societyCategoryBoardWrite(Principal principal, Integer number, Integer categoryId, String title, String content, List<MultipartFile> files) throws IOException {
-
+    public String societyCategoryBoardWrite(Principal principal,
+                                            Integer number,
+                                            Integer categoryId,
+                                            String title,
+                                            String content,
+                                            List<MultipartFile> files
+    ) throws IOException {
         societyService.categoryBoardWrite(principal, number, categoryId, title, content, files);
-     
+
         return String.format("redirect:/society/detail?number=%d&cid=%d", number, categoryId);
     }
 

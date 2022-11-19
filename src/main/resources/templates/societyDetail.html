@@ -62,21 +62,40 @@
     </div>
 </th:block>
 
-<div th:each="v: ${categoryList}">
-    <div th:text="${v.name}" }>
+<div style="display: flex; gap:24px;">
+
+    <div th:each="v: ${categoryList}">
+
+        <form th:action="@{/society/detail}" method="get">
+            <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
+            <input type="text" name="cid" th:value="${v.id}" readonly style="display: none">
+            <button type="submit">[[${v.name}]]</button>
+        </form>
     </div>
-    <form th:action="@{/society/category-board/write}" method="post">
-        <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
-        <input type="text" name="uid" th:value="${v.id}" readonly style="display: none">
-        <input type="text" name="title">
-        <textarea name="content"></textarea>
-        <button type="submit">글쓰기</button>
-    </form>
 </div>
+
+<br>
+
+<form th:action="@{/society/category-board/write}"
+      method="post"
+      enctype="multipart/form-data"
+>
+    <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
+    <input type="text" name="categoryId" th:value="${currentCategoryId}" readonly style="display: none">
+    <input type="text" name="title"> <br>
+    <textarea name="content"></textarea> <br>
+    <label for="multiple-file">파일업로드</label>
+    <input type="file" accept="image/*" id="multiple-file" name="files" multiple>
+    <br>
+
+    <button type="submit">글쓰기</button>
+</form>
+
 <br>
 <div th:each="v: ${contentList}">
-    <div th:text="${v.title}"></div>
-    <div th:text="${v.content}"></div>
+    <a th:text="${v.title}" th:href="@{/society/category/detail(scid=${v.id})}"></a> <br>
+    <img th:src="${v.thumbnailUrl}" style="object-fit: contain; width: 150px;"/>
+    <!--    <h3 th:text="${v.content}"></h3>-->
 </div>
 
 

@@ -92,7 +92,7 @@ public class UserService {
         if (!proofImage.isEmpty()) {
             String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
             UUID profileUuid = UUID.randomUUID();
-            String proofImageName = profileUuid + "_" + proofImage.getOriginalFilename();
+            String proofImageName = profileUuid + "_" + proofImage.getOriginalFilename() + ".jpg";
             File saveProofImage = new File(filePath, proofImageName);
             proofImage.transferTo(saveProofImage);
             ums.setProofImageUrl("/files/" + proofImageName);
@@ -118,7 +118,7 @@ public class UserService {
         if (!profileImage.isEmpty()) {
             String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
             UUID profileUuid = UUID.randomUUID();
-            String profileImageName = profileUuid + "_" + profileImage.getOriginalFilename();
+            String profileImageName = profileUuid + "_" + profileImage.getOriginalFilename() + ".jpg";
             File saveProfileImage = new File(filePath, profileImageName);
             profileImage.transferTo(saveProfileImage);
             user.setProfileUrl("/files/" + profileImageName);
@@ -169,7 +169,7 @@ public class UserService {
         if (!profileImage.isEmpty()) {
             String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
             UUID profileUuid = UUID.randomUUID();
-            String profileImageName = profileUuid + "_" + profileImage.getOriginalFilename();
+            String profileImageName = profileUuid + "_" + profileImage.getOriginalFilename() + ".jpg";
             File saveProfileImage = new File(filePath, profileImageName);
             profileImage.transferTo(saveProfileImage);
             user.setProfileUrl("/files/" + profileImageName);

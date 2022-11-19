@@ -86,11 +86,11 @@
         </tbody>
     </table>
     <th:block th:each="page: ${#numbers.sequence(startPage, endPage)}">
-        <a th:if="${page != currentPage}" th:href="@{/static(page= ${page - 1}, searchKeyword= ${param.searchKeyword})}"
+        <a th:if="${page != currentPage}" th:href="@{/(page= ${page - 1}, searchKeyword= ${param.searchKeyword})}"
            th:text="${page}"></a>
         <b th:if="${page == currentPage}" th:text="${page}" style="color:red"></b>
     </th:block>
-    <form action="/static" method="get" style="display: flex;">
+    <form action="/" method="get" style="display: flex;">
         <input style="width:200px;" class="form-control" type="text" name="searchKeyword"
                th:value="${searchKeyword}"/>
         <button class="btn btn-primary" type="submit" style="display: inline; margin-left: 8px;">검색</button>

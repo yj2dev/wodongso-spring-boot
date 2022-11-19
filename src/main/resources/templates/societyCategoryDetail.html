@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>우동소 - 동아리 개설 신청 목록</title>
+</head>
+<body>
+<a href="/">우동소</a>
+<div th:text="${payload[0].userId}"></div>
+<div th:text="${payload[0].userNickname}"></div>
+<div th:text="${payload[0].userName}"></div>
+
+
+<th:block th:if="${payload[0].userProfileUrl == null}">
+    <img src="https://via.placeholder.com/150x150" width="150"/>
+</th:block>
+
+<th:block th:if="${payload[0].userProfileUrl != null}">
+    <img th:src="${payload[0].userProfileUrl}" width="150"/>
+</th:block>
+
+
+<h1 th:text="${payload[0].title}"></h1>
+<h3 th:text="${payload[0].content}"></h3>
+<div th:text="${payload[0].createdAt}"></div>
+
+<h3>게시판 상세</h3>
+<div th:each="v: ${payload}">
+    <img th:src="${v.imageUrl}" width="150"/>
+</div>
+
+</body>
+</html>

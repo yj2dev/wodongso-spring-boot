@@ -29,7 +29,8 @@ public class WebSecurityConfig {
                                         "/user/register",
                                         "/society/detail",
                                         "/files/**",
-                                        "/css/**"
+                                        "/css/**",
+                                        "/society/category-board/write"
                                 ).permitAll()
                                 .antMatchers(
                                         "/user/my-info",

@@ -22,6 +22,9 @@ public class SocietyContent {
     @Column(name = "from_society_number")
     private Integer fromSocietyNumber;
 
+    @Column(name = "thumbnail_url")
+    private String thumbnailUrl;
+
     @Column(name = "writer_id")
     private String writerId;
 

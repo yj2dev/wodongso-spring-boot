@@ -1,5 +1,6 @@
 package com.wodongso.wodongso.service;
 
+import com.wodongso.wodongso.dto.CategoryDetail;
 import com.wodongso.wodongso.dto.SocietyRecruitWithUserOfficer;
 import com.wodongso.wodongso.dto.SocietyWithUser;
 import com.wodongso.wodongso.entity.*;
@@ -43,6 +44,13 @@ public class SocietyService {
     @Autowired
     private SocietyContentImageRepository societyContentImageRepository;
 
+    //    카테고리 게시글 상세정보 가져오기
+    public List<CategoryDetail> getCategoryDetail(Integer scid) {
+        return societyContentRepository.findByIdJoinUserAndImage(scid);
+
+    }
+
+
     //    해당 동아리 기본게시판(활동내역) 번호 가져오기
     public SocietyCategory getCategoryId(Integer number) {
         return societyCategoryRepository.findByFromSocietyNumberAndName(number, "활동내역");
@@ -57,6 +65,7 @@ public class SocietyService {
     //    카테고리에 맞게 글 작성
     public boolean categoryBoardWrite(Principal principal, Integer number, Integer categoryId, String title, String content, List<MultipartFile> files) throws IOException {
 
+        System.out.println("files >> " + files);
 //         게시글 저장
         SocietyContent sc = new SocietyContent();
         sc.setToCategoryId(categoryId);
@@ -67,19 +76,27 @@ public class SocietyService {
         SocietyContent saveSc = societyContentRepository.save(sc);
 
 // 게시글에 등록된 이미지 저장
-        SocietyContentImage sci = new SocietyContentImage();
-        sci.setFromSocietyContentId(sc.getId());
 
         String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
         if (files.size() > 0) {
+            boolean isThumbnail = false;
             for (MultipartFile file : files) {
+                SocietyContentImage sci = new SocietyContentImage();
+                sci.setFromSocietyContentId(saveSc.getId());
                 UUID imageUuid = UUID.randomUUID();
-                String imageName = file.getOriginalFilename() + "_" + imageUuid;
+                String imageName = file.getOriginalFilename() + "_" + imageUuid + ".jpg";
                 File saveImage = new File(filePath, imageName);
                 file.transferTo(saveImage);
                 sci.setPath("/files/" + imageName);
+
+                if (isThumbnail == false) {
+                    saveSc.setThumbnailUrl("/files/" + imageName);
+                    societyContentRepository.save(saveSc);
+                }
+
                 societyContentImageRepository.save(sci);
+                isThumbnail = true;
             }
         }
 
@@ -221,7 +238,7 @@ public class SocietyService {
 
         if (!profileImage.isEmpty()) {
             UUID profileUuid = UUID.randomUUID();
-            String profileImageName = profileUuid + "_" + profileImage.getOriginalFilename();
+            String profileImageName = profileUuid + "_" + profileImage.getOriginalFilename() + ".jpg";
             File saveProfileImage = new File(filePath, profileImageName);
             profileImage.transferTo(saveProfileImage);
             society.setProfileUrl("/files/" + profileImageName);
@@ -229,7 +246,7 @@ public class SocietyService {
 
         if (!backgroundImage.isEmpty()) {
             UUID backgroundUuid = UUID.randomUUID();
-            String backgroundImageName = backgroundUuid + "_" + backgroundImage.getOriginalFilename();
+            String backgroundImageName = backgroundUuid + "_" + backgroundImage.getOriginalFilename() + ".jpg";
             File saveBackgroundImage = new File(filePath, backgroundImageName);
             backgroundImage.transferTo(saveBackgroundImage);
             society.setBackgroundUrl("/files/" + backgroundImageName);
