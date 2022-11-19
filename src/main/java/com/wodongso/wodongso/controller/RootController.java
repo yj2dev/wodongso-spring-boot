@@ -54,6 +54,7 @@ public class RootController {
 
         try {
             model.addAttribute("userInfo", userService.userInfo(principal.getName()));
+            model.addAttribute("mySocietyList", societyService.getMySocietyList(principal));
         } catch (NullPointerException err) {
         } catch (Exception err) {
             System.out.println("principal err");

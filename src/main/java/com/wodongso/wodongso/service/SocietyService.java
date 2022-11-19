@@ -1,6 +1,7 @@
 package com.wodongso.wodongso.service;
 
 import com.wodongso.wodongso.dto.CategoryDetail;
+import com.wodongso.wodongso.dto.MySocietyList;
 import com.wodongso.wodongso.dto.SocietyRecruitWithUserOfficer;
 import com.wodongso.wodongso.dto.SocietyWithUser;
 import com.wodongso.wodongso.entity.*;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -43,6 +45,16 @@ public class SocietyService {
 
     @Autowired
     private SocietyContentImageRepository societyContentImageRepository;
+
+    //    내가 가입하거나 생성한 동아리 목록 가져오기
+    public List<MySocietyList> getMySocietyList(Principal principal) {
+        List<MySocietyList> createList = societyCreateStatusRepository.findMySocietyCreate(principal.getName());
+        List<MySocietyList> recruitList = societyRecruitStatusRepository.findMySocietyRecruit(principal.getName());
+        List<MySocietyList> resultList = new ArrayList<>();
+        resultList.addAll(createList);
+        resultList.addAll(recruitList);
+        return resultList;
+    }
 
     //    카테고리 게시글 상세정보 가져오기
     public List<CategoryDetail> getCategoryDetail(Integer scid) {

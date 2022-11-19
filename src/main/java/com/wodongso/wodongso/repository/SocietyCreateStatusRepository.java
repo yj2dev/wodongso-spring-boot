@@ -1,5 +1,7 @@
 package com.wodongso.wodongso.repository;
 
+import com.wodongso.wodongso.dto.MySocietyCreate;
+import com.wodongso.wodongso.dto.MySocietyList;
 import com.wodongso.wodongso.dto.SocietyCreateWithUser;
 import com.wodongso.wodongso.entity.SocietyCreateStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +23,14 @@ public interface SocietyCreateStatusRepository extends JpaRepository<SocietyCrea
             "ON s.number = scs.toSocietyNumber " +
             "WHERE u.id = :userId")
     List<SocietyCreateWithUser> findByUserIdJoinSocietyCreate(@Param("userId") String userId);
+
+
+    @Query("SELECT new MySocietyList (u.id, u.name, s.name, s.profileUrl) " +
+            "FROM User u " +
+            "INNER JOIN SocietyCreateStatus scs " +
+            "ON scs.fromUserId = u.id " +
+            "INNER JOIN Society s " +
+            "ON scs.toSocietyNumber = s.number and s.enabled = 1 " +
+            "WHERE u.id = :userId")
+    List<MySocietyList> findMySocietyCreate(@Param("userId") String userId);
 }
