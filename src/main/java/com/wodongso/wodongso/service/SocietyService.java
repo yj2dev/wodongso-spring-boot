@@ -178,10 +178,18 @@ public class SocietyService {
         Optional<Society> society = societyRepository.findById(number);
         society.get().setEnabled(1);
 
-        SocietyCreateStatus scs = new SocietyCreateStatus();
-        scs.setToSocietyNumber(number);
-        scs.setFromUserId(principal.getName());
+//        SocietyCreateStatus scs = new SocietyCreateStatus();
+//        scs.setToSocietyNumber(number);
+//        scs.setFromUserId(principal.getName());
+//        scs.setState(1);
+
+        SocietyCreateStatus scs = societyCreateStatusRepository.findByToSocietyNumberAndFromUserId(
+                society.get().getNumber(),
+                society.get().getOfficerId().getId());
+        scs.setToSocietyNumber(society.get().getNumber());
+        scs.setFromUserId(society.get().getOfficerId().getId());
         scs.setState(1);
+
 
         societyCreateStatusRepository.save(scs);
         societyRepository.save(society.get());
@@ -193,10 +201,14 @@ public class SocietyService {
         Optional<Society> society = societyRepository.findById(number);
         society.get().setEnabled(-1);
 
-        SocietyCreateStatus scs = new SocietyCreateStatus();
-        scs.setToSocietyNumber(number);
-        scs.setFromUserId(principal.getName());
+//        SocietyCreateStatus scs = new SocietyCreateStatus();
+        SocietyCreateStatus scs = societyCreateStatusRepository.findByToSocietyNumberAndFromUserId(
+                society.get().getNumber(),
+                society.get().getOfficerId().getId());
+        scs.setToSocietyNumber(society.get().getNumber());
+        scs.setFromUserId(society.get().getOfficerId().getId());
         scs.setState(-1);
+
 
         if (content.length() == 0) {
             return false;
@@ -205,6 +217,8 @@ public class SocietyService {
         scs.setRejectReason(content);
 
         societyCreateStatusRepository.save(scs);
+
+
         societyRepository.save(society.get());
         return true;
     }

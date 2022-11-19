@@ -33,4 +33,7 @@ public interface SocietyCreateStatusRepository extends JpaRepository<SocietyCrea
             "ON scs.toSocietyNumber = s.number and scs.state = 1 " +
             "WHERE u.id = :userId")
     List<MySocietyList> findMySocietyCreate(@Param("userId") String userId);
+
+    SocietyCreateStatus findByToSocietyNumberAndFromUserId(Integer number, String userId);
+
 }

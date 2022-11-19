@@ -13,4 +13,5 @@ public interface SocietyCategoryRepository extends JpaRepository<SocietyCategory
 
     SocietyCategory findByFromSocietyNumberAndName(Integer number, String name);
 
+
 }
