@@ -1,0 +1,16 @@
+.content-body{
+    position: relative;
+    left: 310px;
+    width: calc(100% - 310px);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s all ease;
+    box-sizing: border-box;
+}
+
+.sidebar.close ~ .content-body,
+.sidebar.close ~ .content-body .content-main-header{
+    left: 95px;
+    width: calc(100% - 95px);
+}

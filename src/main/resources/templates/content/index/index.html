@@ -1,122 +1,246 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layour}">
 <head>
-    <meta charset="UTF-8">
     <title>우동소</title>
 </head>
-<link rel="stylesheet" href="../index.css">
-<body>
 
+<th:block layout:fragment="content">
 
-<th:block th:if="${userInfo == null}">
-    <a href="/user/login">로그인</a> <br>
-    <a href="/user/register">회원가입</a> <br>
-</th:block>
+    <div class="content-body">
 
-<div style="display: flex">
-    <th:block th:each="v: ${mySocietyList}">
-        <div style="border:2px solid orangered;">
+        <!-- Content 헤더 영역 -->
+        <div class="content-main-header">
 
-            <div th:text="${v.societyName}"></div>
-            <th:block th:if="${v.societyProfileUrl == null}">
-                <img src="https://via.placeholder.com/150x150" width="150"/>
+            <!-- Content 헤더-검색창 -->
+            <form action="/" method="get" class="header-search">
+                <input type="text" placeholder="찾고싶은 동아리명을 적어주세요..." name="searchKeyword"
+                       th:value="${searchKeyword}"/>
+                <button>
+                    <i class='bx bx-search'></i>
+                </button>
+            </form>
+
+            <th:block th:if="${userInfo == null}">
+
+                <!-- Content 헤더-유저 토글 -->
+                <div class="header-user" id="user-profile-toggle">
+                    <div class="header-user_img">
+                        <i class='bx bx-plus' ></i>
+                    </div>
+                    <div class="header-user_menu" id="profile-menu">
+                        <ul>
+                            <li>
+                                <a href="/user/login">
+                                    <i class='bx bx-log-in' ></i>
+                                    로그인
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/user/register">
+                                    <i class='bx bx-user-plus' ></i>
+                                    회원가입
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
             </th:block>
-            <th:block th:if="${v.societyProfileUrl != null}">
-                <img th:src="${v.societyProfileUrl}" width="150"/>
+
+            <th:block th:if="${userInfo != null}">
+                <!-- Content 헤더-동아리 등록 버튼 -->
+                <div class="header-society-create" id="society-create-btn">
+                    <button class="header-society-create_btn">
+                        <i class='bx bxs-plus-circle' ></i>
+                        <span>동아리 등록</span>
+                    </button>
+                </div>
+                <!-- Content 헤더-유저 토글 -->
+                <div class="header-user" id="user-profile-toggle">
+                    <div class="header-user_img">
+                        <img th:src="${userInfo.profileUrl}" th:onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP3lC0SfgqCcTGipFh64hddM6xgBYQj90wOA&usqp=CAU';"/>
+                    </div>
+                    <div class="header-user_menu" id="profile-menu">
+                        <ul>
+                            <h1 th:inline="text">[[${userInfo.nickname}]]</h1>
+                            <li>
+                                <form th:action="@{/user/logout}" method="get">
+                                    <button>
+                                        <i class='bx bx-log-in' ></i>
+                                        로그아웃
+                                    </button>
+                                </form>
+                            </li>
+                            <li>
+                                <a href="/user/register">
+                                    <i class='bx bx-user-plus' ></i>
+                                    내 계정
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </th:block>
         </div>
-    </th:block>
-</div>
 
+        <!-- Content 메인 영역 -->
+        <div class="content-main-body">
 
-<th:block th:if="${userInfo != null}">
+            <!-- Content 메인-프로젝트 주제 내용 -->
+            <div class="content-main-body-topic">
+                <div class="content-main-body-topic-content">
+                    <h2>학교생활에 여유를 가지고 즐겨봐요!</h2>
+                    <p>같은 관심사를 가지고 있는 대학교 학우들과 같이 동아리 활동을 해보거나,</p>
+                    <p>학교생활를 졸업하기 전에 개인적으로 즐길 수 있는 취미를 한번 찾아봐요.</p>
+                </div>
+                <div class="content-main-body-topic-img">
+                    <img th:src="@{images/mainimage.png}">
+                </div>
 
-    <h1 th:inline="text">[[${userInfo.nickname}]]님 안녕하세요.</h1>
-    <!--    <h2>[[${#httpServletRequest.remoteUser}]]</h2>-->
-    <img th:src="${userInfo.profileUrl}" width="200" class="img-thumbnail"/>
-    <br>
-    권한: [[${userInfo.role}]] <br>
-    <a href="/user/my-info">내 정보 변경</a> <br>
-    <a href="/user/update-password">비밀번호 변경</a> <br>
+            </div>
 
-    <br>
+            <!-- Content 메인-동아리 목록 -->
+            <table class="content-main-body-list">
+                <thead>
+                <tr>
+                    <th>동아리명</th>
+                    <th>유형</th>
+                    <th>카테고리</th>
+                    <th>위치</th>
+                    <th>간략 소개</th>
+                    <th>상세 소개</th>
+                </tr>
+                </thead>
 
-    <th:block th:if="${userInfo.role != 'ROLE_ADMIN'}">
-        <a href="/society/create">동아리 개설 신청</a> <br>
-        <a href="/user/apply-manager">대학관리자(매니저) 신청</a> <br>
-        <a href="/user/my-create-status">내 동아리 개설 결과 조회</a> <br>
-        <a href="/user/my-apply-status">동아리 가입 신청 결과 조회</a> <br>
-        <a href="/user/my-manager-status">대학 관리자 신청 결과 조회</a> <br>
-        <br>
-    </th:block>
+                <tbody>
+                <tr th:each="society: ${list}">
+                    <td>
+                        <a th:text="${society.name}" th:href="@{/society/detail(number=${society.number})}"></a>
+                    </td>
+                    <td th:text="${society.type}"></td>
+                    <td th:text="${society.category}"></td>
+                    <td th:text="${society.position}"></td>
+                    <td th:text="${society.simpleDesc}"></td>
+                    <td th:text="${society.detailDesc}"></td>
+                </tr>
+                </tbody>
 
-    <th:block th:if="${userInfo.role != 'ROLE_USER'}">
-        <h4>동아리 관리</h4>
-        <a href="/society/status-list">동아리 개설 신청 현황 목록</a> <br>
-        <br>
-    </th:block>
+            </table>
 
-    <th:block th:if="${userInfo.role == 'ROLE_ADMIN'}">
-        <h4>유저 및 동아리 관리</h4>
-        <a href="/user/manager-status-all">대학관리자(매니저) 신청자 명단</a> <br>
-    </th:block>
+            <div class="list-page">
+                <th:block th:each="page: ${#numbers.sequence(startPage, endPage)}">
+                    <a th:if="${page != currentPage}" th:href="@{/static(page= ${page - 1}, searchKeyword= ${param.searchKeyword})}"
+                       th:text="${page}"></a>
+                    <b th:if="${page == currentPage}" th:text="${page}" style="color:red"></b>
+                </th:block>
+            </div>
 
-    <form th:action="@{/user/logout}" method="get">
-        <input type="submit" value="로그아웃"/>
-    </form>
+        </div>
+
+    </div>
+
+    <!-- Content-헤더 동아리 등록 버튼 클릭시 팝업박스 -->
+    <div class="popup-box" id="popup-box">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h2>동아리 등록</h2>
+            </div>
+            <form th:action="@{/society/create}"
+                  method="post"
+                  name="createSocietyForm"
+                  enctype="multipart/form-data"
+                  class="popup-body">
+                <div class="popup-body-wallpaper">
+                    <img id="choice-wallpaper" src="https://kmarket.ro/assets/images/no-image.svg">
+                    <input type="file" id="upload-wallpaper-btn" accept="image/*" name="backgroundImage">
+                    <label for="upload-wallpaper-btn">
+                        <i class='bx bx-image-add'></i> &nbsp;
+                        배경화면을 선택해주세요
+                    </label>
+                </div>
+
+                <div class="popup-body-profile">
+                    <img id="choice-profile" src="https://d2v9ipibika81v.cloudfront.net/uploads/sites/210/Profile-Icon.png">
+                    <input type="file" id="upload-profile-btn" accept="image/*" name="profileImage">
+                    <label for="upload-profile-btn">
+                        <i class='bx bx-camera' ></i>
+                    </label>
+                </div>
+
+                <div class="popup-body-society-panel">
+                    <div class="popup-body-society-left">
+                        <div class="popup-body-society_menu">
+                            <span>동아리 이름</span>
+                            <input type="text" class="popup-body-society_item" placeholder="동아리 이름을 정해주세요" name="name">
+                        </div>
+
+                        <div class="popup-body-society_menu">
+                            <span>동아리 유형</span>
+                            <select class="popup-body-society_item" name="type">
+                                <option value="1">총동아리연합회</option>
+                                <option value="2">중앙동아리</option>
+                                <option value="3">일반동아리</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="popup-body-society-center">
+                        <div class="popup-body-society_menu">
+                            <span>동아리 한 줄 소개</span>
+                            <input type="text" class="popup-body-society_item" placeholder="예시) 바퀴에서 오는 자유" name="simpleDesc">
+                        </div>
+                    </div>
+                    <div class="popup-body-society-right">
+                        <div class="popup-body-society_menu">
+                            <span>카테고리</span>
+                            <select class="popup-body-society_item" name="category">
+                                <option value="0" selected>문화/취미</option>
+                                <option value="1">전시/공연/음악</option>
+                                <option value="2">종교</option>
+                                <option value="3">학술</option>
+                                <option value="4">봉사</option>
+                                <option value="5">체육/레저</option>
+                                <option value="6">창업</option>
+                                <option value="7">기타</option>
+                            </select>
+                        </div>
+
+                        <div class="popup-body-society_menu">
+                            <span>위치</span>
+                            <input type="text" class="popup-body-society_item" placeholder="미지정" name="position">
+                        </div>
+                    </div>
+                    <div class="popup-body-society-bottom">
+                        <div class="popup-body-society-bottom_menu">
+                            <span>동아리 상세 소개</span>
+                            <input type="text" class="popup-body-society_item" placeholder="주당 활동 횟수, 활동 계획 등 자유롭게 입력" name="detailDesc">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="popup-footer">
+                    <button class="popup-footer_btn">신청하기</button>
+                    <button class="popup-footer_btn" onclick="popupClose(event)">취소하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 유저 토글 클릭 모달창 -->
+    <script th:inline="javascript" th:src="@{/js/pages/IndexPage/ProfileModalWindow.js}"></script>
+    <!-- 동아리 등록 모달창 -->
+    <script th:inline="javascript" th:src="@{/js/pages/IndexPage/SocietyCreateModalPopup.js}"></script>
+    <!-- 동아리 등록-배경사진 변경 -->
+    <script th:inline="javascript" th:src="@{/js/pages/IndexPage/UploadWallpaper.js}"></script>
+    <!-- 동아리 등록-프로필사진 변경 -->
+    <script th:inline="javascript" th:src="@{/js/pages/IndexPage/UploadProfile.js}"></script>
+
 </th:block>
 
-<div class="layout">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>동아리명</th>
-            <th>유형</th>
-            <th>카테고리</th>
-            <th>위치</th>
-            <th>프로필</th>
-            <th>프로필배경</th>
-            <th>한줄소개</th>
-            <th>상세소개</th>
-            <th>생성일</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="society: ${list}">
 
 
-            <td>
-                <a th:text="${society.name}" th:href="@{/society/detail(number=${society.number})}"></a>
-            </td>
-            <td th:text="${society.type}"></td>
-            <td th:text="${society.category}"></td>
-            <td th:text="${society.position}"></td>
-            <td><img width="150px" th:src="${society.profileUrl}"></td>
-            <td><img width="150px" th:src="${society.backgroundUrl}"></td>
-            <td th:text="${society.simpleDesc}"></td>
-            <td th:text="${society.detailDesc}"></td>
-            <td th:text="${society.createdAt}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <th:block th:each="page: ${#numbers.sequence(startPage, endPage)}">
-        <a th:if="${page != currentPage}" th:href="@{/(page= ${page - 1}, searchKeyword= ${param.searchKeyword})}"
-           th:text="${page}"></a>
-        <b th:if="${page == currentPage}" th:text="${page}" style="color:red"></b>
-    </th:block>
-    <form action="/" method="get" style="display: flex;">
-        <input style="width:200px;" class="form-control" type="text" name="searchKeyword"
-               th:value="${searchKeyword}"/>
-        <button class="btn btn-primary" type="submit" style="display: inline; margin-left: 8px;">검색</button>
-    </form>
-</div>
 
-<!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
-</body>
 </html>
