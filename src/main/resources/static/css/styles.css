@@ -1,6 +1,9 @@
 @import "reset.css";
 
 @import "component/sidebar/sidebar.css";
+@import "pages/pageCommonCssFolder/common.css";
+
+@import "pages/index/index.css";
 
 @import "pages/users/login/login.css";
 @import "pages/users/register/register.css";
