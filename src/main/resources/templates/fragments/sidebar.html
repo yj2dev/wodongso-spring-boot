@@ -22,7 +22,7 @@
         <div class="sidebar-menu">
             <ul class="sidebar-menu_list">
                 <li class="sidebar-list_item">
-                    <a href="#">
+                    <a th:href="@{/}">
                         <i class='bx bx-message-detail'></i>
                         <span class="text sidebar-item_name">홈</span>
                     </a>
@@ -59,7 +59,7 @@
                 <th:block th:if="${userInfo == null}">
                     <li class="sidebar-list_item">
 
-                        <a href="user/login">
+                        <a th:href="@{/user/login}">
                             <i class='bx bx-log-in' ></i>
                             <span class="text sidebar-item_name">로그인</span>
                         </a>

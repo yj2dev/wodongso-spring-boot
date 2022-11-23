@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layour}">
+<head>
+    <title>우동소-내 계정</title>
+</head>
+
+<th:block layout:fragment="content">
+
+    <div class="content-body profile">
+
+        <div class="content-profile-body">
+            <div class="content-profile-top">
+                <div class="content-profile-info-body">
+                    <div class="content-profile-img">
+                       <img th:src="${userInfo.profileUrl}" th:onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP3lC0SfgqCcTGipFh64hddM6xgBYQj90wOA&usqp=CAU';">
+                    </div>
+                    <div class="content-profile-student_info">
+                        <p class="text user-nickname"> 안녕하세요 [[${userInfo.nickname}]] 님</p>
+                        <th:block th:if="${userInfo.role == 'ROLE_ADMIN'}">
+                            <p class="text user-role">운영자</p>
+                        </th:block>
+                        <th:block th:if="${userInfo.role == 'ROLE_MANAGER'}">
+                            <p class="text user-role"> [[${userInfo.university}]] 관리자 </p>
+                        </th:block>
+                        <th:block th:if="${userInfo.role == 'ROLE_USER'}">
+                            <p class="text user-role"> [[${userInfo.university}]] 학생 </p>
+                        </th:block>
+                        <p th:text="${userInfo.classOf}" class="user-classOf"></p>
+                    </div>
+                </div>
+                <div class="content-profile-personal">
+                    <button class="content-profile-personal-filed" id="user-info-change">
+                        <i class='bx bx-edit-alt'></i>
+                        <span>내 정보 변경</span>
+                    </button>
+                    <button class="content-profile-personal-filed" id="password-change">
+                        <i class='bx bx-lock-alt'></i>
+                        <span>비밀번호 변경</span>
+                    </button>
+                    <button class="content-profile-personal-filed" id="manager-apply">
+                        <i class='bx bx-group'></i>
+                        <span>대학교 관리자 신청</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-profile-bottom">
+
+                <div>Hello</div>
+                <div>Hello</div>
+                <div>Hello</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="profile-page-popup-box" id="user-info-popup">
+        <div class="profile-page-popup-content">
+            <div class="profile-page-popup-content-header">
+                <h2>내 정보 변경</h2>
+                <i class='bx bx-x' id="user-info-popup-close"></i>
+            </div>
+            <form th:action="@{/user/my-info}"
+                  method="post"
+                  name="myInfoForm"
+                  enctype="multipart/form-data"
+                  class="profile-page-popup-content-info-body">
+                <div class="profile-page-popup-content-info-top">
+                    <div class="profile-page-popup-content-info-change-profile">
+                        <img id="change-profile" th:src="${userInfo.profileUrl}" th:onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP3lC0SfgqCcTGipFh64hddM6xgBYQj90wOA&usqp=CAU';">
+                        <input type="file" id="change-profile-btn" accept="image/*" name="profileImage">
+                        <label for="change-profile-btn">
+                            <i class='bx bx-camera' ></i>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="profile-page-popup-content-info-line"></div>
+
+                <div class="profile-page-popup-content-info-bottom">
+
+                    <div class="profile-page-popup-content-info-change-university-info">
+                        <div class="profile-page-popup-content-info-change-university-filed">
+                            <span>지역</span>
+                            <select id="region" name="region" onfocus="value='';this.style.color='#000'">
+                                <option th:value="${userInfo.region}">[[${userInfo.region}]]</option>
+                                <optgroup label="특별시">
+                                    <option value="서울">서울특별시</option>
+                                </optgroup>
+
+                                <optgroup label="광역시">
+                                    <option value="부산">부산광역시</option>
+                                    <option value="대구">대구광역시</option>
+                                    <option value="인천">인천광역시</option>
+                                    <option value="광주">광주광역시</option>
+                                    <option value="대전">대전광역시</option>
+                                    <option value="울산">울산광역시</option>
+                                </optgroup>
+
+                                <optgroup label="특별자치시">
+                                    <option value="세종">세종특별자치시</option>
+                                </optgroup>
+
+                                <optgroup label="도">
+                                    <option value="강원">강원도</option>
+                                    <option value="경기">경기도</option>
+                                    <option value="경남">경상남도</option>
+                                    <option value="경북">경상북도</option>
+                                    <option value="전남">전라남도</option>
+                                    <option value="전북">전라북도</option>
+                                    <option value="충남">충청남도</option>
+                                    <option value="충북">충청북도</option>
+                                </optgroup>
+
+                                <optgroup label="특별자치도">
+                                    <option value="제주">제주도</option>
+                                </optgroup>
+
+                            </select>
+                        </div>
+                        <div class="profile-page-popup-content-info-change-university-filed">
+                            <span>학교</span>
+                            <select id="school" name="university" onfocus="value='';this.style.color='#000'">
+                                <option th:value="${userInfo.university}">[[${userInfo.university}]]</option>
+                            </select>
+                        </div>
+                        <div class="profile-page-popup-content-info-change-university-filed">
+                            <span>학과</span>
+                            <select id="major" name="major" onfocus="value='';this.style.color='#000'">
+                                <option th:value="${userInfo.major}">[[${userInfo.major}]]</option>
+                            </select>
+                        </div>
+                        <div class="profile-page-popup-content-info-change-university-filed">
+                            <span>학번</span>
+                            <input type="text" th:value="${userInfo.classOf}" onfocus="this.value='';this.style.color='#000'" name="classOf">
+                        </div>
+                    </div>
+                    <div class="profile-page-popup-content-info-change-university-info">
+                        <div class="profile-page-popup-content-info-change-university-filed">
+                            <span>아이디</span>
+                            <input type="text" th:value="${userInfo.id}" onfocus="this.value='아이디는 변경 불가능합니다.';this.style.color='#ff3860'"  name="id" readonly>
+                        </div>
+                        <div class="profile-page-popup-content-info-change-university-filed">
+                            <span>이름</span>
+                            <input type="text" th:value="${userInfo.name}" onfocus="this.value='';this.style.color='#000'" name="name">
+                        </div>
+                        <div class="profile-page-popup-content-info-change-university-filed">
+                            <span>닉네임</span>
+                            <input type="text" th:value="${userInfo.nickname}" onfocus="this.value='';this.style.color='#000'" name="nickname">
+                        </div>
+                        <div class="profile-page-popup-content-info-change-university-filed">
+                            <span>연락처</span>
+                            <input type="text" th:value="${userInfo.contact}" onfocus="this.value='';this.style.color='#000'" name="contact">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="popup-content-footer">수정하기</button>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="profile-page-popup-box" id="password-change-popup">
+        <div class="profile-page-popup-content">
+            <div class="profile-page-popup-content-header">
+                <h2>비밀번호 변경</h2>
+                <i class='bx bx-x' id="password-change-popup-close"></i>
+            </div>
+            <form th:action="@{/user/update-password}" method="post" class="profile-page-popup-content-info-body">
+
+                <div class="profile-page-content-password-filed">
+                    <span>현재 비밀번호</span>
+                    <input type="password" name="currentPassword">
+                </div>
+
+                <div class="profile-page-content-password-filed">
+                    <span>새 비밀번호</span>
+                    <input type="password" name="updatePassword">
+                </div>
+
+                <div class="profile-page-content-password-filed">
+                    <span>새 비밀번호 확인</span>
+                    <input type="password" name="updatePasswordCheck">
+                </div>
+
+                <button class="popup-content-footer">비밀번호 변경</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="profile-page-popup-box" id="manager-apply-popup">
+        <div class="profile-page-popup-content">
+            <div class="profile-page-popup-content-header">
+                <h2>대학교 관리자 신청</h2>
+                <i class='bx bx-x' id="manager-apply-popup-close"></i>
+            </div>
+            <form th:action="@{/user/apply-manager}"
+                  name="applyManagerForm"
+                  enctype="multipart/form-data"
+                  method="post"
+                  class="profile-page-popup-content-info-body">
+
+                <div class="profile-page-content-manager-school">
+                    <span>[[${userInfo.university}]]</span>
+                </div>
+
+                <div class="profile-page-content-manager-upload">
+                    <div class="upload-file-name">
+                        학교 인증 사진 또는 파일
+                    </div>
+                    <div class="upload-file">
+                        <input type="file" accept="image/*" id="proof-image" name="proofImage">
+                        <label for="proof-image"> 등록 </label>
+                    </div>
+                </div>
+
+                <div class="profile-page-content-manager-filed">
+                    <span> 소속 학교 재학생임을 인증 할 수 있는 자료를 첨부해주세요. </span>
+                    <span> 예) 학생증, 재학증명서 필수 포함 정보(이름, 학교명, 학번) </span>
+                </div>
+
+                <button class="popup-content-footer">신청하기</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- 모달창 JS 파일 -->
+    <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/UserInfoChange/UserInfoModalPopup.js}"></script>
+    <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/PasswordChange/PasswordChangeModalPopup.js}"></script>
+    <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/ManagerApply/ManagerApplyModalPopup.js}"></script>
+
+    <!-- 내 정보 변경 프로필 사진 변경 JS 파일 -->
+    <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/UserInfoChange/ChangeProfile.js}"></script>
+
+    <!-- 대학교 정보 JS 파일 -->
+    <script th:inline="javascript" th:src="@{/js/pages/RegisterPage/GetSchoolData.js}"></script>
+
+    <script>
+        const proofImagePath = document.getElementById("proof-image");
+
+        proofImagePath.addEventListener('change', (event) => {
+            let uploadFileName = event.target.files[0].name;
+            let fileName = document.querySelector(".upload-file-name");
+
+            fileName.innerHTML = uploadFileName;
+
+        })
+
+    </script>
+
+
+</th:block>
+
+
+
+
+</html>

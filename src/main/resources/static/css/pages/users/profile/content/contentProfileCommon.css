@@ -1,0 +1,10 @@
+.content-profile-body{
+    width: 75%;
+    height: 80vh;
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

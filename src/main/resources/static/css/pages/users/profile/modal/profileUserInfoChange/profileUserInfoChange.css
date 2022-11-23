@@ -1,0 +1,104 @@
+/* 내 정보 변경 - 프로필 사진 변경 부분 */
+.profile-page-popup-content-info-body .profile-page-popup-content-info-top{
+    display: flex;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-page-popup-content-info-top .profile-page-popup-content-info-change-profile{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+.profile-page-popup-content-info-top .profile-page-popup-content-info-change-profile img{
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-page-popup-content-info-top .profile-page-popup-content-info-change-profile input[type="file"]{
+    display: none;
+}
+.profile-page-popup-content-info-top .profile-page-popup-content-info-change-profile label{
+    width: 100%;
+    height: 15%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    left: 0;
+    bottom: 0px;
+    display: flex;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+}
+
+.profile-page-popup-content-info-top .profile-page-popup-content-info-change-profile label:hover{
+    background-color: rgba(77, 132, 226, 0.6);
+}
+
+/* 내 정보 변경 - 경계선 */
+.profile-page-popup-content-info-line{
+    width: 80%;
+    margin: 35px 0 20px 0;
+    border: 1px solid #dddddd;
+}
+
+/* 내 정보 변경 - 계정 정보 변경 */
+.profile-page-popup-content-info-body .profile-page-popup-content-info-bottom{
+    display: flex;
+    width: 80%;
+    height: 300px;
+    justify-content: space-between;
+}
+
+.profile-page-popup-content-info-bottom .profile-page-popup-content-info-change-university-info{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.profile-page-popup-content-info-change-university-info .profile-page-popup-content-info-change-university-filed{
+    width: 90%;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+}
+.profile-page-popup-content-info-change-university-info .profile-page-popup-content-info-change-university-filed span{
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 0 5px 5px;
+}
+.profile-page-popup-content-info-change-university-filed select,
+.profile-page-popup-content-info-change-university-filed input{
+    height: 100%;
+    padding: 5px 10px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s all ease-in;
+}
+.profile-page-popup-content-info-change-university-filed select{
+    cursor: pointer;
+}
+.profile-page-popup-content-info-change-university-filed select,
+.profile-page-popup-content-info-change-university-filed input[value]{
+    color: #aaa;
+    font-weight: 500;
+}
+
+.profile-page-popup-content-info-change-university-filed select:focus,
+.profile-page-popup-content-info-change-university-filed input:focus{
+    border: 1px solid #4d84e2;
+}
+

@@ -80,9 +80,8 @@ public class UserController {
     ) {
         if (userService.userUpdatePassword(principal, currentPassword, updatePassword, updatePasswordCheck) == true) {
             return "redirect:/user/login";
-        } else {
-            return "redirect:/user/update-password?fail=true";
         }
+        return "redirect:/user/profile";
     }
 
     @GetMapping("/my-info")
@@ -97,7 +96,7 @@ public class UserController {
                                User user,
                                MultipartFile profileImage) throws Exception {
         userService.userUpdateInfo(principal, user, profileImage);
-        return "redirect:/";
+        return "redirect:/user/profile";
     }
 
 
@@ -132,7 +131,7 @@ public class UserController {
     public String userApplyManagerDo(Principal principal, MultipartFile proofImage) throws IOException {
         userService.userUploadProof(principal, proofImage);
 
-        return "redirect:/";
+        return "redirect:/user/profile";
     }
 
     @GetMapping("/info")
@@ -164,4 +163,27 @@ public class UserController {
         userService.userRegister(user, profileImage);
         return "redirect:/user/login";
     }
+
+    @GetMapping("/profile")
+    public String userAccount(Model model, Principal principal){
+
+        User userInfo = userService.userInfo(principal.getName());
+        List<SocietyCreateWithUser> uws = userService.myCreateStatus(principal);
+        List<SocietyRecruitWithUser> srw = userService.myApplyStatus(principal);
+        UserManagerStatus ums = userService.myManagerStatus(principal);
+        User user = userService.userInfo(principal.getName());
+
+        // 사용자 정보
+        model.addAttribute("userInfo", userInfo);
+        // 동아리 신청 결과 정보
+        model.addAttribute("listCreateStatus", uws);
+        // 동아리 가입 신청 결과 정보
+        model.addAttribute("listApplyStatus", srw);
+        // 학교 관리자 신청 결과 정보
+        model.addAttribute("listUniversityManager", ums);
+        model.addAttribute("universityManager", user.getUniversity());
+
+        return "content/user/profile/userProfile";
+    }
+
 }
