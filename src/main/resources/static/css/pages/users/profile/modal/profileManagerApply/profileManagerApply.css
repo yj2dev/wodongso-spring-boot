@@ -1,0 +1,71 @@
+.profile-page-content-manager-school,
+.profile-page-content-manager-upload,
+.profile-page-content-manager-filed{
+    display: flex;
+    width: 70%;
+    height: 100px;
+    align-items: center;
+}
+
+.profile-page-content-manager-school{
+    height: 0;
+    margin: 30px 0;
+}
+
+.profile-page-content-manager-upload{
+    height: 50px;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.profile-page-content-manager-upload .upload-file-name{
+    width: 70%;
+    height: 100%;
+    background-color: #fff;
+    color: #aaaaaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+}
+.profile-page-content-manager-upload .upload-file{
+    width: 31%;
+    height: 100%;
+    background-color: #5995fd;
+    color: #fff;
+}
+.profile-page-content-manager-upload .upload-file input[type="file"]{
+    display: none;
+}
+
+.profile-page-content-manager-upload .upload-file label{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s all ease-in;
+}
+
+.profile-page-content-manager-upload .upload-file label:hover{
+    background-color: #4d84e2;
+}
+
+.profile-page-content-manager-filed{
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+
+.profile-page-content-manager-school span{
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.profile-page-content-manager-filed span:first-child{
+    color: #ff3860;
+    font-weight: 500;
+    margin-bottom: 10px;
+}

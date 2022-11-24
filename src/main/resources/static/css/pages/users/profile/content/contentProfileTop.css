@@ -1,0 +1,91 @@
+.content-profile-top{
+    display: flex;
+    width: 90%;
+    height: 40%;
+}
+
+.content-profile-top .content-profile-info-body{
+    width: 40%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-profile-top .content-profile-info-body .content-profile-img{
+    width: 150px;
+    height: 150px;
+    margin-right: 20px;
+}
+
+.content-profile-top .content-profile-info-body .content-profile-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.content-profile-top .content-profile-info-body .content-profile-student_info{
+    width: 250px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-top: 10px;
+    padding-right: 25px;
+    border-right: 1px solid #e6e6e6;
+}
+
+.content-profile-top .content-profile-info-body .content-profile-student_info .text{
+    margin-bottom: 5px;
+}
+
+.content-profile-top .content-profile-info-body .content-profile-student_info .user-nickname{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.content-profile-top .content-profile-info-body .content-profile-student_info .user-role,
+.content-profile-top .content-profile-info-body .content-profile-student_info .user-classOf {
+    font-size: 14px;
+    font-weight: 400;
+}
+.content-profile-top .content-profile-info-body .content-profile-student_info .user-role{
+    color: #4d84e2;
+}
+
+.content-profile-top .content-profile-personal{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: 100%;
+    justify-content: space-evenly;
+    padding: 0.5rem 2rem;
+    box-sizing: border-box;
+}
+
+.content-profile-top .content-profile-personal .content-profile-personal-filed{
+    display: flex;
+    width: 200px;
+    height: 20px;
+    align-items: center;
+    font-size: 18px;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: #707070;
+    transition: 0.4s all ease;
+}
+
+.content-profile-top .content-profile-personal .content-profile-personal-filed:hover{
+    color: #4d84e2;
+}
+
+.content-profile-top .content-profile-personal .content-profile-personal-filed i{
+    margin-right: 5px;
+}
+
+.content-profile-top .content-profile-personal .content-profile-personal-filed span{
+    margin-top: 3px;
+}

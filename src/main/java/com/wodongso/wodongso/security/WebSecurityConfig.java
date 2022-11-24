@@ -36,6 +36,7 @@ public class WebSecurityConfig {
                                         "/user/my-info",
                                         "/user/update-password",
                                         "/user/apply-manager",
+                                        "/user/profile",
                                         "/society/create",
                                         "/society/apply"
                                 ).hasAnyRole("USER", "MANAGER", "ADMIN")

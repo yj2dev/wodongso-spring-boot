@@ -14,3 +14,8 @@
     left: 95px;
     width: calc(100% - 95px);
 }
+
+.content-body.profile{
+    align-items: center;
+    justify-content: center;
+}
