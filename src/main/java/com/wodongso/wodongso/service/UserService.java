@@ -59,6 +59,16 @@ public class UserService {
         return userManagerStatusRepository.findByFromUserId(principal.getName());
     }
 
+    public boolean userManagerDelete(String id) {
+        try {
+            userManagerStatusRepository.deleteById(id);
+            return true;
+        } catch (Exception err) {
+            return false;
+        }
+    }
+
+
     public boolean userManagerAccept(String id) {
         UserManagerStatus ums = userManagerStatusRepository.findByFromUserId(id);
         ums.setState(1);

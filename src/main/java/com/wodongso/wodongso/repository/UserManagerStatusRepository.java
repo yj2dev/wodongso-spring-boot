@@ -19,4 +19,6 @@ public interface UserManagerStatusRepository extends JpaRepository<UserManagerSt
             "INNER JOIN UserManagerStatus ums " +
             "ON u.id = ums.fromUserId")
     List<ManagerWithUser> findAllManagerStatus();
+
+    UserManagerStatus deleteById(String id);
 }

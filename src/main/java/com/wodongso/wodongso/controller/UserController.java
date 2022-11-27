@@ -36,7 +36,7 @@ public class UserController {
     // 유저 아이디 중복 확인
     @GetMapping("/id-check")
     @ResponseBody
-    public boolean userIsId(@RequestParam String id){
+    public boolean userIsId(@RequestParam String id) {
         return userService.isId(id);
     }
 
@@ -100,6 +100,13 @@ public class UserController {
         return "redirect:/";
     }
 
+
+    //    매니저 신청자 제거
+    @PostMapping("/manager-delete/{id}")
+    public String userManagerDelete(@PathVariable String id) {
+        userService.userManagerDelete(id);
+        return "redirect:/user/manager-status-all";
+    }
 
     @PostMapping("/manager-accept/{id}")
     public String userManagerAccept(@PathVariable String id) {
