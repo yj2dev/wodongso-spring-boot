@@ -136,7 +136,7 @@ public class UserController {
     public String userApplyManagerDo(Principal principal, MultipartFile proofImage) throws IOException {
         userService.userUploadProof(principal, proofImage);
 
-        return "redirect:/";
+        return "redirect:/user/my-info";
     }
 
     @GetMapping("/info")

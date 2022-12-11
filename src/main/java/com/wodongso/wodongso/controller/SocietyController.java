@@ -186,12 +186,7 @@ public class SocietyController {
                                   MultipartFile backgroundImage,
                                   Principal principal
     ) throws Exception {
-        Society societyOrigin = societyService.societyDetail(number);
-        societyOrigin.setSimpleDesc(society.getSimpleDesc());
-        societyOrigin.setDetailDesc(society.getDetailDesc());
-        societyOrigin.setPosition(society.getPosition());
-        societyOrigin.setEnabled(society.getEnabled());
-        societyService.societyCreate(societyOrigin, profileImage, backgroundImage, principal);
+        societyService.societyUpdate(number, society, profileImage, backgroundImage, principal);
         return "redirect:/";
     }
 

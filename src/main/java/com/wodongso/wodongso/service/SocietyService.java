@@ -254,6 +254,42 @@ public class SocietyService {
         societyRepository.deleteById(number);
     }
 
+
+
+    //    동아리 정보 수정
+    public void societyUpdate(Integer number,
+                              Society society,
+                              MultipartFile profileImage,
+                              MultipartFile backgroundImage,
+                              Principal principal) throws IOException {
+        Society societyOrigin = societyRepository.findById(number).get();
+        societyOrigin.setSimpleDesc(society.getSimpleDesc());
+        societyOrigin.setDetailDesc(society.getDetailDesc());
+        societyOrigin.setPosition(society.getPosition());
+
+        String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+
+        if (!profileImage.isEmpty()) {
+            UUID profileUuid = UUID.randomUUID();
+            String profileImageName = profileUuid + "_" + profileImage.getOriginalFilename() + ".jpg";
+            File saveProfileImage = new File(filePath, profileImageName);
+            profileImage.transferTo(saveProfileImage);
+            societyOrigin.setProfileUrl("/files/" + profileImageName);
+        }
+
+        if (!backgroundImage.isEmpty()) {
+            UUID backgroundUuid = UUID.randomUUID();
+            String backgroundImageName = backgroundUuid + "_" + backgroundImage.getOriginalFilename() + ".jpg";
+            File saveBackgroundImage = new File(filePath, backgroundImageName);
+            backgroundImage.transferTo(saveBackgroundImage);
+            societyOrigin.setBackgroundUrl("/files/" + backgroundImageName);
+        }
+
+
+
+
+        societyRepository.save(societyOrigin);
+    }
     //    동아리 개설 신청
     public void societyCreate(Society society,
                               MultipartFile profileImage,

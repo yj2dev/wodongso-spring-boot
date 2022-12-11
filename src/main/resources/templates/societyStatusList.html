@@ -17,7 +17,8 @@
         <div th:text="${v.category}"></div>
         <div th:text="${v.simpleDesc}"></div>
         <div th:text="${v.detailDesc}"></div>
-        <div th:text="${v.enabled}"></div>
+<!--        <div th:text="${v.profileUrl}"></div>-->
+
 
         <form th:action="@{/society/accept/{id}(id = ${v.number})}"
               method="post">
