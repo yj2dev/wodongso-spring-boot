@@ -1,0 +1,61 @@
+/* 동아리 게시물 리스트 */
+.society-body .society-post .society-post-category-content{
+    width: 95%;
+    height: 100%;
+    margin-top: 10px;
+    overflow: auto;
+}
+.society-body .society-post .society-post-category-content::-webkit-scrollbar{
+    width: 8px;
+}
+.society-body .society-post .society-post-category-content::-webkit-scrollbar-thumb{
+    height: 30%;
+    background: #5995fd;
+    border-radius: 10px;
+}
+.society-body .society-post .society-post-category-content::-webkit-scrollbar-track{
+    background: rgba(33, 122, 244, 0.1);
+}
+.society-body .society-post .society-post-category-content table{
+    width: 100%;
+    height: auto;
+    text-align: left;
+    table-layout: fixed;
+}
+.society-body .society-post .society-post-category-content table thead tr {
+    font-weight: bold;
+}
+
+.society-body .society-post .society-post-category-content table thead th,
+.society-body .society-post .society-post-category-content table tbody td{
+    padding: 10px 15px;
+}
+.society-body .society-post .society-post-category-content table thead tr,
+.society-body .society-post .society-post-category-content table tbody tr{
+    border-bottom: 1px solid #ddd;
+}
+
+.society-body .society-post .society-post-category-content table thead tr th:first-child{
+    width: 50px;
+}
+.society-body .society-post .society-post-category-content table thead tr th:nth-child(2){
+    width: 150px;
+}
+.society-body .society-post .society-post-category-content table thead tr th:nth-child(3){
+    width: 300px;
+    overflow: hidden;
+}
+.society-body .society-post .society-post-category-content table tbody tr td:nth-child(3){
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.society-body .society-post .society-post-category-content table tbody tr:nth-child(odd){
+    background-color: #f3f3f3;
+}
+.society-body .society-post .society-post-category-content table tbody tr {
+    color: #333333;
+}
+.society-body .society-post .society-post-category-content table tbody tr td a:hover{
+    color: #5995fd;
+}

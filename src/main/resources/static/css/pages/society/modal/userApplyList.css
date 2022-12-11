@@ -1,0 +1,117 @@
+/* 가입신청자 조회 모달창 */
+.recruit-user-filed{
+    width: 80%;
+    min-height: 180px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 1px 4px #ddd;
+    border-radius: 10px;
+}
+.recruit-user-filed:last-child{
+    margin: 0;
+}
+.recruit-user-profile-img{
+    width: 40%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #ddd;
+}
+.recruit-user-profile-img img{
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.recruit-user-profile-info{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+}
+.recruit-user-profile-info span{
+    margin-bottom: 5px;
+}
+
+.recruit-user-profile-info .recruit-user-profile-info-apply-btn{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.recruit-user-profile-info .recruit-user-profile-info-apply-btn .cancel-on.active,
+.recruit-user-profile-info .recruit-user-profile-info-apply-btn .accept-box.active{
+    display: none;
+    justify-content: end;
+}
+
+.recruit-user-profile-info .recruit-user-profile-info-apply-btn button{
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 15px;
+    color: #ffffff;
+    border: none;
+    outline: none;
+    background-color: #5995fd;
+    transition: 0.5s all ease-in-out;
+}
+.recruit-user-profile-info .recruit-user-profile-info-apply-btn button:hover{
+    background-color: #4d84e2;
+}
+.recruit-user-profile-info .recruit-user-profile-info-apply-btn form{
+    margin-right: 15px;
+}
+.recruit-user-profile-info .recruit-user-profile-info-apply-btn form:last-child{
+    margin: 0;
+}
+
+.recruit-user-profile-info-apply-cancel{
+    width: 20%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    transition: 0.3s all ease;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.recruit-user-profile-info-apply-cancel.active{
+    width: 100%;
+    visibility: visible;
+    opacity: 1;
+}
+
+.recruit-user-profile-info-apply-cancel input{
+    width: 60%;
+    border: none;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+.recruit-user-profile-info-apply-cancel .recruit-user-profile-info-apply-cancel-btn{
+    width: 40%;
+    height: 100%;
+    display: flex;
+}
+.recruit-user-profile-info-apply-cancel .recruit-user-profile-info-apply-cancel-btn button{
+    width: 50%;
+    height: 100%;
+    border-radius: 0;
+    font-size: 12px;
+}
+
+.recruit-user-profile-info-apply-cancel .recruit-user-profile-info-apply-cancel-btn button:last-child{
+    background-color: #ff3860;
+    border-radius: 0 4px 4px 0;
+}

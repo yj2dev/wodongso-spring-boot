@@ -88,13 +88,13 @@ public class SocietyController {
     @PostMapping("/accept/{number}")
     public String societyCreateAccept(@PathVariable Integer number, Principal principal) {
         societyService.societyCreateAccept(number, principal);
-        return "redirect:/society/status-list";
+        return "redirect:/user/profile";
     }
 
     @PostMapping("/reject/{number}")
     public String societyCreateReject(@PathVariable Integer number, Principal principal, String content) {
         societyService.societyCreateReject(number, content, principal);
-        return "redirect:/society/status-list";
+        return "redirect:/user/profile";
     }
 
 
@@ -190,6 +190,7 @@ public class SocietyController {
         societyOrigin.setSimpleDesc(society.getSimpleDesc());
         societyOrigin.setDetailDesc(society.getDetailDesc());
         societyOrigin.setPosition(society.getPosition());
+        societyOrigin.setEnabled(society.getEnabled());
         societyService.societyCreate(societyOrigin, profileImage, backgroundImage, principal);
         return "redirect:/";
     }

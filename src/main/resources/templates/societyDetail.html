@@ -1,138 +1,308 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layour}">
 <head>
-    <meta charset="UTF-8">
     <title th:text="${society.name}"></title>
-
 </head>
-<body>
-<a href="/">우동소</a>
 
-<div th:replace="layout/header" :: headerFragment></div>
+<th:block layout:fragment="content">
 
-<h2 th:text="${society.name}"></h2>
-<h3 th:text="${society.simpleDesc}"></h3>
-<div th:text="${society.detailDesc}"></div>
-<h3 th:text="${society.officerId.getNickname()}"></h3>
+    <div class="content-body">
 
-<th:block th:if="${society.officerId.getId() != #httpServletRequest.remoteUser}">
-    <button th:value="${society.number}"
-            onclick="onClickSocietyApply(this.value)">
-        가입 신청
-    </button>
-</th:block>
+        <div class="content-main-body">
 
-<th:block th:if="${society.officerId.getId() == #httpServletRequest.remoteUser}">
-    <button th:onclick="|location.href='@{/society/update/{number}(number = ${society.number})}'|">수정</button>
-    <button th:onclick="|location.href='@{/society/delete(number=${society.number})}'|">삭제</button>
-    <br>
-    <button onclick="onClickShowSocietyApplyList()">가입신청자 조회</button>
-    <div class="society_apply_list" style="display: none">
-        <div th:each="v: ${recruitUserList}">
-            <img th:src="${v.userProfileUrl}" style="width: 150px; object-fit: cover">
-            <div th:text="${v.uId}"></div>
-            <div th:text="${v.societyNumber}"></div>
-            <div th:text="${v.userId}"></div>
-            <div th:text="${v.userName}"></div>
-            <div th:text="${v.userUniversity}"></div>
-            <div th:text="${v.userMajor}"></div>
-            <div th:text="${v.userContact}"></div>
-            <div th:text="${v.state}"></div>
-            <div th:text="${v.rejectReason}"></div>
-            <div th:text="${v.createdAt}"></div>
+            <div class="society-thumbnail">
+                <img th:src="${society.backgroundUrl}" th:onerror="this.style.display='none'" alt="SocietyThumbnail">
+                <h2 th:text="${society.name}"></h2>
+                <div class="society-thumbnail-filed-button">
+                    <th:block th:if="${society.officerId.getId() == #httpServletRequest.remoteUser}">
+                        <button id="society-update-btn">수정</button>
+                        <button th:onclick="|location.href='@{/society/delete(number=${society.number})}'|">삭제</button>
+                    </th:block>
+                </div>
+            </div>
 
+            <div class="society-body">
+                <!-- 동아리 정보 -->
+                <div class="society-info">
+                    <div class="society-info-filed">
+                        <h2>동아리 회장</h2>
+                        <span th:text="${society.officerId.getNickname()}"></span>
+                    </div>
+                    <div class="society-info-filed">
+                        <h2>동아리 장소</h2>
+                        <span th:text="${society.position}"></span>
+                    </div>
+                    <div class="society-info-filed">
+                        <h2>동아리 상세 설명</h2>
+                        <span th:text="${society.detailDesc}"></span>
+                    </div>
+                    <div class="society-info-filed">
+                        <h2>동아리 간략한 설명</h2>
+                        <span th:text="${society.simpleDesc}"></span>
+                    </div>
 
-            <form th:action="@{/society/recruit/accept}"
-                  method="post">
-                <input type="text" name="uid" th:value="${v.uId}" readonly style="display: none">
-                <input type="text" name="number" th:value="${v.societyNumber}" readonly style="display: none">
+                    <div class="society-info-filed button">
+                        <th:block th:if="${society.officerId.getId() != #httpServletRequest.remoteUser}">
+                            <button th:value="${society.number}"
+                                    onclick="onClickSocietyApply(this.value)">
+                                가입 신청
+                            </button>
+                        </th:block>
 
-                <button formmethod="post" type="submit" class="btn btn-md btn-primary">수락</button>
-            </form>
-            <form th:action="@{/society/recruit/reject}"
-                  method="post">
-                <input type="text" name="uid" th:value="${v.uId}" readonly style="display: none">
-                <input type="text" name="number" th:value="${v.societyNumber}" readonly style="display: none">
+                        <th:block th:if="${society.officerId.getId() == #httpServletRequest.remoteUser}">
+                            <button class="show-list-btn" onclick="SupApplyList()">가입신청자 조회</button>
+                        </th:block>
+                    </div>
 
-                <button id="rejectBtn" type="submit" class="btn btn-md btn-danger">거절</button>
-                <input type="text" name="content" class="form-control" style="width: 200px;"
-                       onkeyup="onChangeReject(this.value)">
+                </div>
+
+                <!-- 동아리 게시물 영역 -->
+                <div class="society-post">
+
+                    <div class="society-post-category-header">
+
+                        <!-- 카테고리 내용 -->
+                        <div class="society-post-category-header-list">
+                            <div th:each="v: ${categoryList}" class="society-post-category-header-list-btn">
+                                <form th:action="@{/society/detail}" method="get">
+                                    <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
+                                    <input type="text" name="cid" th:value="${v.id}" readonly style="display: none">
+                                    <button type="submit">[[${v.name}]]</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="society-post-category-header-writing-btn">
+                            <button th:value="${#httpServletRequest.remoteUser}" onclick="postWritingBtn(this.value)">글쓰기</button>
+
+                            <!-- 헤더-카테고리 추가영역(동아리 회장만 뷰 활성화) -->
+                            <th:block th:if="${society.officerId.getId() == #httpServletRequest.remoteUser}">
+                                <form th:action="@{/society/category/create}" method="post">
+                                    <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
+                                    <div class="society-post-category-header-writing-filed">
+                                        <input type="text" name="name" placeholder="카테고리 추가 내용을 적어주세요..">
+                                        <button type="submit">추가</button>
+                                    </div>
+                                </form>
+                            </th:block>
+                        </div>
+                    </div>
+
+                    <!-- 게시물 내용 -->
+                    <div class="society-post-category-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>제목</th>
+                                    <th>내용</th>
+                                    <th>작성자</th>
+                                    <th>작성일</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="list: ${contentList}">
+                                    <td th:text="${list.id}"></td>
+                                    <td>
+                                        <a th:text="${list.title}" th:href="@{/society/category/detail(scid=${list.id})}"></a>
+                                    </td>
+                                    <td>[[${list.content}]]</td>
+                                    <td th:text="${list.writerId}"></td>
+                                    <td th:text="${list.createdAt}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 글쓰기 모달창 -->
+    <div class="profile-page-popup-box" id="writing-popup">
+        <div class="profile-page-popup-content">
+            <div class="profile-page-popup-content-header">
+                <h2>글쓰기</h2>
+                <i class='bx bx-x' id="writing-popup-close"></i>
+            </div>
+            <form th:action="@{/society/category-board/write}" method="post"
+                  enctype="multipart/form-data"
+                  class="profile-page-popup-content-info-body">
+                <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
+                <input type="text" name="categoryId" th:value="${currentCategoryId}" readonly style="display: none">
+
+                <div class="writing-popup-filed">
+                    <span>제목 </span>
+                    <input type="text" name="title" placeholder="제목을 입력해주세요...">
+                </div>
+                <div class="writing-popup-filed content">
+                    <span>내용 </span>
+                    <textarea name="content"></textarea>
+                </div>
+
+                <div class="writing-popup-file-filed">
+                    <div class="img-box" id="images"></div>
+                    <input type="file" accept="image/*" id="multiple-file" onchange="preview()" name="files" multiple>
+                    <label for="multiple-file">
+                        <i class='bx bx-upload'></i>
+                        파일업로드
+                    </label>
+                    <span id="num-of-files">선택된 파일이 없습니다</span>
+                </div>
+
+                <button class="post-btn">작성하기</button>
             </form>
         </div>
     </div>
-</th:block>
 
-<div style="display: flex; gap:24px;">
+    <!-- 신청자 조회 모달창 -->
+    <div class="profile-page-popup-box" id="sub-apply-list-popup">
+        <div class="profile-page-popup-content">
+            <div class="profile-page-popup-content-header">
+                <h2>가입 신청자 명단</h2>
+                <i class='bx bx-x' id="sub-apply-list-popup-close"></i>
+            </div>
 
-    <div th:each="v: ${categoryList}">
+            <div class="profile-page-popup-content-info-body">
+                <th:block th:each="recruitUser: ${recruitUserList}">
+                    <th:block th:if="${recruitUser.state == 0}">
+                        <div class="recruit-user-filed">
+                            <div class="recruit-user-profile-img">
+                                <img th:src="${recruitUser.userProfileUrl}" th:onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP3lC0SfgqCcTGipFh64hddM6xgBYQj90wOA&usqp=CAU'">
+                            </div>
+                            <div class="recruit-user-profile-info">
+                                <span>이름: [[${recruitUser.userName}]]</span>
+                                <span>학교: [[${recruitUser.userUniversity}]]</span>
+                                <span>학과: [[${recruitUser.userMajor}]]</span>
+                                <span>연락처: [[${recruitUser.userContact}]]</span>
+                                <span>신청일: [[${recruitUser.createdAt}]]</span>
 
-        <form th:action="@{/society/detail}" method="get">
-            <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
-            <input type="text" name="cid" th:value="${v.id}" readonly style="display: none">
-            <button type="submit">[[${v.name}]]</button>
-        </form>
+                                <div class="recruit-user-profile-info-apply-btn">
+                                    <form th:action="@{/society/recruit/accept}" class="accept-box" method="post">
+                                        <input type="text" name="uid" th:value="${recruitUser.uId}" readonly style="display: none">
+                                        <input type="text" name="number" th:value="${recruitUser.societyNumber}" readonly style="display: none">
+                                        <button formmethod="post" type="submit" class="btn btn-md btn-primary">수락</button>
+                                    </form>
+
+                                    <button class="cancel-on cancel-on-btn">거절</button>
+
+                                    <form th:action="@{/society/recruit/reject}" method="post" class="recruit-user-profile-info-apply-cancel">
+                                        <input type="text" name="uid" th:value="${recruitUser.uId}" readonly style="display: none">
+                                        <input type="text" name="number" th:value="${recruitUser.societyNumber}" readonly style="display: none">
+
+                                        <input type="text" class="reject-reason" name="content" placeholder="거절사유를 적어주세요...">
+                                        <div class="recruit-user-profile-info-apply-cancel-btn">
+                                            <button class="reject-reason-send">전송</button>
+                                            <button class="cancel-off-btn">취소</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </th:block>
+                </th:block>
+            </div>
+
+        </div>
     </div>
-</div>
 
-<br>
+    <!-- 수정 모달창 -->
+    <div class="profile-page-popup-box" id="society-update-popup">
+        <div class="profile-page-popup-content">
+            <div class="profile-page-popup-content-header">
+                <h2>동아리 수정</h2>
+                <i class='bx bx-x' id="society-update-popup-close"></i>
+            </div>
 
-<form th:action="@{/society/category-board/write}"
-      method="post"
-      enctype="multipart/form-data"
->
-    <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
-    <input type="text" name="categoryId" th:value="${currentCategoryId}" readonly style="display: none">
-    <input type="text" name="title"> <br>
-    <textarea name="content"></textarea> <br>
-    <label for="multiple-file">파일업로드</label>
-    <input type="file" accept="image/*" id="multiple-file" name="files" multiple>
-    <br>
+            <form th:action="@{/society/update/{id}(id = ${society.number})}"
+                  method="post"
+                  enctype="multipart/form-data"
+                  class="popup-body">
+                <div class="popup-body-wallpaper">
+                    <img id="update-choice-wallpaper" src="https://kmarket.ro/assets/images/no-image.svg">
+                    <input type="file" id="update-wallpaper-btn" accept="image/*" name="backgroundImage">
+                    <label for="update-wallpaper-btn">
+                        <i class='bx bx-image-add'></i> &nbsp;
+                        배경화면을 선택해주세요
+                    </label>
+                </div>
 
-    <button type="submit">글쓰기</button>
-</form>
+                <div class="popup-body-profile">
+                    <img id="update-choice-profile" src="https://d2v9ipibika81v.cloudfront.net/uploads/sites/210/Profile-Icon.png">
+                    <input type="file" id="update-profile-btn" accept="image/*" name="profileImage">
+                    <label for="update-profile-btn">
+                        <i class='bx bx-camera' ></i>
+                    </label>
+                </div>
 
-<br>
-<div th:each="v: ${contentList}">
-    <a th:text="${v.title}" th:href="@{/society/category/detail(scid=${v.id})}"></a> <br>
-    <img th:src="${v.thumbnailUrl}" style="object-fit: contain; width: 150px;"/>
-    <!--    <h3 th:text="${v.content}"></h3>-->
-</div>
+                <div class="popup-body-society-panel">
+
+                    <div class="popup-body-society-center">
+                        <div class="popup-body-society_menu">
+                            <span>위치</span>
+                            <input type="text" class="popup-body-society_item" th:placeholder="${society.position}" name="position" th:value="${society.position}">
+                        </div>
+                        <div class="popup-body-society_menu">
+                            <span>동아리 한 줄 소개</span>
+                            <input type="text" class="popup-body-society_item" th:placeholder="${society.simpleDesc}" name="simpleDesc" th:value="${society.position}">
+                        </div>
+                    </div>
+
+                    <div class="popup-body-society-bottom">
+                        <div class="popup-body-society-bottom_menu">
+                            <span>동아리 상세 소개</span>
+                            <textarea type="text"  class="popup-body-society_item"
+                                      name="detailDesc"
+                                      th:placeholder="${society.detailDesc}"
+                                      th:text="${society.detailDesc}">
+                            </textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="popup-footer">
+                    <button class="popup-footer_btn">신청하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 글작성 JS 부분 -->
+    <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/WritingPost/WritingPostPopup.js}"></script>
+    <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/WritingPost/WritingPostUpload.js}"></script>
+
+    <!-- 신청자 조회 JS 부분 -->
+    <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SubApplyList/SubApplyListPopup.js}"></script>
+    <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SubApplyList/SupApplyListCancelBox.js}"></script>
+
+    <!-- 수정 JS 부분 -->
+    <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SocietyUpdate/SocietyUpdatePopup.js}"></script>
+    <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SocietyUpdate/UpdateProfile.js}"></script>
+    <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SocietyUpdate/UpdateWallpaper.js}"></script>
+
+    <script th:inline="javascript">
+        const onClickShowSocietyApplyList = () => {
+            const sal = document.getElementsByClassName("society_apply_list");
+            sal[0].style.display === "none" ? sal[0].style.display = "block" : sal[0].style.display = "none";
+        }
 
 
-<th:block th:if="${society.officerId.getId() == #httpServletRequest.remoteUser}">
-    <form th:action="@{/society/category/create}" method="post">
-        <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
-        <input type="text" name="name">
-        <button type="submit">카테고리 추가</button>
-    </form>
+        const onClickSocietyApply = (number) => {
+            window.event.preventDefault();
+            if ([[${#httpServletRequest.remoteUser}]] != null) location.href = `/society/apply/${number}`
+            else alert("로그인 후 신청해주세요!")
+        }
+    </script>
+
 </th:block>
 
-<div th:replace="layout/footer"></div>
-<script th:inline="javascript">
-
-    // class show {
-    //     static societyApplyList = false;
-    //
-    //     static setSocietyApplyList(isShow) {
-    //         this.societyApplyList = isShow
-    //     }
-    //
-    //     static getSocietyApplyList() {
-    //         return this.societyApplyList;
-    //     }
-    // }
-
-    const onClickShowSocietyApplyList = () => {
-        const sal = document.getElementsByClassName("society_apply_list");
-        sal[0].style.display === "none" ? sal[0].style.display = "block" : sal[0].style.display = "none";
-    }
-
-
-    const onClickSocietyApply = (number) => {
-        window.event.preventDefault();
-        if ([[${#httpServletRequest.remoteUser}]] != null) location.href = `/society/apply/${number}`
-        else alert("로그인 후 신청해주세요!")
-    }
-</script>
-</body>
 </html>

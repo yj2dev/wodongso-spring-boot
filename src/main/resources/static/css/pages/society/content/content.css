@@ -1,0 +1,14 @@
+@import "info/info.css";
+@import "post/post.css";
+
+.society-body{
+    display: flex;
+    width: 95%;
+    height: 624px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    margin: 20px 0;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+}

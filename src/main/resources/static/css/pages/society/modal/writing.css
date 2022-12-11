@@ -1,0 +1,121 @@
+.writing-popup-file-filed,
+.writing-popup-filed{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.writing-popup-filed span{
+    margin-bottom: 5px;
+    font-size: 17px;
+    color: #2a2a2a;
+    font-weight: 600;
+}
+.writing-popup-filed input,
+.writing-popup-filed textarea{
+    padding: 10px;
+    border: 1px solid #dddddd;
+    outline: none;
+    border-radius: 5px;
+    color: #2a2a2a;
+    font-size: 15px;
+    transition: 0.3s all ease;
+}
+.writing-popup-filed textarea{
+    height: 150px;
+    resize: none
+}
+.writing-popup-filed input:focus,
+.writing-popup-filed textarea:focus{
+    border: 1px solid #5995fd;
+}
+
+.profile-page-popup-content-info-body .post-btn{
+    width: 70%;
+    padding: 10px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #5995fd;
+    transition: 0.3s all ease;
+    color: #fff;
+    font-size: 15px;
+}
+.profile-page-popup-content-info-body .post-btn:hover{
+    background-color: #4d84e2;
+}
+
+.writing-popup-file-filed{
+    position: relative;
+}
+.writing-popup-file-filed input[type='file']{
+    display: none;
+}
+.writing-popup-file-filed label{
+    display: block;
+    position: relative;
+    background-color: #5995fd;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    width: 150px;
+    margin: auto;
+    border-radius: 5px;
+    padding: 15px 0;
+    cursor: pointer;
+}
+.writing-popup-file-filed span{
+    text-align: center;
+    font-size: 13px;
+    color: #2a2a2a;
+    margin: 5px 0 10px 0;
+}
+
+.writing-popup-file-filed .error{
+    color: #ff3860;
+}
+
+.writing-popup-file-filed .img-box{
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+    display: flex;
+    gap: 20px;
+    box-sizing: border-box;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: center;
+}
+
+.writing-popup-file-filed .img-box.excess{
+    justify-content: start;
+}
+.writing-popup-file-filed .img-box::-webkit-scrollbar{
+    height: 8px;
+}
+.writing-popup-file-filed .img-box::-webkit-scrollbar-thumb{
+    background: rgba(89, 149, 253, 0.7);
+    border-radius: 10px;
+    background-clip: padding-box;
+}
+.writing-popup-file-filed .img-box::-webkit-scrollbar-track{
+    background: rgba(33, 122, 244, 0.1);
+}
+
+
+.writing-popup-file-filed .img-box figure{
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.writing-popup-file-filed .img-box figure img{
+    width: 120px;
+    height: 120px;
+}
+.writing-popup-file-filed .img-box figure figcaption{
+    text-align: center;
+    font-size: 8px;
+    margin-top: 3px;
+}

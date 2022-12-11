@@ -25,7 +25,7 @@
         </form>
         <form th:action="@{/society/reject/{id}(id = ${v.number})}"
               method="post">
-            <input type="text" name="content" onkeyup="onChangeReject(this.value)">
+            <input type="text" name="content" >
             <button id="rejectBtn" type="submit">거절</button>
             <!--            <button th:id="${rejectBtn{id}(id = ${v.number})}" type="submit" disabled>거절</button>-->
         </form>

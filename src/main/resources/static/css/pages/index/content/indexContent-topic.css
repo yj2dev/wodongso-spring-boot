@@ -1,7 +1,6 @@
 .content-main-body{
     width: 100%;
     height: auto;
-    margin-top: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,7 +9,7 @@
     position: relative;
     width: 90%;
     height: 280px;
-    margin-top: 30px;
+    margin-top: 90px;
     box-sizing: border-box;
     display: flex;
     background-color: rgb(68, 129, 235);

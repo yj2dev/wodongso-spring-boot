@@ -40,18 +40,320 @@
                         <i class='bx bx-lock-alt'></i>
                         <span>비밀번호 변경</span>
                     </button>
-                    <button class="content-profile-personal-filed" id="manager-apply">
-                        <i class='bx bx-group'></i>
-                        <span>대학교 관리자 신청</span>
-                    </button>
+                    <th:block th:if="${userInfo.role == 'ROLE_USER'}">
+                        <button class="content-profile-personal-filed" id="manager-apply">
+                            <i class='bx bx-group'></i>
+                            <span>대학교 관리자 신청</span>
+                        </button>
+                    </th:block>
                 </div>
             </div>
 
             <div class="content-profile-bottom">
 
-                <div>Hello</div>
-                <div>Hello</div>
-                <div>Hello</div>
+                <div class="content-profile-state-header">
+
+                    <th:block th:if="${userInfo.role == 'ROLE_USER'}">
+                        <div class="content-profile-state-filed active" id="society-member-state" onclick="getListBtn(this.id, 'societyMemberState')">
+                            <span>동아리 가입 신청 결과</span>
+                        </div>
+
+                        <div class="content-profile-state-filed" id="society-create-state" onclick="getListBtn(this.id, 'societyCreateState')">
+                            <span>동아리 개설 신청 결과</span>
+                        </div>
+
+                        <div class="content-profile-state-filed" id="manager-member-state"  onclick="getListBtn(this.id, 'managerMemberState')">
+                            <span>대학교 관리자 신청 결과</span>
+                        </div>
+                    </th:block>
+                    <th:block th:if="${userInfo.role == 'ROLE_MANAGER'}">
+                        <div class="content-profile-state-filed active" id="society-create-list" onclick="getListBtn(this.id, 'societyCreateList')">
+                            <span>동아리 개설 신청 목록</span>
+                        </div>
+                    </th:block>
+                    <th:block th:if="${userInfo.role == 'ROLE_ADMIN'}">
+                        <div class="content-profile-state-filed active" id="manager-member-list" onclick="getListBtn(this.id, 'societyMemberState')">
+                            <span>대학교 관리자 신청자 명단</span>
+                        </div>
+                    </th:block>
+
+
+                </div>
+
+                <div class="content-profile-state-list">
+
+                    <!-- 운영자 신청 결과 -->
+                    <th:block th:if="${userInfo.role == 'ROLE_ADMIN'}">
+                        <div  class="content-profile-state-list_item manager-list show">
+                            <div th:each="ManagerList: ${listUniversityManagerAdmin}" class="manager-user-list">
+                                <div class="manager-user-list_left">
+                                    <div class="manager-user-list_img">
+                                        <img th:src="${ManagerList.proofImageUrl}" th:onerror="this.src='https://www.survivorsuk.org/wp-content/uploads/2017/01/no-image.jpg';">
+                                    </div>
+                                </div>
+
+                                <div class="manager-user-list_right">
+                                    <div class="manager-user-list_right-user-info">
+                                        <span> [[${ManagerList.name}]] / [[${ManagerList.id}]] </span>
+                                    </div>
+                                    <div class="manager-user-list_right-school-info">
+                                        <span>[[${ManagerList.university}]]</span>
+                                        <span>[[${ManagerList.major}]]</span>
+                                        <span>[[${ManagerList.classOf}]]</span>
+                                    </div>
+                                    <div class="manager-user-list_right-createAt-info">
+                                        <span>[[${ManagerList.createdAt}]]<</span>
+                                    </div>
+                                    <div class="manager-user-list_right-button">
+                                        <form th:action="@{/user/manager-accept/{id}(id = ${ManagerList.id})}"
+                                              method="post">
+                                            <button>승인</button>
+                                        </form>
+                                        <button class="manager-reject-btn">거절</button>
+                                    </div>
+                                </div>
+
+                                <!-- 매니저 거절 팝업 창 -->
+                                <div class="profile-page-popup-box" id="manager-reject-popup">
+                                    <div class="profile-page-popup-content">
+                                        <div class="profile-page-popup-content-header">
+                                            <h2>[[${ManagerList.name}]]님의 동아리 거부 사유</h2>
+                                            <i class='bx bx-x' id="manager-reject-close"></i>
+                                        </div>
+                                        <form th:action="@{/user/manager-reject/{id}(id = ${ManagerList.id})}"
+                                              method="post"
+                                              class="profile-page-popup-content-info-body">
+
+                                            <div class="profile-page-content-reject-filed">
+                                                <span>관리자 거부 사유를 적어주세요</span>
+                                                <input type="text" name="content" >
+                                            </div>
+
+
+                                            <button class="popup-content-footer">거절하기</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/ManagerReject/ManagerRejectDragScroll.js}"></script>
+
+                    </th:block>
+
+                    <!-- 대학교 관리자 유저 신청 결과 -->
+                    <th:block th:if="${userInfo.role == 'ROLE_MANAGER'}">
+                        <div class="content-profile-state-list_item show" id="societyCreateList">
+
+                            <table class="list-table society-list">
+                                <thead>
+                                <tr>
+                                    <th>사용자명</th>
+                                    <th>동아리명</th>
+                                    <th>카테고리</th>
+                                    <th>동아리 간단 소개</th>
+                                    <th>동아리 상세 소개</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                    <tbody>
+                                        <tr th:each="ApplyState: ${SocietyCreatelist}">
+                                            <th:block th:if="${ApplyState.enabled == 0}">
+                                                <td th:text="${ApplyState.userName}"></td>
+                                                <td th:text="${ApplyState.societyName}"></td>
+                                                <td th:text="${ApplyState.category}"></td>
+                                                <td th:text="${ApplyState.simpleDesc}"></td>
+                                                <td th:text="${ApplyState.detailDesc}"></td>
+                                                <td class="refuse">
+                                                    <form th:action="@{/society/accept/{id}(id = ${ApplyState.number})}"
+                                                          method="post">
+                                                        <button type="submit" class="check-on">
+                                                            <i class='bx bx-check'></i>
+                                                        </button>
+                                                    </form>
+                                                    <button class="check-off reject-btn">
+                                                        <i class='bx bx-x'></i>
+                                                    </button>
+
+                                                    <!-- 동아리 신청 거부 모달창 -->
+                                                    <div class="profile-page-popup-box" id="reject-popup">
+                                                        <div class="profile-page-popup-content">
+                                                            <div class="profile-page-popup-content-header">
+                                                                <h2 th:text="${ApplyState.societyName}"></h2>
+                                                                <i class='bx bx-x' id="reject-popup-close"></i>
+                                                            </div>
+                                                            <form th:action="@{/society/reject/{id}(id = ${ApplyState.number})}" method="post" class="profile-page-popup-content-info-body">
+
+                                                                <div class="profile-page-content-reject-filed">
+                                                                    <span>동아리 거부 사유를 적어주세요</span>
+                                                                    <input type="text" name="content" >
+                                                                </div>
+
+
+                                                                <button class="popup-content-footer">거절하기</button>
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                            </th:block>
+                                        </tr>
+                                    </tbody>
+                            </table>
+
+                        </div>
+                    </th:block>
+
+                    <!-- 일반 유저 신청 결과 -->
+                    <th:block th:if="${userInfo.role == 'ROLE_USER'}">
+                        <!-- 일반 유저 동아리 가입 신청 결과 -->
+                        <div class="content-profile-state-list_item show" id="societyMemberState">
+
+                            <table class="list-table member">
+                                <thead>
+                                <tr>
+                                    <th>동아리명</th>
+                                    <th>가입 신청날짜</th>
+                                    <th>상태</th>
+                                    <th>사유</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="ApplyState: ${listApplyStatus}">
+                                    <td th:text="${ApplyState.name}"></td>
+                                    <td th:text="${ApplyState.createdAt}"></td>
+
+                                    <th:block th:if="${ApplyState.state == 0}">
+                                        <td class="wait">
+                                            <div>
+                                                대기중
+                                            </div>
+                                        </td>
+                                    </th:block>
+
+                                    <th:block th:if="${ApplyState.state == 1}">
+                                        <td class="ok">
+                                            <div>
+                                                승인
+                                            </div>
+                                        </td>
+                                    </th:block>
+
+                                    <th:block th:if="${ApplyState.state == -1}">
+                                        <td class="fails">
+                                            <div>
+                                                거절
+                                            </div>
+                                        </td>
+                                    </th:block>
+
+                                    <td th:text="${ApplyState.rejectReason}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!-- 일반 유저 동아리 개설 신청 결과 -->
+                        <div class="content-profile-state-list_item" id="societyCreateState">
+
+                            <table class="list-table create">
+                                <thead>
+                                <tr>
+                                    <th>동아리명</th>
+                                    <th>개설 신청날짜</th>
+                                    <th>동아리 간단 소개</th>
+                                    <th>상태</th>
+                                    <th>사유</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="CreateState: ${listCreateStatus}">
+                                    <td th:text="${CreateState.societyName}"></td>
+                                    <td th:text="${CreateState.createdAt}"></td>
+                                    <td th:text="${CreateState.simpleDesc}"></td>
+
+                                    <th:block th:if="${CreateState.state == 0}">
+                                        <td class="wait">
+                                            <div>
+                                                대기중
+                                            </div>
+                                        </td>
+                                    </th:block>
+
+                                    <th:block th:if="${CreateState.state == 1}">
+                                        <td class="ok">
+                                            <div>
+                                                승인
+                                            </div>
+                                        </td>
+                                    </th:block>
+
+                                    <th:block th:if="${CreateState.state == -1}">
+                                        <td class="fails">
+                                            <div>
+                                                거절
+                                            </div>
+                                        </td>
+                                    </th:block>
+
+                                    <td th:text="${CreateState.rejectReason}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <!-- 일반 유저 대학교 관리자 신청 결과 -->
+                        <div class="content-profile-state-list_item" id="managerMemberState">
+                            <table class="list-table manager">
+                                <thead>
+                                <tr>
+                                    <th>학교</th>
+                                    <th>관리자 신청날짜</th>
+                                    <th>상태</th>
+                                    <th>사유</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="UniversityManagerState: ${listUniversityManager}">
+                                    <td th:text="${universityManager}"></td>
+                                    <td th:text="${UniversityManagerState.createdAt}"></td>
+                                    <th:block th:if="${UniversityManagerState.state == 0}">
+                                        <td class="wait">
+                                            <div>
+                                                대기중
+                                            </div>
+                                        </td>
+                                    </th:block>
+
+                                    <th:block th:if="${UniversityManagerState.state == 1}">
+                                        <td class="ok">
+                                            <div>
+                                                승인
+                                            </div>
+                                        </td>
+                                    </th:block>
+
+                                    <th:block th:if="${UniversityManagerState.state == -1}">
+                                        <td class="fails">
+                                            <div>
+                                                거절
+                                            </div>
+                                        </td>
+                                    </th:block>
+
+                                    <td th:text="${UniversityManagerState.rejectReason}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </th:block>
+
+                </div>
 
             </div>
 
@@ -59,6 +361,7 @@
 
     </div>
 
+    <!-- 내 정보 변경 모달창 -->
     <div class="profile-page-popup-box" id="user-info-popup">
         <div class="profile-page-popup-content">
             <div class="profile-page-popup-content-header">
@@ -147,7 +450,7 @@
                         </div>
                         <div class="profile-page-popup-content-info-change-university-filed">
                             <span>이름</span>
-                            <input type="text" th:value="${userInfo.name}" onfocus="this.value='';this.style.color='#000'" name="name">
+                            <input type="text" th:value="${userInfo.name}" name="name">
                         </div>
                         <div class="profile-page-popup-content-info-change-university-filed">
                             <span>닉네임</span>
@@ -165,7 +468,7 @@
             </form>
         </div>
     </div>
-
+    <!-- 비밀번호 변경 모달창 -->
     <div class="profile-page-popup-box" id="password-change-popup">
         <div class="profile-page-popup-content">
             <div class="profile-page-popup-content-header">
@@ -193,7 +496,7 @@
             </form>
         </div>
     </div>
-
+    <!-- 대학교 관리자 신청 모달창 -->
     <div class="profile-page-popup-box" id="manager-apply-popup">
         <div class="profile-page-popup-content">
             <div class="profile-page-popup-content-header">
@@ -207,6 +510,7 @@
                   class="profile-page-popup-content-info-body">
 
                 <div class="profile-page-content-manager-school">
+                    <i class='bx bxs-graduation'></i>
                     <span>[[${userInfo.university}]]</span>
                 </div>
 
@@ -235,25 +539,22 @@
     <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/UserInfoChange/UserInfoModalPopup.js}"></script>
     <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/PasswordChange/PasswordChangeModalPopup.js}"></script>
     <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/ManagerApply/ManagerApplyModalPopup.js}"></script>
+    <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/SocietyRejectModalPopup/SocietyRejectModalPopup.js}"></script>
+    <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/ManagerReject/ManagerRejectModalPopup.js}"></script>
 
     <!-- 내 정보 변경 프로필 사진 변경 JS 파일 -->
     <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/UserInfoChange/ChangeProfile.js}"></script>
 
+    <!-- 대학교 관리자 신청 파일 주소 JS 파일 -->
+    <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/ManagerApply/ManagerApplyImgFileName.js}"></script>
+
+    <!--  신청 결과마다 결과 값 JS 파일  -->
+    <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/EachListCheckState/EachListCheckState.js}"></script>
+
     <!-- 대학교 정보 JS 파일 -->
     <script th:inline="javascript" th:src="@{/js/pages/RegisterPage/GetSchoolData.js}"></script>
 
-    <script>
-        const proofImagePath = document.getElementById("proof-image");
-
-        proofImagePath.addEventListener('change', (event) => {
-            let uploadFileName = event.target.files[0].name;
-            let fileName = document.querySelector(".upload-file-name");
-
-            fileName.innerHTML = uploadFileName;
-
-        })
-
-    </script>
+    <!-- Initialize Swiper -->
 
 
 </th:block>
