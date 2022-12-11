@@ -187,7 +187,7 @@ public class SocietyController {
                                   Principal principal
     ) throws Exception {
         societyService.societyUpdate(number, society, profileImage, backgroundImage, principal);
-        return "redirect:/";
+        return String.format("redirect:/society/detail?number=%d", number);
     }
 
 
