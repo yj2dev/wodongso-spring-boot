@@ -59,9 +59,15 @@
     justify-content: center;
 }
 
+.profile-page-content-manager-school i{
+    margin-right: 5px;
+    font-size: 16px;
+}
+
 .profile-page-content-manager-school span{
     font-size: 12px;
     font-weight: 600;
+    margin-top: 2px;
 }
 
 .profile-page-content-manager-filed span:first-child{

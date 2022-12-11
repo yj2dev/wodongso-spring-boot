@@ -3,12 +3,16 @@ package com.wodongso.wodongso.controller;
 import com.wodongso.wodongso.dto.ManagerWithUser;
 import com.wodongso.wodongso.dto.SocietyCreateWithUser;
 import com.wodongso.wodongso.dto.SocietyRecruitWithUser;
+import com.wodongso.wodongso.dto.SocietyWithUser;
 import com.wodongso.wodongso.entity.User;
 import com.wodongso.wodongso.entity.UserManagerStatus;
 import com.wodongso.wodongso.security.SessionManager;
 import com.wodongso.wodongso.service.SocietyService;
 import com.wodongso.wodongso.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -166,23 +170,34 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String userAccount(Model model, Principal principal){
+    public String userAccount(Model model, @PageableDefault(page = 0, size = 10,
+            sort = "number",
+            direction = Sort.Direction.DESC)
+            Pageable pageable,Principal principal){
 
         User userInfo = userService.userInfo(principal.getName());
-        List<SocietyCreateWithUser> uws = userService.myCreateStatus(principal);
         List<SocietyRecruitWithUser> srw = userService.myApplyStatus(principal);
+        List<SocietyCreateWithUser> uws = userService.myCreateStatus(principal);
+        List<SocietyWithUser> list = societyService.societyStatusList(pageable, principal);
+        List<ManagerWithUser> umsList = userService.userManagerStatusAll();
         UserManagerStatus ums = userService.myManagerStatus(principal);
         User user = userService.userInfo(principal.getName());
 
         // 사용자 정보
         model.addAttribute("userInfo", userInfo);
-        // 동아리 신청 결과 정보
-        model.addAttribute("listCreateStatus", uws);
         // 동아리 가입 신청 결과 정보
         model.addAttribute("listApplyStatus", srw);
+        // 동아리 신청 결과 정보
+        model.addAttribute("listCreateStatus", uws);
         // 학교 관리자 신청 결과 정보
         model.addAttribute("listUniversityManager", ums);
         model.addAttribute("universityManager", user.getUniversity());
+
+        // 동아리 신청 목록
+        model.addAttribute("SocietyCreatelist", list);
+
+        // 학교 관리자 신청 목록
+        model.addAttribute("listUniversityManagerAdmin", umsList);
 
         return "content/user/profile/userProfile";
     }
