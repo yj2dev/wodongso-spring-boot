@@ -23,6 +23,7 @@
                 </button>
             </form>
 
+            <!-- 로그인을 하지 않았을 경우 -->
             <th:block th:if="${userInfo == null}">
 
                 <!-- Content 헤더-유저 토글 -->
@@ -50,6 +51,7 @@
 
             </th:block>
 
+            <!-- 로그인을 했을 경우 -->
             <th:block th:if="${userInfo != null}">
                 <!-- Content 헤더-동아리 등록 버튼 -->
                 <div class="header-society-create" id="society-create-btn">
@@ -100,6 +102,21 @@
                     <img th:src="@{images/mainimage.png}">
                 </div>
 
+            </div>
+
+            <div style="display: flex">
+                <th:block th:each="v: ${mySocietyList}">
+                    <div style="border:2px solid orangered;">
+
+                        <div th:text="${v.societyName}"></div>
+                        <th:block th:if="${v.societyProfileUrl == null}">
+                            <img src="https://via.placeholder.com/150x150" width="150"/>
+                        </th:block>
+                        <th:block th:if="${v.societyProfileUrl != null}">
+                            <img th:src="${v.societyProfileUrl}" width="150"/>
+                        </th:block>
+                    </div>
+                </th:block>
             </div>
 
             <!-- Content 메인-동아리 목록 -->

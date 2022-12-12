@@ -12,7 +12,7 @@
 
             <div class="society-detail-body-posting">
                 <figure class="society-detail-body-posting-filed">
-                    <img th:each="postImages: ${payload}" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq-VUSkrg28oW0eRkxQCm5p94S8xFVm-6OXw&usqp=CAU">
+                    <img th:each="postImages: ${payload}" th:src="${payload[0].userProfileUrl}">
                 </figure>
 
                 <div class="slider-btn-prev" id="slider-prev">
