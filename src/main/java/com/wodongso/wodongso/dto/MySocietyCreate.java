@@ -11,15 +11,17 @@ public class MySocietyCreate {
     private String userName;
     private String societyName;
     private String societyProfileUrl;
+    private Integer societyNumber;
 
     public MySocietyCreate() {
     }
 
-    public MySocietyCreate(String userId, String userName, String societyName, String societyProfileUrl) {
+    public MySocietyCreate(String userId, String userName, String societyName, String societyProfileUrl, Integer societyNumber) {
         this.userId = userId;
         this.userName = userName;
         this.societyName = societyName;
         this.societyProfileUrl = societyProfileUrl;
+        this.societyNumber = societyNumber;
     }
 
     public String getUserId() {
@@ -52,5 +54,13 @@ public class MySocietyCreate {
 
     public void setSocietyProfileUrl(String societyProfileUrl) {
         this.societyProfileUrl = societyProfileUrl;
+    }
+
+    public Integer getSocietyNumber() {
+        return societyNumber;
+    }
+
+    public void setSocietyNumber(Integer societyNumber) {
+        this.societyNumber = societyNumber;
     }
 }

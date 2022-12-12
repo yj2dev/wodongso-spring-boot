@@ -25,7 +25,7 @@ public interface SocietyCreateStatusRepository extends JpaRepository<SocietyCrea
     List<SocietyCreateWithUser> findByUserIdJoinSocietyCreate(@Param("userId") String userId);
 
 
-    @Query("SELECT new MySocietyList (u.id, u.name, s.name, s.profileUrl) " +
+    @Query("SELECT new MySocietyList (u.id, u.name, s.name, s.profileUrl, s.number) " +
             "FROM User u " +
             "INNER JOIN SocietyCreateStatus scs " +
             "ON scs.fromUserId = u.id " +

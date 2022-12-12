@@ -32,7 +32,7 @@ public interface SocietyRecruitStatusRepository extends JpaRepository<SocietyRec
             "WHERE srs.toSocietyNumber = :number")
     List<SocietyRecruitWithUserOfficer> findBySocietyRecruitJoinUser(@Param("number") Integer number);
 
-    @Query("SELECT new MySocietyList (u.id, u.name, s.name, s.profileUrl) " +
+    @Query("SELECT new MySocietyList (u.id, u.name, s.name, s.profileUrl, s.number) " +
             "FROM User u " +
             "INNER JOIN SocietyRecruitStatus srs " +
             "ON srs.fromUserId = u.id " +

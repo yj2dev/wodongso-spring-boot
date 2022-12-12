@@ -11,9 +11,17 @@
         <div class="society-detail-body">
 
             <div class="society-detail-body-posting">
-                <figure class="society-detail-body-posting-filed">
-                    <img th:each="postImages: ${payload}" th:src="${payload[0].userProfileUrl}">
+                <figure  class="society-detail-body-posting-filed">
+
+                        <img th:each="v: ${payload}" th:src="${v.imageUrl}" />
                 </figure>
+
+<!--                <figure class="society-detail-body-posting-filed">-->
+<!--                    <span th:each="v: ${payload}">-->
+<!--                        <img th:src="${v.imageUrl}" />-->
+<!--                    </span>-->
+<!--                    &lt;!&ndash;                    <img th:each="postImages: ${payload}" th:src="${payload[0].imageUrl}">&ndash;&gt;-->
+<!--                </figure>-->
 
                 <div class="slider-btn-prev" id="slider-prev">
                     <i class='bx bx-chevron-left' ></i>
