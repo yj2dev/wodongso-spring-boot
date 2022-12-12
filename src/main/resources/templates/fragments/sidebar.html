@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 
 <div th:fragment="sidebarFragment" class="sidebar" id="sidebar">
 
-    <div class="sidebar-title">
-        <div class="sidebar-title_logo">
-            <i class='bx bxs-bot'></i>
-        </div>
+    <a th:href="@{/}">
+        <div class="sidebar-title">
+            <div class="sidebar-title_logo">
+                <i class='bx bxs-bot'></i>
+            </div>
 
-        <div class="text sidebar-title_text">
-            <span class="project-title">우동소</span>
-            <span class="project-sub-title">우리 학교 동아리를 소개합니다</span>
+            <div class="text sidebar-title_text">
+                <span class="project-title">우동소</span>
+                <span class="project-sub-title">우리 학교 동아리를 소개합니다</span>
+            </div>
         </div>
-    </div>
+    </a>
+
 
     <i class='bx bx-chevron-left toggle' id="toggle"></i>
 
@@ -27,36 +32,12 @@
                         <span class="text sidebar-item_name">홈</span>
                     </a>
                 </li>
-                <li class="sidebar-list_item">
-                    <a href="#">
-                        <i class='bx bx-message-detail'></i>
-                        <span class="text sidebar-item_name">동아리 신청 확인</span>
-                    </a>
-                </li>
-                <li class="sidebar-list_item">
-                    <a href="#">
-                        <i class='bx bx-message-detail'></i>
-                        <span class="text sidebar-item_name">동아리</span>
-                    </a>
-                </li>
-                <li class="sidebar-list_item">
-                    <a href="#">
-                        <i class='bx bx-message-detail'></i>
-                        <span class="text sidebar-item_name">동아리</span>
-                    </a>
-                </li>
-                <li class="sidebar-list_item">
-                    <a href="#">
-                        <i class='bx bx-message-detail'></i>
-                        <span class="text sidebar-item_name">동아리</span>
-                    </a>
-                </li>
             </ul>
         </div>
 
         <div class="sidebar-bottom-bar">
             <ul class="sidebar-menu_list">
-                <th:block th:if="${userInfo} == null">
+                <th:block th:if="${#httpServletRequest.remoteUser} == null">
                     <li class="sidebar-list_item">
                         <a th:href="@{/user/login}">
                             <i class='bx bx-log-in' ></i>
@@ -66,7 +47,13 @@
                     </li>
                 </th:block>
 
-                <th:block th:if="${userInfo} != null">
+                <th:block th:if="${#httpServletRequest.remoteUser} != null">
+                    <li class="sidebar-list_item">
+                        <a th:href="@{/user/profile}">
+                            <i class='bx bx-user'></i>
+                            내 계정
+                        </a>
+                    </li>
                     <li class="sidebar-list_item">
                         <form th:action="@{/user/logout}" method="get">
                             <button>
@@ -74,7 +61,6 @@
                                 <span class="text sidebar-item_name">로그아웃</span>
                             </button>
                         </form>
-
                     </li>
                 </th:block>
 

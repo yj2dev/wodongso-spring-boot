@@ -62,6 +62,7 @@
                 <!-- 동아리 게시물 영역 -->
                 <div class="society-post">
 
+                    <!-- 동아리 게시물 헤더 영역 -->
                     <div class="society-post-category-header">
 
                         <!-- 카테고리 내용 -->
@@ -91,7 +92,7 @@
                         </div>
                     </div>
 
-                    <!-- 게시물 내용 -->
+                    <!-- 동아리 게시물 본문 내용 -->
                     <div class="society-post-category-content">
                         <table>
                             <thead>
@@ -290,12 +291,6 @@
     <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SocietyUpdate/UpdateWallpaper.js}"></script>
 
     <script th:inline="javascript">
-        const onClickShowSocietyApplyList = () => {
-            const sal = document.getElementsByClassName("society_apply_list");
-            sal[0].style.display === "none" ? sal[0].style.display = "block" : sal[0].style.display = "none";
-        }
-
-
         const onClickSocietyApply = (number) => {
             window.event.preventDefault();
             if ([[${#httpServletRequest.remoteUser}]] != null) location.href = `/society/apply/${number}`

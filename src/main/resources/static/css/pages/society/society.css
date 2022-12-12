@@ -1,8 +1,11 @@
-/* 동아리 상세 게시물 CSS */
-@import "thumbnail/thumbnail.css";
-@import "content/content.css";
+/* 동아리 페이지 CSS */
+@import "detail/thumbnail/thumbnail.css";
+@import "detail/content/content.css";
+
+/* 동아리 게시물 페이지 CSS */
+@import "category/category.css";
 
 /* 모달창 CSS */
-@import "modal/userApplyList.css";
-@import "modal/writing.css";
-@import "modal/societyUpdate.css";
+@import "detail/modal/userApplyList.css";
+@import "detail/modal/writing.css";
+@import "detail/modal/societyUpdate.css";

@@ -109,7 +109,9 @@
     color: #707070;
     transition: 0.1s all ease-in-out;
 }
-
+.sidebar .sidebar-list_item a{
+    font-size: 20px;
+}
 .sidebar .sidebar-list_item form button{
     background-color: transparent;
     border: none;
