@@ -1,0 +1,52 @@
+.content-main-body-society-shortcut{
+    width: 90%;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: center;
+    justify-content: left;
+}
+
+.content-main-body-society-shortcut::-webkit-scrollbar{
+    height: 8px;
+}
+.content-main-body-society-shortcut::-webkit-scrollbar-thumb{
+    background: rgba(89, 149, 253, 0.7);
+    border-radius: 10px;
+    background-clip: padding-box;
+}
+.content-main-body-society-shortcut::-webkit-scrollbar-track{
+    background: rgba(33, 122, 244, 0.1);
+}
+
+.content-main-body-society-shortcut .content-main-body-society-shortcut-filed{
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.content-main-body-society-shortcut a{
+    width: 100px;
+    height: 100px;
+    background-color: #333333;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 3px #555555;
+}
+
+.content-main-body-society-shortcut a img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.content-main-body-society-shortcut span{
+    font-size: 12px;
+    font-weight: 500;
+    color: #2d2d2d;
+}

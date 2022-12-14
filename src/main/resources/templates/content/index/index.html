@@ -104,17 +104,14 @@
 
             </div>
 
-            <div style="display: flex">
-                <th:block th:each="v: ${mySocietyList}">
-                    <div style="border:2px solid orangered;">
-
-                        <div th:text="${v.societyName}"></div>
-                        <th:block th:if="${v.societyProfileUrl == null}">
-                            <img src="https://via.placeholder.com/150x150" width="150"/>
-                        </th:block>
-                        <th:block th:if="${v.societyProfileUrl != null}">
-                            <img th:src="${v.societyProfileUrl}" width="150"/>
-                        </th:block>
+            <!-- Content 메인-동아리 바로가기 -->
+            <div class="content-main-body-society-shortcut">
+                <th:block th:each="mySociety: ${mySocietyList}">
+                    <div class="content-main-body-society-shortcut-filed">
+                        <a th:href="@{/society/detail(number=${mySociety.societyNumber})}">
+                            <img th:src="${mySociety.societyProfileUrl}" th:onerror="this.src='https://www.gbeti.or.kr/upload/admin/TB_UNHP_ASP_BIZP_HOME_PAGE_INF/1/1000014332.gif;jsessionid=MDyxWKxpevpaR4sbk7Rvq1PaK2MUn8PbxHeVkVbrRtML6B1cblw6svuegH6mrW1w.nest-was3_servlet_ulearn2'">
+                        </a>
+                        <span th:text="${mySociety.societyName}"></span>
                     </div>
                 </th:block>
             </div>
@@ -124,8 +121,8 @@
                 <thead>
                 <tr>
                     <th>동아리명</th>
-                    <th>유형</th>
-                    <th>카테고리</th>
+                    <th class="list-center">유형</th>
+                    <th class="list-center">카테고리</th>
                     <th>위치</th>
                     <th>간략 소개</th>
                     <th>상세 소개</th>
@@ -137,8 +134,8 @@
                     <td>
                         <a th:text="${society.name}" th:href="@{/society/detail(number=${society.number})}"></a>
                     </td>
-                    <td th:text="${society.type}"></td>
-                    <td th:text="${society.category}"></td>
+                    <td class="list-center" th:text="${society.type}"></td>
+                    <td class="list-center" th:text="${society.category}"></td>
                     <td th:text="${society.position}"></td>
                     <td th:text="${society.simpleDesc}"></td>
                     <td th:text="${society.detailDesc}"></td>

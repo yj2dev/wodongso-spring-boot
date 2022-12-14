@@ -71,13 +71,13 @@
                                 <form th:action="@{/society/detail}" method="get">
                                     <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
                                     <input type="text" name="cid" th:value="${v.id}" readonly style="display: none">
-                                    <button type="submit">[[${v.name}]]</button>
+                                    <button class="category-list-btn" type="submit">[[${v.name}]]</button>
                                 </form>
                             </div>
                         </div>
 
                         <div class="society-post-category-header-writing-btn">
-                            <button th:value="${#httpServletRequest.remoteUser}" onclick="postWritingBtn(this.value)">글쓰기</button>
+                            <button th:user="${#httpServletRequest.remoteUser}" onclick="postWritingBtn(this.getAttribute('user'))">글쓰기</button>
 
                             <!-- 헤더-카테고리 추가영역(동아리 회장만 뷰 활성화) -->
                             <th:block th:if="${society.officerId.getId() == #httpServletRequest.remoteUser}">

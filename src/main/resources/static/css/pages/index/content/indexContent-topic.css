@@ -9,7 +9,7 @@
     position: relative;
     width: 90%;
     height: 280px;
-    margin-top: 90px;
+    margin: 90px 0 20px 0;
     box-sizing: border-box;
     display: flex;
     background-color: rgb(68, 129, 235);

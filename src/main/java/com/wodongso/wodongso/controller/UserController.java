@@ -108,13 +108,13 @@ public class UserController {
     @PostMapping("/manager-accept/{id}")
     public String userManagerAccept(@PathVariable String id) {
         userService.userManagerAccept(id);
-        return "redirect:/user/manager-status-all";
+        return "redirect:/user/profile";
     }
 
     @PostMapping("/manager-reject/{id}")
     public String userManagerReject(@PathVariable String id, String content) {
         userService.userManagerReject(id, content);
-        return "redirect:/user/manager-status-all";
+        return "redirect:/user/profile";
     }
 
     @GetMapping("/manager-status-all")
@@ -136,7 +136,7 @@ public class UserController {
     public String userApplyManagerDo(Principal principal, MultipartFile proofImage) throws IOException {
         userService.userUploadProof(principal, proofImage);
 
-        return "redirect:/user/my-info";
+        return "redirect:/user/profile";
     }
 
     @GetMapping("/info")

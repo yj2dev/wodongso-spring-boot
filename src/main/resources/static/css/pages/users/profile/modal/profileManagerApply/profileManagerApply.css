@@ -69,9 +69,14 @@
     font-weight: 600;
     margin-top: 2px;
 }
-
-.profile-page-content-manager-filed span:first-child{
+.profile-page-content-manager-filed span{
+    margin-bottom: 10px;
+}
+.profile-page-content-manager-filed span:first-child,
+.profile-page-content-manager-filed span:last-child{
     color: #ff3860;
     font-weight: 500;
-    margin-bottom: 10px;
+}
+.profile-page-content-manager-filed span:last-child{
+    margin: 0;
 }

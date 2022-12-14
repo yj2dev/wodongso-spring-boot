@@ -5,7 +5,7 @@ let clickListHeader = null;
 let selectListItem = null;
 
 function getListBtn(listHeaderId, listItemId){
-    clickListHeader = listHeaderId
+    clickListHeader = listHeaderId;
     selectListItem = listItemId;
     showListItem();
 }

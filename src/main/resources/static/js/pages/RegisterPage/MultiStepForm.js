@@ -265,8 +265,8 @@ function onPasswordHandler(){
 		setSuccess(password);
 		setIsPassword = true;
 	}
-	
 }
+
 function onConfirmPassword(){
 	const passwordCheckValue = passwordCheck.value.trim();
 	

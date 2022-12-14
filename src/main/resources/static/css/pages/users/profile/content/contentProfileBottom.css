@@ -31,19 +31,29 @@
     color: #4d84e2;
 }
 
+/* 테이블 CSS 영역 */
 .content-profile-bottom .content-profile-state-list{
     position: relative;
     width: 100%;
     height: 100%;
     margin-bottom: 10px;
     overflow-x: hidden;
-    overflow-y: scroll;
-    cursor: grab;
+    overflow-y: auto;
+    cursor: auto;
 }
 
 .content-profile-bottom .content-profile-state-list::-webkit-scrollbar{
-    display: none;
+    width: 8px;
 }
+.content-profile-bottom .content-profile-state-list::-webkit-scrollbar-thumb{
+    height: 30%;
+    background: #5995fd;
+    border-radius: 10px;
+}
+.content-profile-bottom .content-profile-state-list::-webkit-scrollbar-track{
+    background: rgba(33, 122, 244, 0.1);
+}
+
 
 .content-profile-bottom .content-profile-state-list_item {
     display: none;
@@ -57,36 +67,38 @@
 }
 
 .content-profile-bottom .content-profile-state-list_item.show .list-table{
+    width: 100%;
     border-collapse: collapse;
     font-size: 15px;
-    width: 100%;
     overflow: hidden;
-    border-radius: 15px 15px 0 0;
+    table-layout: fixed;
 }
 
 .content-profile-bottom .content-profile-state-list_item.show .list-table th,
 .content-profile-bottom .content-profile-state-list_item.show .list-table td{
     padding: 12px 15px;
-    width: 200px;
     height: 25px;
     vertical-align: middle;
 }
 
+
 .content-profile-bottom .content-profile-state-list_item.show .list-table thead tr{
-    color: #fff;
-    background-color: #4d84e2;
     text-align: left;
     font-weight: bold;
 }
 
+.content-profile-bottom .content-profile-state-list_item.show .list-table thead tr,
 .content-profile-bottom .content-profile-state-list_item.show .list-table tbody tr{
     border-bottom: 1px solid #ddd;
 }
-.content-profile-bottom .content-profile-state-list_item.show .list-table tbody tr:nth-of-type(even){
+.content-profile-bottom .content-profile-state-list_item.show .list-table tbody tr:nth-of-type(odd){
     background-color: #f3f3f3;
 }
-.content-profile-bottom .content-profile-state-list_item.show .list-table tbody tr:last-child{
-    border-bottom: 2px solid #4d84e2;
+
+.content-profile-bottom .content-profile-state-list_item.show .list-table .text-over{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .content-profile-bottom .content-profile-state-list_item.show .list-table .wait div{

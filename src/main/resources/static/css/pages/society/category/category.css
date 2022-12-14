@@ -112,6 +112,7 @@
     transition: 0.4s all ease;
 }
 .society-detail-body-posting-filed img{
+    min-width: 100%;
     object-fit: contain;
 }
 
@@ -138,12 +139,9 @@
     right: 10px;
 }
 
-.slider-btn-next.disable{
-    pointer-events: none;
-    opacity: 0.3;
+.slider-btn-next.disable,
+.slider-btn-prev.disable{
+    display: none;
 }
 
-.slider-btn-prev.disable{
-    pointer-events: none;
-    opacity: 0.3;
-}
+

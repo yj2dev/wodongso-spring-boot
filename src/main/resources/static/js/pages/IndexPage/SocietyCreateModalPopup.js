@@ -3,6 +3,7 @@ const popup = document.getElementById('popup-box');
 
 function popupClose(event) {
     event.preventDefault();
+    location.reload();
     popup.classList.remove('open')
 }
 

@@ -10,17 +10,31 @@
 
 .society-post .society-post-category-header .society-post-category-header-list{
     width: 60%;
+    height: 100%;
     display: flex;
     align-items: center;
 }
-
-.society-post .society-post-category-header .society-post-category-header-list .society-post-category-header-list-btn button{
+.society-post .society-post-category-header .society-post-category-header-list .society-post-category-header-list-btn{
+    height: 100%;
+}
+.society-post .society-post-category-header .society-post-category-header-list .society-post-category-header-list-btn form{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.society-post .society-post-category-header .society-post-category-header-list .society-post-category-header-list-btn .category-list-btn{
+    height: 100%;
     margin-right: 10px;
     border: none;
     background-color: transparent;
     font-size: 18px;
     color: #aaaaaa;
     cursor: pointer;
+    box-sizing: content-box;
+}
+
+.society-post .society-post-category-header .society-post-category-header-list .society-post-category-header-list-btn .category-list-btn:hover{
+    color: #4d84e2;
 }
 
 .society-post-category-header-writing-btn{

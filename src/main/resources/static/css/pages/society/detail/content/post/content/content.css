@@ -3,7 +3,8 @@
     width: 95%;
     height: 100%;
     margin-top: 10px;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 .society-body .society-post .society-post-category-content::-webkit-scrollbar{
     width: 8px;
