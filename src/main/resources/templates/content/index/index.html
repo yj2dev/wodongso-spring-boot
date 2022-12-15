@@ -188,7 +188,7 @@
                     <div class="popup-body-society-left">
                         <div class="popup-body-society_menu">
                             <span>동아리 이름</span>
-                            <input type="text" class="popup-body-society_item" placeholder="동아리 이름을 정해주세요" name="name">
+                            <input type="text" class="popup-body-society_item create-society" placeholder="동아리 이름을 정해주세요" name="name">
                         </div>
 
                         <div class="popup-body-society_menu">
@@ -204,7 +204,7 @@
                     <div class="popup-body-society-center">
                         <div class="popup-body-society_menu">
                             <span>동아리 한 줄 소개</span>
-                            <input type="text" class="popup-body-society_item" placeholder="예시) 바퀴에서 오는 자유" name="simpleDesc">
+                            <input type="text" class="popup-body-society_item create-society" placeholder="예시) 바퀴에서 오는 자유" name="simpleDesc">
                         </div>
                     </div>
                     <div class="popup-body-society-right">
@@ -224,19 +224,19 @@
 
                         <div class="popup-body-society_menu">
                             <span>위치</span>
-                            <input type="text" class="popup-body-society_item" placeholder="미지정" name="position">
+                            <input type="text" class="popup-body-society_item create-society" placeholder="미지정" name="position">
                         </div>
                     </div>
                     <div class="popup-body-society-bottom">
                         <div class="popup-body-society-bottom_menu">
                             <span>동아리 상세 소개</span>
-                            <input type="text" class="popup-body-society_item" placeholder="주당 활동 횟수, 활동 계획 등 자유롭게 입력" name="detailDesc">
+                            <input type="text" class="popup-body-society_item create-society" placeholder="주당 활동 횟수, 활동 계획 등 자유롭게 입력" name="detailDesc">
                         </div>
                     </div>
 
                 </div>
                 <div class="popup-footer">
-                    <button class="popup-footer_btn">신청하기</button>
+                    <button class="popup-footer_btn" id="create-society-btn">신청하기</button>
                     <button class="popup-footer_btn" onclick="popupClose(event)">취소하기</button>
                 </div>
             </form>
@@ -247,6 +247,7 @@
     <script th:inline="javascript" th:src="@{/js/pages/IndexPage/ProfileModalWindow.js}"></script>
     <!-- 동아리 등록 모달창 -->
     <script th:inline="javascript" th:src="@{/js/pages/IndexPage/SocietyCreateModalPopup.js}"></script>
+    <script th:inline="javascript" th:src="@{/js/pages/IndexPage/SocietyCreateValidation.js}"></script>
     <!-- 동아리 등록-배경사진 변경 -->
     <script th:inline="javascript" th:src="@{/js/pages/IndexPage/UploadWallpaper.js}"></script>
     <!-- 동아리 등록-프로필사진 변경 -->

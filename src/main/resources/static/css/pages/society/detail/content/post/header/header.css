@@ -64,6 +64,12 @@
 .society-post-category-header-writing-filed input::placeholder{
     color: #aaaaaa;
 }
+
+.society-post-category-header-writing-filed input.error::placeholder{
+    color: rgba(255, 56, 96, 0.7);
+    font-weight: bold;
+}
+
 .society-post-category-header-writing-filed button{
     border-radius: 0;
 }

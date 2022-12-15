@@ -74,6 +74,8 @@
 
 .writing-popup-file-filed .error{
     color: #ff3860;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .writing-popup-file-filed .img-box{

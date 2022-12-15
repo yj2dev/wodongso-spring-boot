@@ -196,6 +196,12 @@
     border: 1px solid #4d84e2;
 }
 
+.popup-box .popup-body .popup-body-society_menu .popup-body-society_item.error::placeholder,
+.popup-box .popup-body .popup-body-society-bottom_menu .popup-body-society_item.error::placeholder{
+    color: rgba(255, 56, 96, 0.7);
+    font-weight: bold;
+}
+
 .popup-body-society-bottom_menu{
     width: 97%;
     height: 80%;

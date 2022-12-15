@@ -25,8 +25,9 @@
             </div>
 
             <div class="society-body">
-                <!-- 동아리 정보 -->
+                <!-- 동아리 정보 영역 -->
                 <div class="society-info">
+                    <!-- 동아리 상세 정보 영역 -->
                     <div class="society-info-filed">
                         <h2>동아리 회장</h2>
                         <span th:text="${society.officerId.getNickname()}"></span>
@@ -36,22 +37,24 @@
                         <span th:text="${society.position}"></span>
                     </div>
                     <div class="society-info-filed">
-                        <h2>동아리 상세 설명</h2>
-                        <span th:text="${society.detailDesc}"></span>
-                    </div>
-                    <div class="society-info-filed">
                         <h2>동아리 간략한 설명</h2>
                         <span th:text="${society.simpleDesc}"></span>
                     </div>
+                    <div class="society-info-filed">
+                        <h2>동아리 상세 설명</h2>
+                        <span th:text="${society.detailDesc}"></span>
+                    </div>
 
+                    <!-- 동아리 신청 조회 버튼 영역 -->
                     <div class="society-info-filed button">
+                        <!-- 비 동아리 멤버 가입 신청 버튼 영역 -->
                         <th:block th:if="${society.officerId.getId() != #httpServletRequest.remoteUser}">
                             <button th:value="${society.number}"
                                     onclick="onClickSocietyApply(this.value)">
                                 가입 신청
                             </button>
                         </th:block>
-
+                        <!-- 동아리 회장 가입신청자 조회 영역 -->
                         <th:block th:if="${society.officerId.getId() == #httpServletRequest.remoteUser}">
                             <button class="show-list-btn" onclick="SupApplyList()">가입신청자 조회</button>
                         </th:block>
@@ -76,6 +79,7 @@
                             </div>
                         </div>
 
+                        <!-- 글쓰기, 카테고리 내용 추가 버튼 영역 -->
                         <div class="society-post-category-header-writing-btn">
                             <button th:user="${#httpServletRequest.remoteUser}" onclick="postWritingBtn(this.getAttribute('user'))">글쓰기</button>
 
@@ -84,8 +88,8 @@
                                 <form th:action="@{/society/category/create}" method="post">
                                     <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
                                     <div class="society-post-category-header-writing-filed">
-                                        <input type="text" name="name" placeholder="카테고리 추가 내용을 적어주세요..">
-                                        <button type="submit">추가</button>
+                                        <input type="text" name="name" placeholder="카테고리 추가 내용을 적어주세요.." id="category-value">
+                                        <button type="submit" id="category-value-check-btn">추가</button>
                                     </div>
                                 </form>
                             </th:block>
@@ -139,16 +143,18 @@
                 <input type="text" name="number" th:value="${society.number}" readonly style="display: none">
                 <input type="text" name="categoryId" th:value="${currentCategoryId}" readonly style="display: none">
 
-                <div class="writing-popup-filed">
+                <div class="writing-popup-filed filed-validation">
                     <span>제목 </span>
-                    <input type="text" name="title" placeholder="제목을 입력해주세요...">
+                    <input type="text" name="title" id="writing-title" placeholder="제목을 입력해주세요...">
+                    <div class="writing-error error"></div>
                 </div>
-                <div class="writing-popup-filed content">
+                <div class="writing-popup-filed content filed-validation">
                     <span>내용 </span>
-                    <textarea name="content"></textarea>
+                    <textarea name="content" id="writing-content"></textarea>
+                    <div class="writing-error error"></div>
                 </div>
 
-                <div class="writing-popup-file-filed">
+                <div class="writing-popup-file-filed filed-validation">
                     <div class="img-box" id="images"></div>
                     <input type="file" accept="image/*" id="multiple-file" onchange="preview()" name="files" multiple>
                     <label for="multiple-file">
@@ -158,7 +164,7 @@
                     <span id="num-of-files">선택된 파일이 없습니다</span>
                 </div>
 
-                <button class="post-btn">작성하기</button>
+                <button class="post-btn" id="writing-btn">작성하기</button>
             </form>
         </div>
     </div>
@@ -228,8 +234,9 @@
                   method="post"
                   enctype="multipart/form-data"
                   class="popup-body">
+                <!-- 동아리 배경화면 지정 영역 -->
                 <div class="popup-body-wallpaper">
-                    <img id="update-choice-wallpaper" src="https://kmarket.ro/assets/images/no-image.svg">
+                    <img id="update-choice-wallpaper" th:src="${society.backgroundUrl}" th:onerror="this.src='https://kmarket.ro/assets/images/no-image.svg'">
                     <input type="file" id="update-wallpaper-btn" accept="image/*" name="backgroundImage">
                     <label for="update-wallpaper-btn">
                         <i class='bx bx-image-add'></i> &nbsp;
@@ -237,8 +244,9 @@
                     </label>
                 </div>
 
+                <!-- 동아리 프로필 사진 지정 영역 -->
                 <div class="popup-body-profile">
-                    <img id="update-choice-profile" src="https://d2v9ipibika81v.cloudfront.net/uploads/sites/210/Profile-Icon.png">
+                    <img id="update-choice-profile" th:src="${society.profileUrl}" th:onerror="this.src='https://d2v9ipibika81v.cloudfront.net/uploads/sites/210/Profile-Icon.png'">
                     <input type="file" id="update-profile-btn" accept="image/*" name="profileImage">
                     <label for="update-profile-btn">
                         <i class='bx bx-camera' ></i>
@@ -250,11 +258,11 @@
                     <div class="popup-body-society-center">
                         <div class="popup-body-society_menu">
                             <span>위치</span>
-                            <input type="text" class="popup-body-society_item" th:placeholder="${society.position}" name="position" th:value="${society.position}">
+                            <input type="text" class="popup-body-society_item" placeholder="동아리 위치를 입력해주세요." name="position" th:value="${society.position}" id="society-position">
                         </div>
                         <div class="popup-body-society_menu">
                             <span>동아리 한 줄 소개</span>
-                            <input type="text" class="popup-body-society_item" th:placeholder="${society.simpleDesc}" name="simpleDesc" th:value="${society.position}">
+                            <input type="text" class="popup-body-society_item" placeholder="동아리에 대한 간단한 설명을 적어주세요." name="simpleDesc" th:value="${society.simpleDesc}" id="society-simple">
                         </div>
                     </div>
 
@@ -263,7 +271,8 @@
                             <span>동아리 상세 소개</span>
                             <textarea type="text"  class="popup-body-society_item"
                                       name="detailDesc"
-                                      th:placeholder="${society.detailDesc}"
+                                      placeholder="동아리에 대한 상세한 설명을 적어주세요."
+                                      id="society-detail"
                                       th:text="${society.detailDesc}">
                             </textarea>
                         </div>
@@ -271,15 +280,19 @@
 
                 </div>
                 <div class="popup-footer">
-                    <button class="popup-footer_btn">신청하기</button>
+                    <button class="popup-footer_btn" id="society-update-content-btn">수정하기</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- 카테고리 추가 JS 부분 -->
+    <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/AddCategory/AddCategory.js}"></script>
+
     <!-- 글작성 JS 부분 -->
     <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/WritingPost/WritingPostPopup.js}"></script>
     <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/WritingPost/WritingPostUpload.js}"></script>
+    <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/WritingPost/WritingValidation.js}"></script>
 
     <!-- 신청자 조회 JS 부분 -->
     <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SubApplyList/SubApplyListPopup.js}"></script>
@@ -287,6 +300,7 @@
 
     <!-- 수정 JS 부분 -->
     <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SocietyUpdate/SocietyUpdatePopup.js}"></script>
+    <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SocietyUpdate/SocietyUpdateValidation.js}"></script>
     <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SocietyUpdate/UpdateProfile.js}"></script>
     <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SocietyUpdate/UpdateWallpaper.js}"></script>
 
@@ -297,6 +311,7 @@
             else alert("로그인 후 신청해주세요!")
         }
     </script>
+
 
 </th:block>
 

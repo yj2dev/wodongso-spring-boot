@@ -111,14 +111,15 @@
 }
 
 .register-input-field.success input,
-.profile-page-content-password-filed.success input,
+.filed-validation.success input,
 .register-input-field.success select,
 .register-input-field .id-input.success{
     border-color: #09c372;
 }
 
 .register-input-field.error input,
-.profile-page-content-password-filed.error input,
+.filed-validation.error input,
+.filed-validation.error textarea,
 .register-input-field.error select,
 .register-input-field .id-input.error{
     border-color: #ff3860;
@@ -126,7 +127,7 @@
 
 
 .register-input-field.error .error,
-.profile-page-content-password-filed.error .error,
+.filed-validation.error .error,
 .register-input-field .id-input.error .error{
     color: #ff3860;
     font-size: 12px;

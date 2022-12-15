@@ -9,7 +9,6 @@ writingPopupClose.addEventListener('click', (event) => {
 })
 
 function postWritingBtn(value){
-    console.log(value);
     if(value != null) {
         WritingPopup();
     } else{

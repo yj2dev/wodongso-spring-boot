@@ -93,8 +93,12 @@
 }
 .profile-page-popup-content-info-change-university-filed select,
 .profile-page-popup-content-info-change-university-filed input[value]{
-    color: #aaa;
-    font-weight: 500;
+    color: #3a3a3a;
+}
+
+.profile-page-popup-content-info-change-university-filed .error::placeholder{
+    color: rgba(255, 56, 96, 0.7);
+    font-weight: bold;
 }
 
 .profile-page-popup-content-info-change-university-filed select:focus,
