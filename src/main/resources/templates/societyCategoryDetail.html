@@ -40,7 +40,7 @@
                 <div class="society-detail-body-user-post-info">
                     <div class="society-detail-body-user-post-info-filed">
                         <h1>[[${payload[0].title}]]</h1>
-                        <span>[[${payload[0].createdAt}]]</span>
+                        <span class="date-change-number">[[${payload[0].createdAt}]]</span>
                     </div>
                     <div class="society-detail-body-user-post-info-filed">
                         <h3>[[${payload[0].content}]]</h3>
@@ -52,7 +52,8 @@
         </div>
 
         <script th:inline="javascript" th:src="@{/js/pages/Society/Category/ImageSlider.js}"></script>
-
+        <!-- 날짜 변경 -->
+        <script th:inline="javascript" th:src="@{/js/component/changeDate/changeDate.js}"></script>
         <script>
             function MoveBeforeLocation() {
                 const referrer = document.referrer;

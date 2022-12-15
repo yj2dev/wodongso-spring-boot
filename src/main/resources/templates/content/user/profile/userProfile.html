@@ -110,7 +110,7 @@
                                         <span>[[${ManagerList.classOf}]]</span>
                                     </div>
                                     <div class="manager-user-list_right-createAt-info">
-                                        <span>[[${ManagerList.createdAt}]]<</span>
+                                        <span class="date-change-number">[[${ManagerList.createdAt}]]</span>
                                     </div>
                                     <div class="manager-user-list_right-button">
                                         <form th:action="@{/user/manager-accept/{id}(id = ${ManagerList.id})}"
@@ -188,7 +188,7 @@
                                 <tbody>
                                 <tr th:each="ApplyState: ${listApplyStatus}">
                                     <td th:text="${ApplyState.name}"></td>
-                                    <td th:text="${ApplyState.createdAt}"></td>
+                                    <td th:text="${ApplyState.createdAt}" class="date-change-number"></td>
 
                                     <th:block th:if="${ApplyState.state == 0}">
                                         <td class="wait">
@@ -236,7 +236,7 @@
                                 <tbody>
                                 <tr th:each="CreateState: ${listCreateStatus}">
                                     <td th:text="${CreateState.societyName}"></td>
-                                    <td th:text="${CreateState.createdAt}"></td>
+                                    <td th:text="${CreateState.createdAt}" class="date-change-number"></td>
                                     <td th:text="${CreateState.simpleDesc}"></td>
 
                                     <th:block th:if="${CreateState.state == 0}">
@@ -283,7 +283,7 @@
                                 <tbody>
                                 <tr th:each="UniversityManagerState: ${listUniversityManager}">
                                     <td th:text="${universityManager}"></td>
-                                    <td th:text="${UniversityManagerState.createdAt}"></td>
+                                    <td th:text="${UniversityManagerState.createdAt}" class="date-change-number"></td>
                                     <th:block th:if="${UniversityManagerState.state == 0}">
                                         <td class="wait">
                                             <div>
@@ -570,10 +570,9 @@
 
     <script th:inline="javascript" th:src="@{/js/pages/ProfilePage/PasswordChange/UpdatePassword.js}"></script>
 
-    <script>
+    <!-- 날짜 변경 -->
+    <script th:inline="javascript" th:src="@{/js/component/changeDate/changeDate.js}"></script>
 
-
-    </script>
 
 </th:block>
 

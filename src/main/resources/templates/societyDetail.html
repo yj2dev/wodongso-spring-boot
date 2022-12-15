@@ -116,7 +116,7 @@
                                     </td>
                                     <td>[[${list.content}]]</td>
                                     <td th:text="${list.writerId}"></td>
-                                    <td th:text="${list.createdAt}"></td>
+                                    <td th:text="${list.createdAt}" class="date-change-number"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -189,7 +189,7 @@
                                 <span>학교: [[${recruitUser.userUniversity}]]</span>
                                 <span>학과: [[${recruitUser.userMajor}]]</span>
                                 <span>연락처: [[${recruitUser.userContact}]]</span>
-                                <span>신청일: [[${recruitUser.createdAt}]]</span>
+                                <span onload="DateChangeNumber(this.value)">신청일: [[${recruitUser.createdAt}]]</span>
 
                                 <div class="recruit-user-profile-info-apply-btn">
                                     <form th:action="@{/society/recruit/accept}" class="accept-box" method="post">
@@ -303,6 +303,21 @@
     <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SocietyUpdate/SocietyUpdateValidation.js}"></script>
     <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SocietyUpdate/UpdateProfile.js}"></script>
     <script th:inline="javascript" th:src="@{/js/pages/Society/Detail/SocietyUpdate/UpdateWallpaper.js}"></script>
+
+    <!-- 날짜 변경 -->
+    <script th:inline="javascript" th:src="@{/js/component/changeDate/changeDate.js}"></script>
+
+    <script>
+
+        function DateChangeNumber(value){
+            console.log(value)
+
+            const date = new Date(value);
+            const formatDate = new Intl.DateTimeFormat('ko-KR').format(date);
+            value = formatDate;
+        }
+
+    </script>
 
     <script th:inline="javascript">
         const onClickSocietyApply = (number) => {
