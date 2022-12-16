@@ -12,7 +12,7 @@
 
             <div class="society-detail-body-posting">
                 <figure class="society-detail-body-posting-filed">
-                    <img th:each="postImages: ${payload}" th:src="${payload[0].userProfileUrl}">
+                    <img th:each="postImages: ${payload}" th:src="${postImages.imageUrl}">
                 </figure>
 
                 <div class="slider-btn-prev" id="slider-prev">
